@@ -1,18 +1,19 @@
 package com.application.server.on_project;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "on_project")
+@IdClass(OnProjectId.class)
 public class OnProject {
 
+    @Id
     @Column(name = "user_id")
     private UUID userId;
 
+    @Id
     @Column(name = "project_id")
     private UUID projectId;
 
