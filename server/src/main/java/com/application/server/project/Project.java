@@ -1,12 +1,16 @@
 package com.application.server.project;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "project")
+@EntityListeners(AuditingEntityListener.class)
 public class Project {
 
     @Id
@@ -20,6 +24,8 @@ public class Project {
     @Column(name = "description")
     private String description;
 
+    @CreatedDate
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Europe/Madrid")
     @Column(name = "created_at")
     private Date createdAt;
 
