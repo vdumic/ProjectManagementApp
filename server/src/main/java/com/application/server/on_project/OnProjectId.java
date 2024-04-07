@@ -1,13 +1,17 @@
 package com.application.server.on_project;
 
+import jakarta.persistence.Column;
+
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 public class OnProjectId implements Serializable {
 
+    @Column(name = "user_id")
     private UUID userId;
 
+    @Column(name = "project_id")
     private UUID projectId;
 
     public OnProjectId(UUID userId, UUID projectId) {

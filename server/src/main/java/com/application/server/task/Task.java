@@ -1,12 +1,20 @@
 package com.application.server.task;
 
+import com.application.server.priority.Priority;
+import com.application.server.project.Project;
+import com.application.server.status.Status;
+import com.application.server.user.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "task")
+@EntityListeners(AuditingEntityListener.class)
 public class Task {
 
     @Id
@@ -14,14 +22,21 @@ public class Task {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "project_id")
-    private UUID projectId;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
-    @Column(name = "status_id")
-    private UUID statusId;
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
 
-    @Column(name = "created_by")
-    private UUID createdBy;
+    @ManyToOne
+    @JoinColumn(name = "priority_id")
+    private Priority priority;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private User user;
 
     @Column(name = "name")
     private String name;
@@ -29,6 +44,8 @@ public class Task {
     @Column(name = "description")
     private String description;
 
+    @CreatedDate
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Europe/Madrid")
     @Column(name = "created_at")
     private Date createdAt;
 
@@ -44,10 +61,11 @@ public class Task {
     public Task() {
     }
 
-    public Task(UUID projectId, UUID statusId, UUID createdBy, String name, String description, Date createdAt, Date startDate, Date endDate, Integer storyPoints) {
-        this.projectId = projectId;
-        this.statusId = statusId;
-        this.createdBy = createdBy;
+    public Task(Project project, Status status, Priority priority, User user, String name, String description, Date createdAt, Date startDate, Date endDate, Integer storyPoints) {
+        this.project = project;
+        this.status = status;
+        this.priority = priority;
+        this.user = user;
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
@@ -64,28 +82,36 @@ public class Task {
         this.id = id;
     }
 
-    public UUID getProjectId() {
-        return projectId;
+    public Project getProject() {
+        return project;
     }
 
-    public void setProjectId(UUID projectId) {
-        this.projectId = projectId;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-    public UUID getStatusId() {
-        return statusId;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setStatusId(UUID statusId) {
-        this.statusId = statusId;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-    public UUID getCreatedBy() {
-        return createdBy;
+    public Priority getPriority() {
+        return priority;
     }
 
-    public void setCreatedBy(UUID createdBy) {
-        this.createdBy = createdBy;
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {
@@ -140,9 +166,10 @@ public class Task {
     public String toString() {
         return "Task{" +
                 "id=" + id +
-                ", projectId=" + projectId +
-                ", statusId=" + statusId +
-                ", createdBy=" + createdBy +
+                ", project=" + project +
+                ", status=" + status +
+                ", priority=" + priority +
+                ", user=" + user +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +

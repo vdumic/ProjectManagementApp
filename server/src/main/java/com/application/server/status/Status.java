@@ -1,7 +1,9 @@
 package com.application.server.status;
 
+import com.application.server.task.Task;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,11 +18,15 @@ public class Status {
     @Column(name = "name")
     private String name;
 
+    @OneToMany(mappedBy = "status")
+    private List<Task> tasks;
+
     public Status() {
     }
 
-    public Status(String name) {
+    public Status(String name, List<Task> tasks) {
         this.name = name;
+        this.tasks = tasks;
     }
 
     public UUID getId() {
@@ -39,11 +45,20 @@ public class Status {
         this.name = name;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
     @Override
     public String toString() {
         return "Status{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", tasks=" + tasks +
                 '}';
     }
 }

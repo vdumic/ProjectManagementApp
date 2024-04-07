@@ -1,5 +1,8 @@
 package com.application.server.on_project;
 
+import com.application.server.project.Project;
+import com.application.server.role.Role;
+import com.application.server.user.User;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -10,23 +13,32 @@ import java.util.UUID;
 public class OnProject {
 
     @Id
-    @Column(name = "user_id")
     private UUID userId;
 
     @Id
-    @Column(name = "project_id")
     private UUID projectId;
 
-    @Column(name = "role_id")
-    private UUID roleId;
+    @ManyToOne
+    @MapsId("userId")
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @MapsId("projectId")
+    @JoinColumn(name = "project_id")
+    private Project project;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     public OnProject() {
     }
 
-    public OnProject(UUID userId, UUID projectId, UUID roleId) {
-        this.userId = userId;
-        this.projectId = projectId;
-        this.roleId = roleId;
+    public OnProject(User user, Project project, Role role) {
+        this.user = user;
+        this.project = project;
+        this.role = role;
     }
 
     public UUID getUserId() {
@@ -45,12 +57,28 @@ public class OnProject {
         this.projectId = projectId;
     }
 
-    public UUID getRoleId() {
-        return roleId;
+    public User getUser() {
+        return user;
     }
 
-    public void setRoleId(UUID roleId) {
-        this.roleId = roleId;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
@@ -58,7 +86,9 @@ public class OnProject {
         return "OnProject{" +
                 "userId=" + userId +
                 ", projectId=" + projectId +
-                ", roleId=" + roleId +
+                ", user=" + user +
+                ", project=" + project +
+                ", role=" + role +
                 '}';
     }
 }

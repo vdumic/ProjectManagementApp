@@ -1,7 +1,10 @@
 package com.application.server.user;
 
+import com.application.server.on_project.OnProject;
+import com.application.server.task.Task;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -28,15 +31,23 @@ public class User {
     @Column(name = "job_title")
     private String jobTitle;
 
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks;
+
+    @OneToMany(mappedBy = "user")
+    private List<OnProject> onProjects;
+
     public User() {
     }
 
-    public User(String email, String password, String fullName, String publicName, String jobTitle) {
+    public User(String email, String password, String fullName, String publicName, String jobTitle, List<Task> tasks, List<OnProject> onProjects) {
         this.email = email;
         this.password = password;
         this.fullName = fullName;
         this.publicName = publicName;
         this.jobTitle = jobTitle;
+        this.tasks = tasks;
+        this.onProjects = onProjects;
     }
 
     public UUID getId() {
@@ -87,6 +98,22 @@ public class User {
         this.jobTitle = jobTitle;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public List<OnProject> getOnProjects() {
+        return onProjects;
+    }
+
+    public void setOnProjects(List<OnProject> onProjects) {
+        this.onProjects = onProjects;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -96,6 +123,8 @@ public class User {
                 ", fullName='" + fullName + '\'' +
                 ", publicName='" + publicName + '\'' +
                 ", jobTitle='" + jobTitle + '\'' +
+                ", tasks=" + tasks +
+                ", onProjects=" + onProjects +
                 '}';
     }
 }

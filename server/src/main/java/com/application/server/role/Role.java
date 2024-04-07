@@ -1,7 +1,9 @@
 package com.application.server.role;
 
+import com.application.server.on_project.OnProject;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,11 +18,15 @@ public class Role {
     @Column(name = "name")
     private String name;
 
+    @OneToMany(mappedBy = "role")
+    private List<OnProject> onProjects;
+
     public Role() {
     }
 
-    public Role(String name) {
+    public Role(String name, List<OnProject> onProjects) {
         this.name = name;
+        this.onProjects = onProjects;
     }
 
     public UUID getId() {
@@ -39,11 +45,20 @@ public class Role {
         this.name = name;
     }
 
+    public List<OnProject> getOnProjects() {
+        return onProjects;
+    }
+
+    public void setOnProjects(List<OnProject> onProjects) {
+        this.onProjects = onProjects;
+    }
+
     @Override
     public String toString() {
         return "Role{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", onProjects=" + onProjects +
                 '}';
     }
 }
