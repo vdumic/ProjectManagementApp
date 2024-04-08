@@ -24,9 +24,8 @@ public class Role {
     public Role() {
     }
 
-    public Role(String name, List<OnProject> onProjects) {
+    public Role(String name) {
         this.name = name;
-        this.onProjects = onProjects;
     }
 
     public UUID getId() {
@@ -58,7 +57,6 @@ public class Role {
         return "Role{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", onProjects=" + onProjects +
                 '}';
     }
 }

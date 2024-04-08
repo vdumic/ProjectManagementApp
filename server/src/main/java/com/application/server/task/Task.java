@@ -4,12 +4,14 @@ import com.application.server.priority.Priority;
 import com.application.server.project.Project;
 import com.application.server.status.Status;
 import com.application.server.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -22,20 +24,24 @@ public class Task {
     @Column(name = "id")
     private UUID id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "project_id")
+    @JsonBackReference
     private Project project;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "status_id")
+    @JsonBackReference
     private Status status;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "priority_id")
+    @JsonBackReference
     private Priority priority;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "created_by")
+    @JsonBackReference
     private User user;
 
     @Column(name = "name")

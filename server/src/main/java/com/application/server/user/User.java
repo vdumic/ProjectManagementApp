@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user")
+@Table(name = " `user`")
 public class User {
 
     @Id
@@ -31,23 +31,22 @@ public class User {
     @Column(name = "job_title")
     private String jobTitle;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Task> tasks;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<OnProject> onProjects;
+
 
     public User() {
     }
 
-    public User(String email, String password, String fullName, String publicName, String jobTitle, List<Task> tasks, List<OnProject> onProjects) {
+    public User(String email, String password, String fullName, String publicName, String jobTitle) {
         this.email = email;
         this.password = password;
         this.fullName = fullName;
         this.publicName = publicName;
         this.jobTitle = jobTitle;
-        this.tasks = tasks;
-        this.onProjects = onProjects;
     }
 
     public UUID getId() {
@@ -123,8 +122,6 @@ public class User {
                 ", fullName='" + fullName + '\'' +
                 ", publicName='" + publicName + '\'' +
                 ", jobTitle='" + jobTitle + '\'' +
-                ", tasks=" + tasks +
-                ", onProjects=" + onProjects +
                 '}';
     }
 }
