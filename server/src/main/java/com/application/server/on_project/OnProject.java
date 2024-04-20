@@ -5,18 +5,19 @@ import com.application.server.role.Role;
 import com.application.server.user.User;
 import jakarta.persistence.*;
 
-import java.util.UUID;
-
 @Entity
-@Table(name = "on_project")
-@IdClass(OnProjectId.class)
+/*@Table(name = "on_project")
+@IdClass(OnProjectId.class)*/
 public class OnProject {
 
+/*
     @Id
     private UUID userId;
 
     @Id
     private UUID projectId;
+*/
+    @EmbeddedId OnProjectId id;
 
     @ManyToOne
     @MapsId("userId")
@@ -35,13 +36,14 @@ public class OnProject {
     public OnProject() {
     }
 
-    public OnProject(User user, Project project, Role role) {
+    public OnProject(OnProjectId id, User user, Project project, Role role) {
+        this.id = id;
         this.user = user;
         this.project = project;
         this.role = role;
     }
 
-    public UUID getUserId() {
+/*    public UUID getUserId() {
         return userId;
     }
 
@@ -55,7 +57,7 @@ public class OnProject {
 
     public void setProjectId(UUID projectId) {
         this.projectId = projectId;
-    }
+    }*/
 
     public User getUser() {
         return user;
@@ -81,11 +83,18 @@ public class OnProject {
         this.role = role;
     }
 
+    public OnProjectId getId() {
+        return id;
+    }
+
+    public void setId(OnProjectId id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "OnProject{" +
-                "userId=" + userId +
-                ", projectId=" + projectId +
+                "id=" + id +
                 ", user=" + user +
                 ", project=" + project +
                 ", role=" + role +

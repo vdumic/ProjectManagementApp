@@ -1,7 +1,6 @@
 package com.application.server.task;
 
 import com.application.server.priority.Priority;
-import com.application.server.priority.PriorityService;
 import com.application.server.project.Project;
 import com.application.server.status.Status;
 import com.application.server.user.User;
@@ -11,12 +10,6 @@ import java.util.UUID;
 
 @Service
 public class TaskMapper {
-
-    private final PriorityService priorityService;
-
-    public TaskMapper(PriorityService priorityService) {
-        this.priorityService = priorityService;
-    }
 
     public Task toTask(TaskDto taskDto) {
         if(taskDto == null) {
