@@ -20,6 +20,11 @@ public class PriorityController {
         return priorityService.getAllPriorities();
     }
 
+    @GetMapping("/priorities_names")
+    public List<PrioritiesListDto> getAllPrioritiesNames() {
+        return priorityService.getAllPrioritiesNames();
+    }
+
     @GetMapping("/priorities/{priority-id}")
     public Priority getPriorityById(@PathVariable("priority-id") UUID id) {
         return priorityService.getPriorityById(id);
@@ -32,7 +37,7 @@ public class PriorityController {
 
     @DeleteMapping("/priorities/{priority-id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deletePriorty(@PathVariable("priority-id") UUID id) {
-        priorityService.deletePriorty(id);
+    public void deletePriority(@PathVariable("priority-id") UUID id) {
+        priorityService.deletePriority(id);
     }
 }

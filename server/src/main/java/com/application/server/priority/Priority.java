@@ -1,6 +1,7 @@
 package com.application.server.priority;
 
 import com.application.server.task.Task;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -19,14 +20,14 @@ public class Priority {
     private String name;
 
     @OneToMany(mappedBy = "priority")
+    @JsonManagedReference(value = "task-priority")
     private List<Task> tasks;
 
     public Priority() {
     }
 
-    public Priority(String name, List<Task> tasks) {
+    public Priority(String name) {
         this.name = name;
-        this.tasks = tasks;
     }
 
     public UUID getId() {

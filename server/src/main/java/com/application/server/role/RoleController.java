@@ -20,6 +20,11 @@ public class RoleController {
         return roleService.getAllRoles();
     }
 
+    @GetMapping("/roles_names")
+    public List<RolesListDto> getAllRolesNames() {
+        return roleService.getAllRolesNames();
+    }
+
     @GetMapping("/roles/{role-id}")
     public Role getRoleById(@PathVariable("role-id") UUID id) {
         return roleService.getRoleById(id);

@@ -20,6 +20,11 @@ public class StatusController {
         return statusService.getAllStatuses();
     }
 
+    @GetMapping("/statuses_names")
+    public List<StatusesListDto> getAllStatusesNames() {
+        return statusService.getAllStatusesNames();
+    }
+
     @GetMapping("/statuses/{status-id}")
     public Status getStatusById(@PathVariable("status-id") UUID id) {
         return statusService.getStatusById(id);

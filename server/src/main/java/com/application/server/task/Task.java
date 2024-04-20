@@ -6,9 +6,9 @@ import com.application.server.status.Status;
 import com.application.server.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
@@ -26,22 +26,22 @@ public class Task {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "project_id")
-    @JsonBackReference
+    @JsonBackReference(value = "task-on-project")
     private Project project;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "status_id")
-    @JsonBackReference
+    @JsonBackReference(value = "task-status")
     private Status status;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "priority_id")
-    @JsonBackReference
+    @JsonBackReference(value = "task-priority")
     private Priority priority;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "created_by")
-    @JsonBackReference
+    @JsonBackReference(value = "task-creator")
     private User user;
 
     @Column(name = "name")
@@ -54,6 +54,11 @@ public class Task {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Europe/Madrid")
     @Column(name = "created_at")
     private Date createdAt;
+
+    @LastModifiedDate
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Europe/Madrid")
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
     @Column(name = "start_date")
     private Date startDate;

@@ -1,6 +1,7 @@
 package com.application.server.status;
 
 import com.application.server.task.Task;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -19,14 +20,14 @@ public class Status {
     private String name;
 
     @OneToMany(mappedBy = "status")
+    @JsonManagedReference(value = "task-status")
     private List<Task> tasks;
 
     public Status() {
     }
 
-    public Status(String name, List<Task> tasks) {
+    public Status(String name) {
         this.name = name;
-        this.tasks = tasks;
     }
 
     public UUID getId() {

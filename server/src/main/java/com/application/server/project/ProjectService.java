@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
@@ -18,6 +19,10 @@ public class ProjectService {
 
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
+    }
+
+    public List<ProjectsListDto> getAllProjectsNames() {
+        return projectRepository.findAll().stream().map(projectMapper::toProjectsListDto).collect(Collectors.toList());
     }
 
     public Project getProjectById(UUID id) {

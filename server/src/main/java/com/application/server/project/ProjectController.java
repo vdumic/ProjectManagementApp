@@ -21,6 +21,11 @@ public class ProjectController {
         return projectService.getAllProjects();
     }
 
+    @GetMapping("/projects_names")
+    public List<ProjectsListDto> getAllProjectsNames() {
+        return projectService.getAllProjectsNames();
+    }
+
     @GetMapping("/projects/{project-id}")
     public Project getProjectById(@PathVariable("project-id") UUID id) {
         return projectService.getProjectById(id);

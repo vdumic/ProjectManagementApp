@@ -2,7 +2,10 @@ package com.application.server.project;
 
 import com.application.server.on_project.OnProject;
 import com.application.server.task.Task;
+import com.application.server.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -21,6 +24,11 @@ public class Project {
     @Column(name = "id")
     private UUID id;
 
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "created_by")
+    @JsonBackReference(value = "project-creator")
+    private User user;
+
     @Column(name = "name")
     private String name;
 
@@ -32,7 +40,13 @@ public class Project {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @OneToMany(mappedBy = "project")
+    @CreatedDate
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Europe/Madrid")
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonManagedReference(value = "task-on-project")
     private List<Task> tasks;
 
     @OneToMany(mappedBy = "project")
@@ -41,11 +55,12 @@ public class Project {
     public Project() {
     }
 
-    public Project(String name, String description, Date createdAt, List<Task> tasks, List<OnProject> onProjects) {
+    public Project(User user, String name, String description, Date createdAt, Date updatedAt, List<OnProject> onProjects) {
+        this.user = user;
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
-        this.tasks = tasks;
+        this.updatedAt = updatedAt;
         this.onProjects = onProjects;
     }
 
@@ -55,6 +70,22 @@ public class Project {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public String getName() {
@@ -101,9 +132,11 @@ public class Project {
     public String toString() {
         return "Project{" +
                 "id=" + id +
+                ", user=" + user +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 ", tasks=" + tasks +
                 ", onProjects=" + onProjects +
                 '}';

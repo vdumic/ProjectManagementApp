@@ -1,6 +1,9 @@
 package com.application.server.project;
 
+import com.application.server.user.User;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class ProjectMapper {
@@ -14,6 +17,14 @@ public class ProjectMapper {
         project.setName(projectDto.name());
         project.setDescription(projectDto.description());
 
+        User user = new User();
+        user.setId(UUID.fromString(projectDto.createdBy()));
+        project.setUser(user);
+
         return project;
+    }
+
+    public ProjectsListDto toProjectsListDto(Project project) {
+        return new ProjectsListDto(project.getName());
     }
 }

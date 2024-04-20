@@ -1,7 +1,9 @@
 package com.application.server.user;
 
 import com.application.server.on_project.OnProject;
+import com.application.server.project.Project;
 import com.application.server.task.Task;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -32,7 +34,12 @@ public class User {
     private String jobTitle;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "task-creator")
     private List<Task> tasks;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "project-creator")
+    private List<Project> projects;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<OnProject> onProjects;
