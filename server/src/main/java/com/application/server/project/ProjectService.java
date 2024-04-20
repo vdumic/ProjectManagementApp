@@ -25,6 +25,16 @@ public class ProjectService {
         return projectRepository.findAll().stream().map(projectMapper::toProjectsListDto).collect(Collectors.toList());
     }
 
+    public List<ProjectsListDto> getAllProjectsCretedByUser(UUID userId) {
+        var allProjects = projectRepository.findAll();
+        return allProjects.stream().filter(project -> project.getUser().getId().equals(userId)).map(projectMapper::toProjectsListDto).collect(Collectors.toList());
+    }
+
+    public List<ProjectsListDto> getAllProjectsCretedByOtherUsers(UUID userId) {
+        var projects = projectRepository.projectsFromOthers(userId);
+        return projects.stream().map(projectMapper::toProjectsListDto).collect(Collectors.toList());
+    }
+
     public Project getProjectById(UUID id) {
         return projectRepository.findById(id).orElse(null);
     }

@@ -3,34 +3,29 @@ package com.application.server.on_project;
 import com.application.server.project.Project;
 import com.application.server.role.Role;
 import com.application.server.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
-/*@Table(name = "on_project")
-@IdClass(OnProjectId.class)*/
 public class OnProject {
 
-/*
-    @Id
-    private UUID userId;
-
-    @Id
-    private UUID projectId;
-*/
     @EmbeddedId OnProjectId id;
 
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @ManyToOne
     @MapsId("projectId")
     @JoinColumn(name = "project_id")
+    @JsonIgnore
     private Project project;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @JsonIgnore
     private Role role;
 
     public OnProject() {
@@ -42,22 +37,6 @@ public class OnProject {
         this.project = project;
         this.role = role;
     }
-
-/*    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public UUID getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(UUID projectId) {
-        this.projectId = projectId;
-    }*/
 
     public User getUser() {
         return user;

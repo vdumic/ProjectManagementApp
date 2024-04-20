@@ -3,7 +3,7 @@ package com.application.server.user;
 import com.application.server.on_project.OnProject;
 import com.application.server.project.Project;
 import com.application.server.task.Task;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -34,11 +34,10 @@ public class User {
     private String jobTitle;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference(value = "task-creator")
     private List<Task> tasks;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference(value = "project-creator")
+    @JsonIgnore
     private List<Project> projects;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -48,12 +47,13 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, String fullName, String publicName, String jobTitle) {
+    public User(String email, String password, String fullName, String publicName, String jobTitle, List<Project> projects) {
         this.email = email;
         this.password = password;
         this.fullName = fullName;
         this.publicName = publicName;
         this.jobTitle = jobTitle;
+        this.projects = projects;
     }
 
     public UUID getId() {

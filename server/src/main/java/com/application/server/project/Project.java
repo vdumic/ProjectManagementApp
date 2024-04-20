@@ -26,7 +26,6 @@ public class Project {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "created_by")
-    @JsonBackReference(value = "project-creator")
     private User user;
 
     @Column(name = "name")
@@ -46,7 +45,6 @@ public class Project {
     private Date updatedAt;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonManagedReference(value = "task-on-project")
     private List<Task> tasks;
 
     @OneToMany(mappedBy = "project")

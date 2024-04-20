@@ -4,8 +4,8 @@ import com.application.server.priority.Priority;
 import com.application.server.project.Project;
 import com.application.server.status.Status;
 import com.application.server.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -26,22 +26,22 @@ public class Task {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "project_id")
-    @JsonBackReference(value = "task-on-project")
+    @JsonIgnore
     private Project project;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "status_id")
-    @JsonBackReference(value = "task-status")
+    @JsonIgnore
     private Status status;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "priority_id")
-    @JsonBackReference(value = "task-priority")
+    @JsonIgnore
     private Priority priority;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "created_by")
-    @JsonBackReference(value = "task-creator")
+    @JsonIgnore
     private User user;
 
     @Column(name = "name")
@@ -72,7 +72,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(Project project, Status status, Priority priority, User user, String name, String description, Date createdAt, Date startDate, Date endDate, Integer storyPoints) {
+    public Task(Project project, Status status, Priority priority, User user, String name, String description, Date createdAt, Date updatedAt, Date startDate, Date endDate, Integer storyPoints) {
         this.project = project;
         this.status = status;
         this.priority = priority;
@@ -80,6 +80,7 @@ public class Task {
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.startDate = startDate;
         this.endDate = endDate;
         this.storyPoints = storyPoints;

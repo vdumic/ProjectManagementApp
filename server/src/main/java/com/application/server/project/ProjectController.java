@@ -26,6 +26,16 @@ public class ProjectController {
         return projectService.getAllProjectsNames();
     }
 
+    @GetMapping("/projects_created_by/{user-id}")
+    public List<ProjectsListDto> getAllProjectsCretedByUser(@PathVariable("user-id") UUID userId) {
+        return projectService.getAllProjectsCretedByUser(userId);
+    }
+
+    @GetMapping("/projects_from_others/{user-id}")
+    public List<ProjectsListDto> getAllProjectsCreatedByOtherUsers(@PathVariable("user-id") UUID userId) {
+        return projectService.getAllProjectsCretedByOtherUsers(userId);
+    }
+
     @GetMapping("/projects/{project-id}")
     public Project getProjectById(@PathVariable("project-id") UUID id) {
         return projectService.getProjectById(id);
