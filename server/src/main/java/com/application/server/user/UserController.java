@@ -24,6 +24,11 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @GetMapping("/users_on_project/{project-id}")
+    public List<UsersListDto> getAllUsersOnProject(@PathVariable("project-id") UUID projectId) {
+        return userService.getAllUsersOnProject(projectId);
+    }
+
     @PostMapping("/users")
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
