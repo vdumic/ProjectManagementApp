@@ -3,7 +3,7 @@ import { SocialIcon } from "react-social-icons";
 
 const Footer = () => {
   return (
-    <footer className="relative z-50 bg-bckgrnd-light">
+    <footer className="relative z-50 bg-bckgrnd-main">
       <div className="container mx-auto">
         <div className="flex items-center justify-between flex-wrap py-10">
           <div className="flex justify-items-center items-center w-full sm:w-2/3 lg:w-3/12">

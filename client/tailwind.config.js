@@ -8,8 +8,9 @@ module.exports = {
           dark: "#494444",
         },
         bckgrnd: {
-          light: "#f0f8ff",
-          main: "#fcfdff",
+          light: "#f4f4f4",
+          main: "#fbfafa",
+          spacer: "#f2eeee",
         },
         button: {
           blue: "#1d597d",
