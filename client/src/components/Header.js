@@ -32,7 +32,7 @@ const Header = () => {
     >
       <main className="max-w-full flex-grow flex flex-col my-5 mx-44">
         <div className="flex items-center justify-between">
-          <img src={logo} height="100" width="150" />
+          <img src={logo} alt="Sprynt logo" height="100" width="150" />
           <div className="flex items-center justify-between mr-80">
             <NavLink title="Work management" />
             <NavLink title="About us" />
