@@ -27,7 +27,7 @@ const Header = () => {
   return (
     <header
       className={`sticky z-50 top-0 flex items-center bg-bckgrnd-light ${
-        isScrolled && "bg-opacity-100 drop-shadow-md"
+        isScrolled && "bg-opacity-100 drop-shadow-lg"
       }`}
     >
       <main className="max-w-full flex-grow flex flex-col my-3 mx-44">

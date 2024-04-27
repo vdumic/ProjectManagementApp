@@ -1,5 +1,5 @@
-import heroImage from "../assets/hero_section_image.png";
-import HeroButton from "./Buttons/HeroButton";
+import heroImage from "../../assets/hero_section_image.png";
+import HeroButton from "../Buttons/HeroButton";
 
 const HeroSection = () => {
   return (

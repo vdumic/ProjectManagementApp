@@ -1,6 +1,7 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import HeroSection from "../components/HeroSection";
+import Examples from "../components/Home/Examples";
+import HeroSection from "../components/Home/HeroSection";
 import Spacer from "../components/Spacer";
 
 const Home = () => {
@@ -8,6 +9,8 @@ const Home = () => {
     <div className="bg-bckgrnd-main">
       <Header />
       <HeroSection />
+      <Spacer />
+      <Examples />
       <Spacer />
       <Footer />
     </div>
