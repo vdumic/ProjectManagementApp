@@ -1,19 +1,15 @@
-import Footer from "../components/Footer";
-import Header from "../components/Header";
 import Examples from "../components/Home/Examples";
 import HeroSection from "../components/Home/HeroSection";
 import Spacer from "../components/Spacer";
+import HeaderFooterLayout from "../layouts/HeaderFooterLayout";
 
 const Home = () => {
   return (
-    <div className="bg-bckgrnd-main">
-      <Header />
+    <HeaderFooterLayout title="Sprynt / Home">
       <HeroSection />
       <Spacer />
       <Examples />
-      <Spacer />
-      <Footer />
-    </div>
+    </HeaderFooterLayout>
   );
 };
 
