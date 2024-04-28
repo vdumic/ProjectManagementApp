@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import HeaderLayout from "../../layouts/HeaderLayout";
-import HeaderButton from "../Buttons/HeaderButton";
-import ProjectsList from "./ProjectsList";
-import ProjectBoard from "./ProjectBoard";
+import HeaderLayout from "../layouts/HeaderLayout";
+import HeaderButton from "../components/Buttons/HeaderButton";
+import ProjectsList from "../components/User home/ProjectsList";
+import ProjectBoard from "../components/User home/ProjectBoard";
 
 const myProjects = [
   {
