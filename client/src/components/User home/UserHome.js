@@ -3,6 +3,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import HeaderLayout from "../../layouts/HeaderLayout";
 import HeaderButton from "../Buttons/HeaderButton";
 import ProjectsList from "./ProjectsList";
+import ProjectBoard from "./ProjectBoard";
 
 const myProjects = [
   {
@@ -91,7 +92,7 @@ const UserHome = () => {
             </div>
           </div>
           <div className="w-9/12">
-            <p>Project</p>
+            <ProjectBoard />
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 const ProjectsList = ({ projects }) => {
   return (
-    <div className="ml-2 overflow-auto h-64">
+    <div className="ml-3 overflow-auto h-64">
       {projects.map((project) => {
         return (
           <button className="text-text-dark my-2 text-lg text-start">

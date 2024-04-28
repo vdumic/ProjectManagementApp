@@ -45,9 +45,9 @@ const Header = () => {
       <main className="max-w-full flex-grow flex flex-col my-3 mx-48">
         <div className="flex items-center justify-between">
           <Link to="/">
-            <img src={logo} alt="Sprynt logo" height="100" width="150" />
+            <img src={logo} alt="Sprynt logo" width="110" />
           </Link>
-          <div className="flex items-center justify-between mr-80">
+          <div className="flex items-center justify-between mr-64">
             <NavLink title="Work management" path="/work-management" />
             <NavLink title="About us" path="/about-us" />
             <NavLink title="Support" path="/support" />
@@ -68,9 +68,9 @@ const Header = () => {
                 <img
                   src={userIcon}
                   alt="User icon"
-                  height="50"
-                  width="50"
-                  className="bg-bckgrnd-main rounded-full p-1"
+                  height="45"
+                  width="45"
+                  className="bg-bckgrnd-main rounded-full"
                 />
               </button>
             </div>
