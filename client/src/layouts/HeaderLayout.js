@@ -3,7 +3,7 @@ import Header from "../components/Header";
 
 const HeaderLayout = ({ title, children, ...rest }) => {
   return (
-    <div className="h-full">
+    <div className="h-screen overflow-hidden">
       <Helmet>
         <meta charSet="utf-8" />
         <title>{title}</title>

@@ -11,6 +11,7 @@ module.exports = {
           light: "#f4f4f4",
           main: "#fbfafa",
           spacer: "#f2eeee",
+          block: "#ecf5ff",
         },
         button: {
           blue: "#1d597d",
