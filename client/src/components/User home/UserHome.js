@@ -2,6 +2,28 @@ import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import HeaderLayout from "../../layouts/HeaderLayout";
 import HeaderButton from "../Buttons/HeaderButton";
+import ProjectsList from "./ProjectsList";
+
+const myProjects = [
+  {
+    name: "Website Redesign for Cleaning Company",
+  },
+  {
+    name: "Software Development: Mobile App Upgrade",
+  },
+];
+
+const otherProjects = [
+  {
+    name: "Design and Development of a Video Conferencing Application",
+  },
+  {
+    name: "Building an Inventory Management System for Retail",
+  },
+  {
+    name: "Implementation of a Chatbot for Customer Support",
+  },
+];
 
 const UserHome = () => {
   const [myProjectsClicked, setMyProjectsClicked] = useState(false);
@@ -20,7 +42,7 @@ const UserHome = () => {
       <div className="flex h-svh w-full">
         <div className="flex h-full w-full mx-6">
           <div className=" h-full flex flex-col justify-items-end bg-bckgrnd-block w-3/12">
-            <div className="m-8">
+            <div className="m-8 h-64">
               <button
                 className="flex justify-start align-middle my-4"
                 onClick={handleMyProjectsClicked}
@@ -39,21 +61,9 @@ const UserHome = () => {
                   </div>
                 )}
               </button>
-              {myProjectsClicked && (
-                <div className="ml-2 overflow-auto h-64">
-                  <button className="text-text-dark my-2 text-lg text-start">
-                    Website Redesign for Cleaning Company
-                  </button>
-                  <button className="text-text-dark my-2 text-lg text-start">
-                    Software Development: Mobile App Upgrade
-                  </button>
-                  <button className="text-text-dark my-2 text-lg text-start">
-                    Website Redesign for Cleaning Company
-                  </button>
-                </div>
-              )}
+              {myProjectsClicked && <ProjectsList projects={myProjects} />}
             </div>
-            <div className="m-8">
+            <div className="m-8 h-64">
               <button
                 className="flex justify-start align-middle my-2"
                 onClick={handleOtherProjectsClicked}
@@ -73,17 +83,7 @@ const UserHome = () => {
                 )}
               </button>
               {otherProjectsClicked && (
-                <div className="ml-2 overflow-auto h-64">
-                  <button className="text-text-dark my-2 text-lg text-start">
-                    Website Redesign for Cleaning Company
-                  </button>
-                  <button className="text-text-dark my-2 text-lg text-start">
-                    Software Development: Mobile App Upgrade
-                  </button>
-                  <button className="text-text-dark my-2 text-lg text-start">
-                    Website Redesign for Cleaning Company
-                  </button>
-                </div>
+                <ProjectsList projects={otherProjects} />
               )}
             </div>
             <div className="flex justify-center my-8">
