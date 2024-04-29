@@ -38,7 +38,7 @@ const tasks = [
   },
 ];
 
-const ProjectBoard = () => {
+const ProjectDetails = () => {
   return (
     <div className="flex h-full mx-20 my-12">
       <div className="flex h-full w-full flex-wrap justify-start">
@@ -67,4 +67,4 @@ const ProjectBoard = () => {
   );
 };
 
-export default ProjectBoard;
+export default ProjectDetails;

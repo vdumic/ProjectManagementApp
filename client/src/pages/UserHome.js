@@ -3,7 +3,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import HeaderLayout from "../layouts/HeaderLayout";
 import HeaderButton from "../components/Buttons/HeaderButton";
 import ProjectsList from "../components/User home/ProjectsList";
-import ProjectBoard from "../components/User home/ProjectBoard";
+import ProjectDetails from "../components/User home/ProjectDetails";
 
 const myProjects = [
   {
@@ -42,7 +42,7 @@ const UserHome = () => {
     <HeaderLayout title="User home">
       <div className="flex h-svh w-full">
         <div className="flex h-full w-full mx-6">
-          <div className=" h-full flex flex-col justify-items-end bg-bckgrnd-block w-3/12">
+          <div className="flex flex-col justify-items-end bg-bckgrnd-block w-3/12">
             <div className="m-8 h-64">
               <button
                 className="flex justify-start align-middle my-4"
@@ -92,7 +92,7 @@ const UserHome = () => {
             </div>
           </div>
           <div className="w-9/12">
-            <ProjectBoard />
+            <ProjectDetails />
           </div>
         </div>
       </div>
