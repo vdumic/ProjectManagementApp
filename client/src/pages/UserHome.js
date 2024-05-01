@@ -27,8 +27,8 @@ const otherProjects = [
 ];
 
 const UserHome = () => {
-  const [myProjectsClicked, setMyProjectsClicked] = useState(false);
-  const [otherProjectsClicked, setOtherProjectsClicked] = useState(false);
+  const [myProjectsClicked, setMyProjectsClicked] = useState(true);
+  const [otherProjectsClicked, setOtherProjectsClicked] = useState(true);
   const [projects, setProjects] = useState([]);
 
   const userEmail = "samantha.jones@gmail.com";

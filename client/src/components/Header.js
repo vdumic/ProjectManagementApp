@@ -1,13 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
+import AppContext from "../store/app-context";
 import logo from "../assets/logo.png";
 import userIcon from "../assets/user_icon.png";
 import HeaderButton from "./Buttons/HeaderButton";
 import NavLink from "./Buttons/NavLink";
 
+import { Hanko, UnauthorizedError } from "@teamhanko/hanko-frontend-sdk";
+
+const hankoApi = process.env.REACT_APP_HANKO_API_URL;
+
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const appCtx = useContext(AppContext);
+
+  const isLoggedIn = appCtx.userData.isLoggedIn;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,25 +49,19 @@ const Header = () => {
             <NavLink title="About us" path="/about-us" />
             <NavLink title="Support" path="/support" />
           </div>
-          <div className="flex items-center justify-between">
-            <Link to="/login" className="py-2 px-2">
-              <p className="text-text-dark text-lg font-medium mr-6">Sign in</p>
-            </Link>
-            <HeaderButton title="Get started" />
-          </div>
-          {/* {!isLoggedIn && (
+          {!isLoggedIn && (
             <div className="flex items-center justify-between">
-              <button className="py-2 px-2">
+              <Link to="/login" className="py-2 px-2">
                 <p className="text-text-dark text-lg font-medium mr-6">
                   Sign in
                 </p>
-              </button>
+              </Link>
               <HeaderButton title="Get started" />
             </div>
           )}
           {isLoggedIn && (
             <div className="flex items-center justify-between ml-44">
-              <button>
+              <Link to="/profile">
                 <img
                   src={userIcon}
                   alt="User icon"
@@ -67,9 +69,9 @@ const Header = () => {
                   width="45"
                   className="bg-bckgrnd-main rounded-full"
                 />
-              </button>
+              </Link>
             </div>
-          )} */}
+          )}
         </div>
       </main>
     </header>
