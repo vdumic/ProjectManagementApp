@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import HeaderLayout from "../layouts/HeaderLayout";
 import HeaderButton from "../components/Buttons/HeaderButton";
@@ -29,6 +29,26 @@ const otherProjects = [
 const UserHome = () => {
   const [myProjectsClicked, setMyProjectsClicked] = useState(false);
   const [otherProjectsClicked, setOtherProjectsClicked] = useState(false);
+  const [projects, setProjects] = useState([]);
+
+  const userEmail = "samantha.jones@gmail.com";
+
+  useEffect(() => {
+    const getProjects = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/projects_created_by/${userEmail}`
+        );
+        const jsonData = await response.json();
+
+        setProjects(jsonData);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    getProjects();
+    console.log(projects);
+  }, []);
 
   const handleMyProjectsClicked = () => {
     setMyProjectsClicked(!myProjectsClicked);
@@ -62,7 +82,7 @@ const UserHome = () => {
                   </div>
                 )}
               </button>
-              {myProjectsClicked && <ProjectsList projects={myProjects} />}
+              {myProjectsClicked && <ProjectsList projects={projects} />}
             </div>
             <div className="m-8 h-64">
               <button

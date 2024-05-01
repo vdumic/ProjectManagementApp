@@ -1,4 +1,6 @@
 package com.application.server.project;
 
-public record ProjectsListDto(String name) {
+import java.util.UUID;
+
+public record ProjectsListDto(String name, UUID id) {
 }

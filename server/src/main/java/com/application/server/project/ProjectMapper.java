@@ -25,6 +25,6 @@ public class ProjectMapper {
     }
 
     public ProjectsListDto toProjectsListDto(Project project) {
-        return new ProjectsListDto(project.getName());
+        return new ProjectsListDto(project.getName(), project.getId());
     }
 }

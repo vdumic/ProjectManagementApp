@@ -3,7 +3,10 @@ const ProjectsList = ({ projects }) => {
     <div className="ml-3 overflow-auto h-64">
       {projects.map((project) => {
         return (
-          <button className="text-text-dark my-2 text-lg text-start">
+          <button
+            className="text-text-dark my-2 text-lg text-start"
+            key={project.id}
+          >
             {project.name}
           </button>
         );

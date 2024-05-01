@@ -19,8 +19,6 @@ const Header = () => {
       }
     };
 
-    console.log(isScrolled);
-
     window.addEventListener("scroll", handleScroll);
 
     return () => {

@@ -8,6 +8,7 @@ import java.util.UUID;
 
 @RestController
 @EnableJpaAuditing
+@CrossOrigin
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -26,9 +27,9 @@ public class ProjectController {
         return projectService.getAllProjectsNames();
     }
 
-    @GetMapping("/projects_created_by/{user-id}")
-    public List<ProjectsListDto> getAllProjectsCretedByUser(@PathVariable("user-id") UUID userId) {
-        return projectService.getAllProjectsCretedByUser(userId);
+    @GetMapping("/projects_created_by/{user-email}")
+    public List<ProjectsListDto> getAllProjectsCretedByUser(@PathVariable("user-email") String userEmail) {
+        return projectService.getAllProjectsCretedByUser(userEmail);
     }
 
     @GetMapping("/projects_from_others/{user-id}")
