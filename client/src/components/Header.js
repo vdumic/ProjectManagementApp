@@ -8,7 +8,6 @@ import NavLink from "./Buttons/NavLink";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,14 +25,6 @@ const Header = () => {
     };
   });
 
-  const handleSignIn = () => {
-    setIsLoggedIn(true);
-  };
-
-  const handleSignOut = () => {
-    setIsLoggedIn(false);
-  };
-
   return (
     <header
       className={`sticky z-50 top-0 flex items-center bg-bckgrnd-light ${
@@ -50,9 +41,15 @@ const Header = () => {
             <NavLink title="About us" path="/about-us" />
             <NavLink title="Support" path="/support" />
           </div>
-          {!isLoggedIn && (
+          <div className="flex items-center justify-between">
+            <Link to="/login" className="py-2 px-2">
+              <p className="text-text-dark text-lg font-medium mr-6">Sign in</p>
+            </Link>
+            <HeaderButton title="Get started" />
+          </div>
+          {/* {!isLoggedIn && (
             <div className="flex items-center justify-between">
-              <button className="py-2 px-2" onClick={handleSignIn}>
+              <button className="py-2 px-2">
                 <p className="text-text-dark text-lg font-medium mr-6">
                   Sign in
                 </p>
@@ -62,7 +59,7 @@ const Header = () => {
           )}
           {isLoggedIn && (
             <div className="flex items-center justify-between ml-44">
-              <button onClick={handleSignOut}>
+              <button>
                 <img
                   src={userIcon}
                   alt="User icon"
@@ -72,7 +69,7 @@ const Header = () => {
                 />
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </main>
     </header>

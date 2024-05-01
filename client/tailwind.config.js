@@ -15,6 +15,7 @@ module.exports = {
         },
         button: {
           blue: "#1d597d",
+          light: "#33698a",
         },
       },
     },
