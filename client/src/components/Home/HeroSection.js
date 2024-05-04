@@ -17,7 +17,7 @@ const HeroSection = () => {
         />
       </div>
       <div className="flex items-center justify-center mb-14 mt-6">
-        <HeroButton title="Start for free!" />
+        <HeroButton title="Start for free!" path="/register" />
       </div>
     </div>
   );

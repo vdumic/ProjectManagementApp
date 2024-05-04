@@ -1,8 +1,10 @@
-const HeaderButton = ({ title }) => {
+import { Link } from "react-router-dom";
+
+const HeaderButton = ({ title, path }) => {
   return (
-    <button className="bg-button-blue rounded-xl">
+    <Link to={path} className="bg-button-blue rounded-xl">
       <p className="text-lg py-2 px-5 text-white font-medium">{title}</p>
-    </button>
+    </Link>
   );
 };
 

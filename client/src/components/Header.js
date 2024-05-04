@@ -7,10 +7,6 @@ import userIcon from "../assets/user_icon.png";
 import HeaderButton from "./Buttons/HeaderButton";
 import NavLink from "./Buttons/NavLink";
 
-import { Hanko, UnauthorizedError } from "@teamhanko/hanko-frontend-sdk";
-
-const hankoApi = process.env.REACT_APP_HANKO_API_URL;
-
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const appCtx = useContext(AppContext);
@@ -56,7 +52,7 @@ const Header = () => {
                   Sign in
                 </p>
               </Link>
-              <HeaderButton title="Get started" />
+              <HeaderButton title="Get started" path="/register" />
             </div>
           )}
           {isLoggedIn && (
