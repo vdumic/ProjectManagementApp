@@ -21,14 +21,17 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "firstname")
+    private String firstname;
 
-    @Column(name = "full_name")
-    private String fullName;
+    @Column(name = "lastname")
+    private String lastname;
 
-    @Column(name = "public_name")
-    private String publicName;
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "organization")
+    private String organization;
 
     @Column(name = "job_title")
     private String jobTitle;
@@ -43,17 +46,17 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<OnProject> onProjects;
 
-
     public User() {
     }
 
-    public User(String email, String password, String fullName, String publicName, String jobTitle, List<Project> projects) {
+    public User(UUID id, String email, String firstname, String lastname, String username, String organization, String jobTitle) {
+        this.id = id;
         this.email = email;
-        this.password = password;
-        this.fullName = fullName;
-        this.publicName = publicName;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.organization = organization;
         this.jobTitle = jobTitle;
-        this.projects = projects;
     }
 
     public UUID getId() {
@@ -72,28 +75,36 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public String getPublicName() {
-        return publicName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPublicName(String publicName) {
-        this.publicName = publicName;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 
     public String getJobTitle() {
@@ -112,6 +123,14 @@ public class User {
         this.tasks = tasks;
     }
 
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
     public List<OnProject> getOnProjects() {
         return onProjects;
     }
@@ -125,10 +144,14 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", publicName='" + publicName + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", username='" + username + '\'' +
+                ", organization='" + organization + '\'' +
                 ", jobTitle='" + jobTitle + '\'' +
+                ", tasks=" + tasks +
+                ", projects=" + projects +
+                ", onProjects=" + onProjects +
                 '}';
     }
 }

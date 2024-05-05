@@ -25,6 +25,10 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
+    public boolean getUserByEmail(String email) {
+        return !userRepository.findAll().stream().filter(user -> user.getEmail().equals(email)).collect(Collectors.toList()).isEmpty();
+    }
+
     public List<UsersListDto> getAllUsersOnProject(UUID projectId) {
         var users = userRepository.usersOnProject(projectId);
         return users.stream().map(userMapper::toUserListDto).collect(Collectors.toList());

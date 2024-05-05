@@ -48,7 +48,7 @@ const UserHome = () => {
     };
     getProjects();
     console.log(projects);
-  }, []);
+  }, [projects]);
 
   const handleMyProjectsClicked = () => {
     setMyProjectsClicked(!myProjectsClicked);

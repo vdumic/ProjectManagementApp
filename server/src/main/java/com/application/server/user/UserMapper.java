@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 public class UserMapper {
 
     public UsersListDto toUserListDto(User user) {
-        return new UsersListDto(user.getFullName());
+        return new UsersListDto(user.getFirstname(), user.getLastname());
     }
 }

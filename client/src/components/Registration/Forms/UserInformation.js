@@ -27,10 +27,28 @@ const UserInformation = () => {
         lastname: "",
       }}
       validationSchema={ValidationSchema}
-      onSubmit={(values) => {
+      onSubmit={async (values) => {
+        let userExists = false;
         const data = { ...formData, ...values };
         setFormData(data);
-        setActiveStepIndex(activeStepIndex + 1);
+
+        try {
+          const response = await fetch(
+            `http://localhost:8080/users/exist/${formData.email}`
+          );
+          const jsonData = await response.json();
+          userExists = jsonData;
+        } catch (error) {
+          console.error(error.message);
+        }
+
+        console.log(userExists);
+
+        if (userExists) {
+          setActiveStepIndex(4);
+        } else {
+          setActiveStepIndex(activeStepIndex + 1);
+        }
       }}
     >
       <Form className="flex flex-col w-1/5 justify-center items-center">

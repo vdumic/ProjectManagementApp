@@ -5,11 +5,13 @@ import jakarta.validation.constraints.NotEmpty;
 public record UserDto(
         @NotEmpty(message = "Email should not be empty")
         String email,
-        @NotEmpty(message = "Password should not be empty")
-        String password,
-        @NotEmpty(message = "Name should not be empty")
-        String fullName,
-        String publicName,
+        @NotEmpty(message = "Firstname should not be empty")
+        String firstname,
+        @NotEmpty(message = "Lastname should not be empty")
+        String lastname,
+        @NotEmpty(message = "Username should not be empty")
+        String username,
+        String organization,
         String jobTitle
 ) {
 }

@@ -1,12 +1,13 @@
 import { createContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 import StepCounter from "../components/Registration/StepCounter";
 import DisplayedStep from "../components/Registration/DisplayedStep";
 import Success from "../components/Registration/Forms/Success";
+import Failure from "../components/Registration/Forms/Failure";
 
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
 
 export const FormContext = createContext();
 
@@ -16,18 +17,14 @@ const Register = () => {
 
   if (activeStepIndex === 3) {
     window.scrollTo(0, 0);
-    return (
-      <div className="flex flex-col h-screen items-center pt-20">
-        <Helmet>
-          <meta charSet="utf-8" />
-          <title>Sprynt / Registration</title>
-        </Helmet>
-        <Success />
-        <div className="text-xl font-light pt-5 sm:text-center">
-          Confirmation email was sent to: {formData.email}
-        </div>
-      </div>
-    );
+
+    return <Success email={formData.email} />;
+  }
+
+  if (activeStepIndex === 4) {
+    window.scrollTo(0, 0);
+
+    return <Failure email={formData.email} />;
   }
 
   return (
@@ -36,7 +33,7 @@ const Register = () => {
         <meta charSet="utf-8" />
         <title>Sprynt / Registration</title>
       </Helmet>
-      <div className="flex justify-center place-items-center mt-10 sm:mx-8">
+      <div className="flex justify-center place-items-center pt-14 sm:mx-8">
         <p className="font-medium text-text-dark text-2xl sm:text-center">
           Organize your projects with
         </p>

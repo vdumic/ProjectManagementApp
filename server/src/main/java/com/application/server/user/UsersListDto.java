@@ -1,4 +1,5 @@
 package com.application.server.user;
 
-public record UsersListDto(String fullName) {
+public record UsersListDto(String firstname,
+                           String lastname) {
 }

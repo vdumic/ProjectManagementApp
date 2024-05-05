@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin
 public class UserController {
 
     private final UserService userService;
@@ -22,6 +23,11 @@ public class UserController {
     @GetMapping("/users/{user-id}")
     public User getUserById(@PathVariable("user-id") UUID id) {
         return userService.getUserById(id);
+    }
+
+    @GetMapping("/users/exist/{email}")
+    public boolean getUserByEmail(@PathVariable("email") String email) {
+        return userService.getUserByEmail(email);
     }
 
     @GetMapping("/users_on_project/{project-id}")

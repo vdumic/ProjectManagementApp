@@ -1,12 +1,13 @@
 import { useEffect, useCallback, useMemo, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { register, Hanko } from "@teamhanko/hanko-elements";
 
+import logo from "../assets/logo.png";
 import AppContext from "../store/app-context";
 
 const hankoApi = process.env.REACT_APP_HANKO_API_URL;
 
-const HankoAuth = () => {
+const Login = () => {
   const navigate = useNavigate();
   const hanko = useMemo(() => new Hanko(hankoApi), []);
 
@@ -16,17 +17,13 @@ const HankoAuth = () => {
     navigate("/user-home");
   }, [navigate]);
 
-  const handleLogin = () => {
-    appCtx.handleLogin();
-  };
-
   useEffect(
     () =>
       hanko.onAuthFlowCompleted(() => {
         redirectAfterLogin();
-        handleLogin();
+        appCtx.handleLogin();
       }),
-    [hanko, redirectAfterLogin, handleLogin]
+    [hanko, redirectAfterLogin, appCtx]
   );
 
   useEffect(() => {
@@ -36,10 +33,15 @@ const HankoAuth = () => {
   }, []);
 
   return (
-    <div className="flex justify-center place-items-center bg-bckgrnd-main h-screen ">
+    <div className="flex flex-col justify-center items-center bg-bckgrnd-main h-screen ">
+      <div className="flex justify-center place-items-center pb-6 sm:mx-8">
+        <Link to="/">
+          <img className="w-36 mx-4" src={logo} alt="Sprynt logo" />
+        </Link>
+      </div>
       <hanko-auth />
     </div>
   );
 };
 
-export default HankoAuth;
+export default Login;

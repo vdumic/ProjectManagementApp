@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
+import { SlArrowLeft } from "react-icons/sl";
 
 import { FormContext } from "../../../pages/Register";
 import ContinueButton from "../../Buttons/ContinueButton";
@@ -18,6 +19,11 @@ const AdditionalInfo = () => {
     organization: yup.string(),
     jobtitle: yup.string(),
   });
+
+  const handleGoingBack = (e) => {
+    e.preventDefault();
+    setActiveStepIndex(activeStepIndex - 1);
+  };
 
   return (
     <Formik
@@ -49,7 +55,16 @@ const AdditionalInfo = () => {
           <Field name="jobtitle" className="border-2 py-2 w-full px-4" />
           <ErrorMessage name="jobtitle" render={renderError} />
         </div>
-        <ContinueButton />
+        <div className="flex justify-center">
+          <button
+            className="flex justify-center text-white font-medium mt-10 py-2.5 pr-5 pl-3.5 bg-button-blue rounded-xl shadow-xl mr-6"
+            onClick={handleGoingBack}
+          >
+            <SlArrowLeft className="h-5 w-5 sm:inline cursor-pointer pt-1 pr-1" />
+            Back
+          </button>
+          <ContinueButton />
+        </div>
       </Form>
     </Formik>
   );

@@ -1,4 +1,5 @@
 import { useContext } from "react";
+
 import { FormContext } from "../../pages/Register";
 import UserInformation from "./Forms/UserInformation";
 import AdditionalInfo from "./Forms/AdditionalInfo";

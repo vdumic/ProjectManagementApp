@@ -11,12 +11,36 @@ const PasskeyCreation = () => {
 
   const appCtx = useContext(AppContext);
 
-  const { activeStepIndex, setActiveStepIndex } = useContext(FormContext);
+  const { activeStepIndex, setActiveStepIndex, formData } =
+    useContext(FormContext);
+
+  const addUserToDatabase = async () => {
+    let response;
+    try {
+      const body = {
+        email: formData.email,
+        firstname: formData.firstname,
+        lastname: formData.lastname,
+        username: formData.username,
+        jobTitle: formData.jobtitle,
+        organization: formData.organization,
+      };
+      response = await fetch("http://localhost:8080/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+    return response;
+  };
 
   useEffect(
     () =>
       hanko.onAuthFlowCompleted(() => {
         setActiveStepIndex(activeStepIndex + 1);
+        addUserToDatabase();
         appCtx.handleLogin();
       }),
     [hanko, setActiveStepIndex, activeStepIndex, appCtx]

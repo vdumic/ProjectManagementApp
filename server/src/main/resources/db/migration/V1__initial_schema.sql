@@ -1,24 +1,27 @@
 CREATE TABLE "user" (
     "id" UUID NOT NULL,
-    "email" VARCHAR(30) NOT NULL,
-    "password" text NOT NULL,
-    "full_name" VARCHAR(20) NOT NULL,
-    "public_name" VARCHAR(20),
-    "job_title" VARCHAR(20),
+    "email" VARCHAR(50) NOT NULL,
+    "firstname" VARCHAR(50) NOT NULL,
+    "lastname" VARCHAR(50) NOT NULL,
+    "username" VARCHAR(50) NOT NULL,
+    "organization" VARCHAR(50),
+    "job_title" VARCHAR(50),
     PRIMARY KEY("id")
 );
 
 CREATE TABLE "project" (
     "id" UUID NOT NULL,
-    "name" VARCHAR(20) NOT NULL,
-    "description" VARCHAR(100),
+    "created_by" UUID references "user"("id"),
+    "name" VARCHAR(100) NOT NULL,
+    "description" VARCHAR(500),
     "created_at" TIMESTAMP NOT NULL DEFAULT now()::timestamp(0),
+    "updated_at" TIMESTAMP NOT NULL DEFAULT now()::timestamp(0),
     PRIMARY KEY("id")
 );
 
 CREATE TABLE "role" (
     "id" UUID NOT NULL,
-    "name" VARCHAR(20) NOT NULL,
+    "name" VARCHAR(50) NOT NULL,
     PRIMARY KEY("id")
 );
 
@@ -31,13 +34,19 @@ CREATE TABLE "on_project" (
 
 CREATE TABLE "status" (
     "id" UUID NOT NULL,
-    "name" VARCHAR(20) NOT NULL,
+    "name" VARCHAR(50) NOT NULL,
     PRIMARY KEY("id")
+);
+
+CREATE TABLE "project_status" (
+    "project_id" UUID references "project"("id"),
+    "status_id" UUID references "status"("id"),
+    PRIMARY KEY("project_id", "status_id")
 );
 
 CREATE TABLE "priority" (
     "id" UUID NOT NULL,
-    "name" VARCHAR(20) NOT NULL,
+    "name" VARCHAR(50) NOT NULL,
     PRIMARY KEY("id")
 );
 
@@ -50,6 +59,7 @@ CREATE TABLE "task" (
     "name" VARCHAR(50) NOT NULL,
     "description" VARCHAR(200) NOT NULL,
     "created_at" TIMESTAMP NOT NULL DEFAULT now()::timestamp(0),
+    "updated_at" TIMESTAMP NOT NULL DEFAULT now()::timestamp(0),
     "start_date" DATE,
     "end_date" DATE,
     "story_points" INTEGER NOT NULL,
