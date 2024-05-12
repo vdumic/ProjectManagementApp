@@ -30,6 +30,11 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
+    @GetMapping("/users/id/{email}")
+    public UserIdDto getUserIdByEmail(@PathVariable("email") String email) {
+        return userService.getUserIdByEmail(email);
+    }
+
     @GetMapping("/users_on_project/{project-id}")
     public List<UsersListDto> getAllUsersOnProject(@PathVariable("project-id") UUID projectId) {
         return userService.getAllUsersOnProject(projectId);

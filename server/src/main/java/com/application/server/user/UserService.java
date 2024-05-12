@@ -29,6 +29,11 @@ public class UserService {
         return !userRepository.findAll().stream().filter(user -> user.getEmail().equals(email)).collect(Collectors.toList()).isEmpty();
     }
 
+    public UserIdDto getUserIdByEmail(String email) {
+        User user = userRepository.findAll().stream().filter(u -> u.getEmail().equals(email)).findAny().orElse(null);
+        return userMapper.toUserIdDto(user);
+    }
+
     public List<UsersListDto> getAllUsersOnProject(UUID projectId) {
         var users = userRepository.usersOnProject(projectId);
         return users.stream().map(userMapper::toUserListDto).collect(Collectors.toList());

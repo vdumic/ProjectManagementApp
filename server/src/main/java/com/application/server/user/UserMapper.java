@@ -8,4 +8,8 @@ public class UserMapper {
     public UsersListDto toUserListDto(User user) {
         return new UsersListDto(user.getFirstname(), user.getLastname());
     }
+
+    public UserIdDto toUserIdDto(User user) {
+        return new UserIdDto(user.getId());
+    }
 }
