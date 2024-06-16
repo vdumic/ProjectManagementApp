@@ -44,6 +44,7 @@ const Header = () => {
             <NavLink title="Work management" path="/work-management" />
             <NavLink title="About us" path="/about-us" />
             <NavLink title="Support" path="/support" />
+            {isLoggedIn && <NavLink title="Projects board" path="user-home" />}
           </div>
           {!isLoggedIn && (
             <div className="flex items-center justify-between">

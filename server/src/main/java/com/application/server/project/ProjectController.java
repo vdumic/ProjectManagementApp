@@ -28,7 +28,7 @@ public class ProjectController {
     }
 
     @GetMapping("/projects_created_by/{user-email}")
-    public List<ProjectsListDto> getAllProjectsCretedByUser(@PathVariable("user-email") String userEmail) {
+    public List<ProjectsListDto> getAllProjectsCreatedByUser(@PathVariable("user-email") String userEmail) {
         return projectService.getAllProjectsCretedByUser(userEmail);
     }
 

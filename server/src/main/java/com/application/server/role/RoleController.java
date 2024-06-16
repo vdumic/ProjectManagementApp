@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin
 public class RoleController {
 
     private final RoleService roleService;

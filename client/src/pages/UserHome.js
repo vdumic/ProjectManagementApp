@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { Hanko, UnauthorizedError } from "@teamhanko/hanko-elements";
 
 import HeaderLayout from "../layouts/HeaderLayout";
 import ProjectsList from "../components/User home/ProjectsList";
@@ -7,6 +8,10 @@ import ProjectDetails from "../components/User home/ProjectDetails";
 import CreateProjectPopUp from "../components/Project/CreateProjectPopUp";
 import CreatedProjectPopUp from "../components/Project/CreatedProjectPopUp";
 import FailedProjectCreation from "../components/Project/FailedProjectCreationPopUp";
+
+import AppContext from "../store/app-context";
+
+const hankoApi = process.env.REACT_APP_HANKO_API_URL;
 
 const myProjects = [
   {
@@ -30,31 +35,43 @@ const otherProjects = [
 ];
 
 const UserHome = () => {
+  const appCtx = useContext(AppContext);
   const [myProjectsClicked, setMyProjectsClicked] = useState(true);
   const [otherProjectsClicked, setOtherProjectsClicked] = useState(true);
   const [projects, setProjects] = useState([]);
   const [openCreatePopUp, setOpenCreatePopUp] = useState(false);
   const [openCreatedPopUp, setOpenCreatedPopUp] = useState(false);
   const [openFailedPopUp, setOpenFailedPopUp] = useState(false);
+  const [email, setEmail] = useState("");
 
-  const userEmail = "samantha.jones@gmail.com";
+  useEffect(() => {
+    const getUserEmail = async () => {
+      const hanko = new Hanko(hankoApi);
+      try {
+        const { email } = await hanko.user.getCurrent();
+        setEmail(email);
+      } catch (e) {
+        if (e instanceof UnauthorizedError) {
+          appCtx.handleLogout();
+        }
+      }
+    };
 
-  // useEffect(() => {
-  //   const getProjects = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:8080/projects_created_by/${userEmail}`
-  //       );
-  //       const jsonData = await response.json();
-
-  //       setProjects(jsonData);
-  //     } catch (error) {
-  //       console.error(error.message);
-  //     }
-  //   };
-  //   getProjects();
-  //   console.log(projects);
-  // }, [projects]);
+    const getProjects = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/projects_created_by/${email}`
+        );
+        const jsonData = await response.json();
+        setProjects(jsonData);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    getUserEmail();
+    getProjects();
+    console.log(projects);
+  }, [projects]);
 
   const handleMyProjectsClicked = () => {
     setMyProjectsClicked(!myProjectsClicked);
