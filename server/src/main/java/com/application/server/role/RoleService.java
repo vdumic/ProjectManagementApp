@@ -30,7 +30,13 @@ public class RoleService {
     }
 
     public Role createRole(Role role) {
-        return roleRepository.save(role);
+        Role roleInDb = roleRepository.findAll().stream().filter(r -> r.getName().equals(role.getName())).findAny().orElse(null);
+
+        if(roleInDb != null) {
+            return roleInDb;
+        } else {
+            return roleRepository.save(role);
+        }
     }
 
     public void deleteRole(UUID id) {

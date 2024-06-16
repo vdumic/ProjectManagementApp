@@ -30,7 +30,13 @@ public class PriorityService {
     }
 
     public Priority createPriority(Priority priority) {
-        return priorityRepository.save(priority);
+        Priority priorityInDb = priorityRepository.findAll().stream().filter(p -> p.getName().equals(priority.getName())).findAny().orElse(null);
+
+        if(priorityInDb != null) {
+            return priorityInDb;
+        } else {
+            return priorityRepository.save(priority);
+        }
     }
 
     public void deletePriority(UUID id) {

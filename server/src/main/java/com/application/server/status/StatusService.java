@@ -30,7 +30,13 @@ public class StatusService {
     }
 
     public Status createStatus(Status status) {
-        return statusRepository.save(status);
+        Status statusInDb = statusRepository.findAll().stream().filter(s -> s.getName().equals(status.getName())).findAny().orElse(null);
+
+        if(statusInDb != null) {
+            return statusInDb;
+        } else {
+            return statusRepository.save(status);
+        }
     }
 
     public void deleteStatus(UUID id) {
