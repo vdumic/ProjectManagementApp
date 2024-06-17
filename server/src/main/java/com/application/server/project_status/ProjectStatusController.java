@@ -1,6 +1,7 @@
 package com.application.server.project_status;
 
 import com.application.server.status.Status;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class ProjectStatusController {
     }
 
     @DeleteMapping("/project_statuses/{project-id}/{status-id}")
+    @ResponseStatus(HttpStatus.OK)
     public String deleteProjectStatus(@PathVariable("project-id") UUID projectId, @PathVariable("status-id") UUID statusId) {
         return projectStatusService.deleteProjectStatus(projectId, statusId);
     }

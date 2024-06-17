@@ -36,9 +36,4 @@ public class PriorityController {
         return priorityService.createPriority(priority);
     }
 
-    @DeleteMapping("/priorities/{priority-id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deletePriority(@PathVariable("priority-id") UUID id) {
-        priorityService.deletePriority(id);
-    }
 }

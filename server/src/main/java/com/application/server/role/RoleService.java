@@ -39,7 +39,4 @@ public class RoleService {
         }
     }
 
-    public void deleteRole(UUID id) {
-        roleRepository.deleteById(id);
-    }
 }

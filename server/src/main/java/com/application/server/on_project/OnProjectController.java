@@ -1,5 +1,6 @@
 package com.application.server.on_project;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class OnProjectController {
     }
 
     @DeleteMapping("/on_projects/{project-id}/{user-id}")
+    @ResponseStatus(HttpStatus.OK)
     public String deleteUserFromProject(@PathVariable("project-id") UUID projectId, @PathVariable("user-id") UUID userId) {
         return onProjectService.deleteUserFromProject(projectId, userId);
     }

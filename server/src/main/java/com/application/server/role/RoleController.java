@@ -36,9 +36,4 @@ public class RoleController {
         return roleService.createRole(role);
     }
 
-    @DeleteMapping("/roles/{role-id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteRole(@PathVariable("role-id") UUID id) {
-        roleService.deleteRole(id);
-    }
 }

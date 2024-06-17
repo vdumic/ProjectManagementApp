@@ -46,14 +46,12 @@ public class ProjectStatusService {
     }
 
     public String deleteProjectStatus(UUID projectId, UUID statusId) {
-        List <String> predefinedStatuses = Arrays.asList("In backlog", "In progress", "Done");
+        List<String> predefinedStatuses = Arrays.asList("In backlog", "In progress", "Done");
         var projectStatus = projectStatusRepository.findAll().stream().filter(ps -> ps.getProject().getId().equals(projectId) && ps.getStatus().getId().equals(statusId)).findAny().orElse(null);
 
-        if(projectStatus == null) {
+        if (projectStatus == null) {
             return "Status is not on project";
-        }
-
-        if(predefinedStatuses.contains(projectStatus.getStatus().getName())) {
+        } else if (predefinedStatuses.contains(projectStatus.getStatus().getName())) {
             return "Predefined statuses cannot be deleted!";
         }
 

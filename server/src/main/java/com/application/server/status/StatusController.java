@@ -38,7 +38,7 @@ public class StatusController {
 
     @DeleteMapping("/statuses/{status-id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteStatus(@PathVariable("status-id") UUID id) {
-        statusService.deleteStatus(id);
+    public String deleteStatus(@PathVariable("status-id") UUID id) {
+        return statusService.deleteStatus(id);
     }
 }

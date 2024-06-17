@@ -2,6 +2,7 @@ package com.application.server.status;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -32,14 +33,24 @@ public class StatusService {
     public Status createStatus(Status status) {
         Status statusInDb = statusRepository.findAll().stream().filter(s -> s.getName().equals(status.getName())).findAny().orElse(null);
 
-        if(statusInDb != null) {
+        if (statusInDb != null) {
             return statusInDb;
         } else {
             return statusRepository.save(status);
         }
     }
 
-    public void deleteStatus(UUID id) {
+    public String deleteStatus(UUID id) {
+        List<String> predefinedStatuses = Arrays.asList("In backlog", "In progress", "Done");
+        Status status = statusRepository.findAll().stream().filter(s -> s.getId().equals(id)).findAny().orElse(null);
+
+        if (status == null) {
+            return "Status with defined id does not exist!";
+        } else if (predefinedStatuses.contains(status.getName())) {
+            return "Predefined statuses cannot be deleted!";
+        }
+
         statusRepository.deleteById(id);
+        return "Status successfully deleted!";
     }
 }

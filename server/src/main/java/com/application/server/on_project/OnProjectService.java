@@ -45,7 +45,9 @@ public class OnProjectService {
     public String deleteUserFromProject(UUID projectId, UUID userId) {
         OnProject onProject = onProjectRepository.findAll().stream().filter(op -> op.getProject().getId().equals(projectId) && op.getUser().getId().equals(userId)).findAny().orElse(null);
 
-        if(userId.equals(onProject.getProject().getUser().getId())) {
+        if (onProject == null) {
+            return "Wrong combination of project and user id";
+        } else if (userId.equals(onProject.getProject().getUser().getId())) {
             return "Project creator cannot be removed from project!";
         }
 
