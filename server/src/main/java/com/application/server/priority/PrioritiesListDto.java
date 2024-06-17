@@ -1,4 +1,6 @@
 package com.application.server.priority;
 
-public record PrioritiesListDto(String name) {
+import java.util.UUID;
+
+public record PrioritiesListDto(UUID projectId, String projectName) {
 }

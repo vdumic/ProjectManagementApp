@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 public class PriorityMapper {
 
     public PrioritiesListDto toPrioritiesListDto(Priority priority) {
-        return new PrioritiesListDto(priority.getName());
+        return new PrioritiesListDto(priority.getId(), priority.getName());
     }
 }

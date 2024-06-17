@@ -1,6 +1,7 @@
 package com.application.server.on_project;
 
-public record OnProjectResponseDto(String project,
-                                  String user,
-                                  String role) {
+import java.util.UUID;
+
+public record OnProjectResponseDto(UUID projectId, String projectName, UUID userId, String userName, UUID roleId,
+                                   String roleName) {
 }

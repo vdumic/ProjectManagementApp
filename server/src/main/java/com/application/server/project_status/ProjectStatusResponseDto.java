@@ -1,4 +1,6 @@
 package com.application.server.project_status;
 
-public record ProjectStatusResponseDto(String project, String status) {
+import java.util.UUID;
+
+public record ProjectStatusResponseDto(UUID projectId, String projectName, UUID statusId, String statusName) {
 }

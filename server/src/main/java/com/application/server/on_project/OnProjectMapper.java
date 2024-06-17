@@ -34,6 +34,6 @@ public class OnProjectMapper {
     }
 
     public OnProjectResponseDto toOnProjectResponseDto(OnProject onProject) {
-        return new OnProjectResponseDto(onProject.getProject().getName(), onProject.getUser().getFirstname() + " " + onProject.getUser().getLastname(), onProject.getRole().getName());
+        return new OnProjectResponseDto(onProject.getProject().getId(), onProject.getProject().getName(), onProject.getUser().getId(), onProject.getUser().getFirstname() + " " + onProject.getUser().getLastname(), onProject.getRole().getId(), onProject.getRole().getName());
     }
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 public class StatusMapper {
 
     public StatusesListDto toStatusesListDto(Status status) {
-        return new StatusesListDto(status.getName());
+        return new StatusesListDto(status.getId(), status.getName());
     }
 }

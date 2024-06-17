@@ -1,4 +1,6 @@
 package com.application.server.role;
 
-public record RolesListDto(String name) {
+import java.util.UUID;
+
+public record RolesListDto(UUID roleId, String roleName) {
 }

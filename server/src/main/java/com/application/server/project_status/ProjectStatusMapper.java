@@ -10,7 +10,7 @@ import java.util.UUID;
 public class ProjectStatusMapper {
 
     public ProjectStatus toProjectStatus(ProjectStatusDto projectStatusDto) {
-        if(projectStatusDto == null) {
+        if (projectStatusDto == null) {
             throw new NullPointerException("The projectStatusDto should not be null");
         }
         var projectStatus = new ProjectStatus();
@@ -29,7 +29,7 @@ public class ProjectStatusMapper {
     }
 
     public ProjectStatusResponseDto toProjectStatusDto(ProjectStatus projectStatus) {
-        return new ProjectStatusResponseDto(projectStatus.getProject().getName(), projectStatus.getStatus().getName());
+        return new ProjectStatusResponseDto(projectStatus.getProject().getId(), projectStatus.getProject().getName(), projectStatus.getStatus().getId(), projectStatus.getStatus().getName());
     }
 
     public StatusesOnProjectResponseDto toStatusesOnProjectDto(ProjectStatus projectStatus) {
