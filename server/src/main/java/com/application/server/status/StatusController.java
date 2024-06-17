@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin
 public class StatusController {
 
     private final StatusService statusService;
