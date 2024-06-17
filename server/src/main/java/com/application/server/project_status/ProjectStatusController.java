@@ -31,5 +31,9 @@ public class ProjectStatusController {
         return projectStatusService.createProjectStatus(projectStatusDto);
     }
 
+    @DeleteMapping("/project_statuses/{project-id}/{status-id}")
+    public String deleteProjectStatus(@PathVariable("project-id") UUID projectId, @PathVariable("status-id") UUID statusId) {
+        return projectStatusService.deleteProjectStatus(projectId, statusId);
+    }
 
 }

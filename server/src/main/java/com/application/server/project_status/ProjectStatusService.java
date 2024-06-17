@@ -3,6 +3,7 @@ package com.application.server.project_status;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -42,5 +43,21 @@ public class ProjectStatusService {
             var projectStatus = projectStatusMapper.toProjectStatus(projectStatusDto);
             return projectStatusMapper.toProjectStatusDto(projectStatusRepository.save(projectStatus));
         }
+    }
+
+    public String deleteProjectStatus(UUID projectId, UUID statusId) {
+        List <String> predefinedStatuses = Arrays.asList("In backlog", "In progress", "Done");
+        var projectStatus = projectStatusRepository.findAll().stream().filter(ps -> ps.getProject().getId().equals(projectId) && ps.getStatus().getId().equals(statusId)).findAny().orElse(null);
+
+        if(projectStatus == null) {
+            return "Status is not on project";
+        }
+
+        if(predefinedStatuses.contains(projectStatus.getStatus().getName())) {
+            return "Predefined statuses cannot be deleted!";
+        }
+
+        projectStatusRepository.delete(projectStatus);
+        return "Successfully deleted";
     }
 }

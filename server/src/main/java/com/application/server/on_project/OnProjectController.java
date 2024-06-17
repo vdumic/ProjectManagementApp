@@ -3,6 +3,7 @@ package com.application.server.on_project;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -22,5 +23,15 @@ public class OnProjectController {
     @PostMapping("/on_projects")
     public OnProjectResponseDto createOnProject(@RequestBody OnProjectDto onProjectDto) {
         return onProjectService.createOnProject(onProjectDto);
+    }
+
+    @PutMapping("/on_projects")
+    public OnProjectResponseDto updateUserRoleOnProject(@RequestBody OnProjectDto onProjectDto) {
+        return onProjectService.updateUserRoleOnProject(onProjectDto);
+    }
+
+    @DeleteMapping("/on_projects/{project-id}/{user-id}")
+    public String deleteUserFromProject(@PathVariable("project-id") UUID projectId, @PathVariable("user-id") UUID userId) {
+        return onProjectService.deleteUserFromProject(projectId, userId);
     }
 }
