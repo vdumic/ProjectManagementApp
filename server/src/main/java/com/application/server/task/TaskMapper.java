@@ -12,7 +12,7 @@ import java.util.UUID;
 public class TaskMapper {
 
     public Task toTask(TaskDto taskDto) {
-        if(taskDto == null) {
+        if (taskDto == null) {
             throw new NullPointerException("The taskDto should not be null");
         }
         var task = new Task();
@@ -34,8 +34,16 @@ public class TaskMapper {
 
         User user = new User();
         user.setId(UUID.fromString(taskDto.createdBy()));
-        task.setUser(user);
+        task.setCreatedByUser(user);
 
         return task;
+    }
+
+    public TaskResponseDto toTaskResponseDto(Task task) {
+        User assignedTo = task.getAssignedToUser();
+        if(assignedTo == null) {
+            return new TaskResponseDto(task.getId(), task.getName(), task.getCreatedByUser().getId(), task.getCreatedByUser().getFirstname() + " " + task.getCreatedByUser().getLastname(), null, null, task.getDescription(), task.getStoryPoints(), task.getProject().getId(), task.getProject().getName(), task.getPriority().getId(), task.getPriority().getName(), task.getStatus().getId(), task.getStatus().getName(), task.getCreatedAt(), task.getUpdatedAt(), task.getStartDate(), task.getEndDate());
+        }
+        return new TaskResponseDto(task.getId(), task.getName(), task.getCreatedByUser().getId(), task.getCreatedByUser().getFirstname() + " " + task.getCreatedByUser().getLastname(), task.getAssignedToUser().getId(), task.getAssignedToUser().getFirstname() + " " + task.getAssignedToUser().getLastname(), task.getDescription(), task.getStoryPoints(), task.getProject().getId(), task.getProject().getName(), task.getPriority().getId(), task.getPriority().getName(), task.getStatus().getId(), task.getStatus().getName(), task.getCreatedAt(), task.getUpdatedAt(), task.getStartDate(), task.getEndDate());
     }
 }

@@ -42,7 +42,12 @@ public class Task {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "created_by")
     @JsonIgnore
-    private User user;
+    private User createdByUser;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "assigned_to")
+    @JsonIgnore
+    private User assignedToUser;
 
     @Column(name = "name")
     private String name;
@@ -72,11 +77,13 @@ public class Task {
     public Task() {
     }
 
-    public Task(Project project, Status status, Priority priority, User user, String name, String description, Date createdAt, Date updatedAt, Date startDate, Date endDate, Integer storyPoints) {
+    public Task(UUID id, Project project, Status status, Priority priority, User user, User assignedToUser, String name, String description, Date createdAt, Date updatedAt, Date startDate, Date endDate, Integer storyPoints) {
+        this.id = id;
         this.project = project;
         this.status = status;
         this.priority = priority;
-        this.user = user;
+        this.createdByUser = user;
+        this.assignedToUser = assignedToUser;
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
@@ -118,12 +125,28 @@ public class Task {
         this.priority = priority;
     }
 
-    public User getUser() {
-        return user;
+    public User getCreatedByUser() {
+        return createdByUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCreatedByUser(User createdByUser) {
+        this.createdByUser = createdByUser;
+    }
+
+    public User getAssignedToUser() {
+        return assignedToUser;
+    }
+
+    public void setAssignedToUser(User assignedToUser) {
+        this.assignedToUser = assignedToUser;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public String getName() {
@@ -181,10 +204,12 @@ public class Task {
                 ", project=" + project +
                 ", status=" + status +
                 ", priority=" + priority +
-                ", user=" + user +
+                ", createdByUser=" + createdByUser +
+                ", assignedToUser=" + assignedToUser +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", storyPoints=" + storyPoints +

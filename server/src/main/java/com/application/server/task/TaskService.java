@@ -20,16 +20,29 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    public Task getTaskById(UUID id) {
-        return taskRepository.findById(id).orElse(null);
+    public TaskResponseDto getTaskById(UUID id) {
+        Task task = taskRepository.findById(id).orElse(null);
+
+        if (task == null) {
+            return null;
+        }
+        return taskMapper.toTaskResponseDto(task);
     }
 
     public Task createTask(TaskDto taskDto) {
-        var task = taskMapper.toTask(taskDto);
-        return taskRepository.save(task);
+        Task taskInDb = taskRepository.findAll().stream().filter(t -> t.getName().equals(taskDto.name()) && t.getProject().getId().toString().equals(taskDto.projectId())).findAny().orElse(null);
+
+        if (taskInDb != null) {
+            return taskInDb;
+        } else {
+            var task = taskMapper.toTask(taskDto);
+            return taskRepository.save(task);
+        }
     }
 
-    public void deleteTask(UUID id) {
-        taskRepository.deleteById(id);
+    public String deleteTask(UUID taskId, UUID userId) {
+
+        taskRepository.deleteById(taskId);
+        return "Task successfully deleted!";
     }
 }

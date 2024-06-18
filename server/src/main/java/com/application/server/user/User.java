@@ -36,8 +36,11 @@ public class User {
     @Column(name = "job_title")
     private String jobTitle;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Task> tasks;
+    @OneToMany(mappedBy = "createdByUser", cascade = CascadeType.ALL)
+    private List<Task> createdTasks;
+
+    @OneToMany(mappedBy = "assignedToUser", cascade = CascadeType.ALL)
+    private List<Task> assignedTasks;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -49,7 +52,7 @@ public class User {
     public User() {
     }
 
-    public User(UUID id, String email, String firstname, String lastname, String username, String organization, String jobTitle) {
+    public User(UUID id, String email, String firstname, String lastname, String username, String organization, String jobTitle, List<Task> createdTasks, List<Task> assignedTasks, List<Project> projects, List<OnProject> onProjects) {
         this.id = id;
         this.email = email;
         this.firstname = firstname;
@@ -57,6 +60,10 @@ public class User {
         this.username = username;
         this.organization = organization;
         this.jobTitle = jobTitle;
+        this.createdTasks = createdTasks;
+        this.assignedTasks = assignedTasks;
+        this.projects = projects;
+        this.onProjects = onProjects;
     }
 
     public UUID getId() {
@@ -115,12 +122,20 @@ public class User {
         this.jobTitle = jobTitle;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public List<Task> getCreatedTasks() {
+        return createdTasks;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setCreatedTasks(List<Task> createdTasks) {
+        this.createdTasks = createdTasks;
+    }
+
+    public List<Task> getAssignedTasks() {
+        return assignedTasks;
+    }
+
+    public void setAssignedTasks(List<Task> assignedTasks) {
+        this.assignedTasks = assignedTasks;
     }
 
     public List<Project> getProjects() {
@@ -149,7 +164,8 @@ public class User {
                 ", username='" + username + '\'' +
                 ", organization='" + organization + '\'' +
                 ", jobTitle='" + jobTitle + '\'' +
-                ", tasks=" + tasks +
+                ", createdTasks=" + createdTasks +
+                ", assignedTasks=" + assignedTasks +
                 ", projects=" + projects +
                 ", onProjects=" + onProjects +
                 '}';

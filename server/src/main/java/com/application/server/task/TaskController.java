@@ -1,5 +1,6 @@
 package com.application.server.task;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,18 +22,18 @@ public class TaskController {
     }
 
     @GetMapping("/tasks/{task-id}")
-    public Task getTaskById(@PathVariable("task-id") UUID id) {
+    public TaskResponseDto getTaskById(@PathVariable("task-id") UUID id) {
         return taskService.getTaskById(id);
     }
 
     @PostMapping("/tasks")
     public Task createTask(@RequestBody TaskDto taskDto) {
-        System.out.println(taskDto.name());
         return taskService.createTask(taskDto);
     }
 
-    @DeleteMapping("/tasks/{task-id}")
-    public void deleteTask(@PathVariable("task-id") UUID id) {
-        taskService.deleteTask(id);
+    @DeleteMapping("/tasks/{task-id}/{user-id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteTask(@PathVariable("task-id") UUID taskId, @PathVariable("user-id") UUID userId) {
+        return taskService.deleteTask(taskId, userId);
     }
 }
