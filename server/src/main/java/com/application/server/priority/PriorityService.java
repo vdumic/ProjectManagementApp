@@ -39,4 +39,10 @@ public class PriorityService {
         }
     }
 
+    public String getPriorityName(UUID priorityId) {
+        Priority priority = priorityRepository.findById(priorityId).orElse(null);
+
+        return priority.getName();
+    }
+
 }

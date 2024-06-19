@@ -17,7 +17,7 @@ public class TaskController {
     }
 
     @GetMapping("/tasks")
-    public List<Task> getAllTasks() {
+    public List<TaskResponseDto> getAllTasks() {
         return taskService.getAllTasks();
     }
 
@@ -26,9 +26,34 @@ public class TaskController {
         return taskService.getTaskById(id);
     }
 
+    @GetMapping("/tasks/project/{project-id}")
+    public List<TaskResponseDto> getTasksOnProject(@PathVariable("project-id") UUID projectId) {
+        return taskService.getTasksOnProject(projectId);
+    }
+
+    @GetMapping("/tasks/status/{project-id}/{status-id}")
+    public List<TaskResponseDto> getTasksOnProjectWithStatus(@PathVariable("project-id") UUID projectId, @PathVariable("status-id") UUID statusId) {
+        return taskService.getTasksOnProjectWithStatus(projectId, statusId);
+    }
+
     @PostMapping("/tasks")
     public Task createTask(@RequestBody TaskDto taskDto) {
         return taskService.createTask(taskDto);
+    }
+
+    @PutMapping("/tasks")
+    public TaskResponseDto updateTask(@RequestBody TaskUpdateDto taskUpdateDto) {
+        return taskService.updateTask(taskUpdateDto);
+    }
+
+    @PutMapping("/tasks/status")
+    public TaskResponseDto updateTaskStatus(@RequestBody TaskUpdateStatusDto taskUpdateStatusDto) {
+        return taskService.updateTaskStatus(taskUpdateStatusDto);
+    }
+
+    @PutMapping("/tasks/priority")
+    public TaskResponseDto updateTaskPriority(@RequestBody TaskUpdatePriorityDto taskUpdatePriorityDto) {
+        return taskService.updateTaskPriority(taskUpdatePriorityDto);
     }
 
     @DeleteMapping("/tasks/{task-id}/{user-id}")

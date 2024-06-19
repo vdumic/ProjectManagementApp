@@ -1,5 +1,6 @@
 package com.application.server.user;
 
+import com.application.server.on_project.OnProject;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,5 +46,12 @@ public class UserService {
 
     public void deleteUser(UUID id) {
         userRepository.deleteById(id);
+    }
+
+    public String getUserRole(UUID userId, UUID projectId) {
+        User user = userRepository.findById(userId).orElse(null);
+
+        OnProject onProject = user.getOnProjects().stream().filter(op -> op.getProject().getId().equals(projectId)).findAny().orElse(null);
+        return onProject.getRole().getName();
     }
 }

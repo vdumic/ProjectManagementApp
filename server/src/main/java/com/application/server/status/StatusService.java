@@ -53,4 +53,10 @@ public class StatusService {
         statusRepository.deleteById(id);
         return "Status successfully deleted!";
     }
+
+    public String getStatusName(UUID statusId) {
+        Status status = statusRepository.findById(statusId).orElse(null);
+
+        return status.getName();
+    }
 }
