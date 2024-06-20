@@ -94,8 +94,7 @@ public class TaskService {
         if (task != null) {
             Status newStatus = new Status();
             newStatus.setId(taskUpdateStatusDto.statusId());
-            String statusName = statusService.getStatusName(taskUpdateStatusDto.statusId());
-            newStatus.setName(statusName);
+            newStatus.setName(statusService.getStatusName(taskUpdateStatusDto.statusId()));
             task.setStatus(newStatus);
 
             if (oldStatus.getName().equals("Done")) {
@@ -126,8 +125,7 @@ public class TaskService {
         if (task != null && userRole.equals("admin")) {
             Priority newPriority = new Priority();
             newPriority.setId(taskUpdatePriorityDto.priorityId());
-            String priorityName = priorityService.getPriorityName(taskUpdatePriorityDto.priorityId());
-            newPriority.setName(priorityName);
+            newPriority.setName(priorityService.getPriorityName(taskUpdatePriorityDto.priorityId()));
             task.setPriority(newPriority);
 
             return taskMapper.toTaskResponseDto(taskRepository.save(task));

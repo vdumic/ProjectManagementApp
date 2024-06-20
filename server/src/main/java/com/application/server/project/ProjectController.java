@@ -47,8 +47,8 @@ public class ProjectController {
         return projectService.createProject(projectDto);
     }
 
-    @DeleteMapping("/projects/{project-id}")
-    public void deleteProject(@PathVariable("project-id") UUID id) {
-        projectService.deleteProject(id);
+    @DeleteMapping("/projects/{project-id}/{user-id}")
+    public String deleteProject(@PathVariable("project-id") UUID projectId, @PathVariable("user-id") UUID userId) {
+        return projectService.deleteProject(projectId, userId);
     }
 }
