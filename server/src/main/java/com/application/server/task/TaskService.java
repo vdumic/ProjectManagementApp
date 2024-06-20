@@ -6,9 +6,12 @@ import com.application.server.priority.PriorityService;
 import com.application.server.project.Project;
 import com.application.server.status.Status;
 import com.application.server.status.StatusService;
+import com.application.server.user.User;
 import com.application.server.user.UserService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -86,6 +89,7 @@ public class TaskService {
 
     public TaskResponseDto updateTaskStatus(TaskUpdateStatusDto taskUpdateStatusDto) {
         Task task = taskRepository.findById(taskUpdateStatusDto.taskId()).orElse(null);
+        Status oldStatus = task.getStatus();
 
         if (task != null) {
             Status newStatus = new Status();
@@ -93,6 +97,19 @@ public class TaskService {
             String statusName = statusService.getStatusName(taskUpdateStatusDto.statusId());
             newStatus.setName(statusName);
             task.setStatus(newStatus);
+
+            if (oldStatus.getName().equals("Done")) {
+                return null;
+            } else if (newStatus.getName().equals("Done") && oldStatus.getName().equals("In backlog")) {
+                task.setStartDate(new Date());
+                task.setEndDate(new Date());
+            } else if (newStatus.getName().equals("In backlog")) {
+                task.setStartDate(null);
+            } else if (oldStatus.getName().equals("In backlog")) {
+                task.setStartDate(new Date());
+            } else if (newStatus.getName().equals("Done")) {
+                task.setEndDate(new Date());
+            }
 
             taskRepository.save(task);
 
@@ -119,6 +136,31 @@ public class TaskService {
         }
     }
 
+    public TaskResponseDto updateTaskAssignee(TaskUpdateAsigneeDto taskUpdateAsigneeDto) {
+        Task task = taskRepository.findById(taskUpdateAsigneeDto.taskId()).orElse(null);
+
+        if (task != null) {
+
+            if (task.getCreatedByUser().getId().equals(taskUpdateAsigneeDto.userId())) {
+                task.setAssignedToUser(task.getCreatedByUser());
+            } else {
+                User user = new User();
+                user.setId(taskUpdateAsigneeDto.userId());
+                user.setEmail(userService.getUserEmail(taskUpdateAsigneeDto.userId()));
+                user.setFirstname(userService.getUserFirstname(taskUpdateAsigneeDto.userId()));
+                user.setLastname(userService.getUserLastname(taskUpdateAsigneeDto.userId()));
+                user.setUsername(userService.getUsername(taskUpdateAsigneeDto.userId()));
+                user.setOrganization(userService.getUserOrganization(taskUpdateAsigneeDto.userId()));
+                user.setJobTitle(userService.getUserJobtitle(taskUpdateAsigneeDto.userId()));
+
+                task.setAssignedToUser(user);
+            }
+
+            return taskMapper.toTaskResponseDto(taskRepository.save(task));
+        } else {
+            return null;
+        }
+    }
 
     public String deleteTask(UUID taskId, UUID userId) {
         Task task = taskRepository.findById(taskId).orElse(null);

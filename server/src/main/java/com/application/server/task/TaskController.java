@@ -56,6 +56,11 @@ public class TaskController {
         return taskService.updateTaskPriority(taskUpdatePriorityDto);
     }
 
+    @PutMapping("/tasks/user")
+    public TaskResponseDto updateTaskAssignee(@RequestBody TaskUpdateAsigneeDto taskUpdateAsigneeDto) {
+        return taskService.updateTaskAssignee(taskUpdateAsigneeDto);
+    }
+
     @DeleteMapping("/tasks/{task-id}/{user-id}")
     @ResponseStatus(HttpStatus.OK)
     public String deleteTask(@PathVariable("task-id") UUID taskId, @PathVariable("user-id") UUID userId) {

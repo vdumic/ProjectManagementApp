@@ -54,4 +54,34 @@ public class UserService {
         OnProject onProject = user.getOnProjects().stream().filter(op -> op.getProject().getId().equals(projectId)).findAny().orElse(null);
         return onProject.getRole().getName();
     }
+
+    public String getUserEmail(UUID userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user.getEmail();
+    }
+
+    public String getUserFirstname(UUID userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user.getFirstname();
+    }
+
+    public String getUserLastname(UUID userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user.getLastname();
+    }
+
+    public String getUsername(UUID userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user.getUsername();
+    }
+
+    public String getUserOrganization(UUID userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user.getOrganization();
+    }
+
+    public String getUserJobtitle(UUID userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user.getJobTitle();
+    }
 }
