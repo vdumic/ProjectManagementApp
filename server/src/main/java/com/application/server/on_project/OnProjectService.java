@@ -55,4 +55,12 @@ public class OnProjectService {
         return "User successfully deleted from project!";
 
     }
+
+    public void deleteAllUsersOnProject(UUID projectId) {
+        List<OnProject> onProjectList = onProjectRepository.findAll().stream().filter(op -> op.getProject().getId().equals(projectId)).collect(Collectors.toList());
+
+        for (OnProject onProject : onProjectList) {
+            onProjectRepository.delete(onProject);
+        }
+    }
 }

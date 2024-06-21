@@ -1,5 +1,6 @@
 package com.application.server.project_status;
 
+import com.application.server.status.StatusService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,9 +15,14 @@ public class ProjectStatusService {
     private final ProjectStatusRepository projectStatusRepository;
     private final ProjectStatusMapper projectStatusMapper;
 
-    public ProjectStatusService(ProjectStatusRepository projectStatusRepository, ProjectStatusMapper projectStatusMapper) {
+    private final StatusService statusService;
+
+    List<String> predefinedStatuses = Arrays.asList("In backlog", "In progress", "Done");
+
+    public ProjectStatusService(ProjectStatusRepository projectStatusRepository, ProjectStatusMapper projectStatusMapper, StatusService statusService) {
         this.projectStatusRepository = projectStatusRepository;
         this.projectStatusMapper = projectStatusMapper;
+        this.statusService = statusService;
     }
 
     public List<ProjectStatusResponseDto> getAllProjectStatuses() {
@@ -46,7 +52,6 @@ public class ProjectStatusService {
     }
 
     public String deleteProjectStatus(UUID projectId, UUID statusId) {
-        List<String> predefinedStatuses = Arrays.asList("In backlog", "In progress", "Done");
         var projectStatus = projectStatusRepository.findAll().stream().filter(ps -> ps.getProject().getId().equals(projectId) && ps.getStatus().getId().equals(statusId)).findAny().orElse(null);
 
         if (projectStatus == null) {
@@ -57,5 +62,19 @@ public class ProjectStatusService {
 
         projectStatusRepository.delete(projectStatus);
         return "Successfully deleted";
+    }
+
+    public void addPredefinedStatusesOnProject(UUID projectId) {
+        for (String status : predefinedStatuses) {
+            UUID statusId = statusService.getStatusId(status);
+            createProjectStatus(new ProjectStatusDto(projectId.toString(), statusId.toString()));
+        }
+    }
+
+    public void deleteAllStatusesOnProject(UUID projectId) {
+        List<ProjectStatus> projectStatuses = projectStatusRepository.findAll().stream().filter(ps -> ps.getProject().getId().equals(projectId)).collect(Collectors.toList());
+        for (ProjectStatus projectStatus : projectStatuses) {
+            projectStatusRepository.delete(projectStatus);
+        }
     }
 }

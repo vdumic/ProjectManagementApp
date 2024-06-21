@@ -2,7 +2,10 @@ package com.application.server.project;
 
 import com.application.server.on_project.OnProjectDto;
 import com.application.server.on_project.OnProjectService;
+import com.application.server.project_status.ProjectStatus;
+import com.application.server.project_status.ProjectStatusService;
 import com.application.server.role.RoleService;
+import com.application.server.task.TaskService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +19,17 @@ public class ProjectService {
     private final ProjectMapper projectMapper;
     private final RoleService roleService;
     private final OnProjectService onProjectService;
+    private final TaskService taskService;
+    private final ProjectStatusService projectStatusService;
 
-    public ProjectService(ProjectRepository projectRepository, ProjectMapper projectMapper, RoleService roleService, OnProjectService onProjectService) {
+
+    public ProjectService(ProjectRepository projectRepository, ProjectMapper projectMapper, RoleService roleService, OnProjectService onProjectService, TaskService taskService, ProjectStatusService projectStatusService) {
         this.projectRepository = projectRepository;
         this.projectMapper = projectMapper;
         this.roleService = roleService;
         this.onProjectService = onProjectService;
+        this.taskService = taskService;
+        this.projectStatusService = projectStatusService;
     }
 
     public List<Project> getAllProjects() {
@@ -55,7 +63,7 @@ public class ProjectService {
             Project project = projectRepository.save(projectMapper.toProject(projectDto));
             OnProjectDto onProjectDto = new OnProjectDto(projectDto.createdBy(), project.getId().toString(), roleService.getRoleIdByName("admin").toString());
             onProjectService.createOnProject(onProjectDto);
-
+            projectStatusService.addPredefinedStatusesOnProject(project.getId());
             return project;
         }
     }
@@ -66,6 +74,9 @@ public class ProjectService {
         if (project == null) {
             return "Project with defined ID does not exist!";
         } else if (project.getUser().getId().equals(userId)) {
+            onProjectService.deleteAllUsersOnProject(projectId);
+            projectStatusService.deleteAllStatusesOnProject(projectId);
+            taskService.deleteAllTasksOnProject(projectId);
             projectRepository.deleteById(projectId);
             return "Project is successfully deleted!";
         } else {

@@ -177,4 +177,11 @@ public class TaskService {
             }
         }
     }
+
+    public void deleteAllTasksOnProject(UUID projectId) {
+        List<Task> tasks = taskRepository.findAll().stream().filter(t -> t.getProject().getId().equals(projectId)).collect(Collectors.toList());
+        for (Task task : tasks) {
+            taskRepository.delete(task);
+        }
+    }
 }
