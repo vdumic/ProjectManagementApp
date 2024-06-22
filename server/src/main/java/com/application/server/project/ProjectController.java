@@ -18,7 +18,7 @@ public class ProjectController {
     }
 
     @GetMapping("/projects")
-    public List<Project> getAllProjects() {
+    public List<ProjectResponseDto> getAllProjects() {
         return projectService.getAllProjects();
     }
 
@@ -28,13 +28,13 @@ public class ProjectController {
     }
 
     @GetMapping("/projects_created_by/{user-email}")
-    public List<ProjectsListDto> getAllProjectsCreatedByUser(@PathVariable("user-email") String userEmail) {
-        return projectService.getAllProjectsCretedByUser(userEmail);
+    public List<ProjectResponseDto> getAllProjectsCreatedByUser(@PathVariable("user-email") String userEmail) {
+        return projectService.getAllProjectsCreatedByUser(userEmail);
     }
 
     @GetMapping("/projects_from_others/{user-id}")
-    public List<ProjectsListDto> getAllProjectsCreatedByOtherUsers(@PathVariable("user-id") UUID userId) {
-        return projectService.getAllProjectsCretedByOtherUsers(userId);
+    public List<ProjectResponseDto> getAllProjectsCreatedByOtherUsers(@PathVariable("user-id") UUID userId) {
+        return projectService.getAllProjectsCreatedByOtherUsers(userId);
     }
 
     @GetMapping("/projects/{project-id}")
@@ -45,6 +45,11 @@ public class ProjectController {
     @PostMapping("/projects")
     public Project createProject(@RequestBody ProjectDto projectDto) {
         return projectService.createProject(projectDto);
+    }
+
+    @PutMapping("/projects")
+    public ProjectResponseDto updateProject(@RequestBody ProjectUpdateDto projectUpdateDto) {
+        return projectService.updateProject(projectUpdateDto);
     }
 
     @DeleteMapping("/projects/{project-id}/{user-id}")

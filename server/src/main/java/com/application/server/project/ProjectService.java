@@ -1,10 +1,12 @@
 package com.application.server.project;
 
+import com.application.server.on_project.OnProject;
 import com.application.server.on_project.OnProjectDto;
 import com.application.server.on_project.OnProjectService;
 import com.application.server.project_status.ProjectStatus;
 import com.application.server.project_status.ProjectStatusService;
 import com.application.server.role.RoleService;
+import com.application.server.task.Task;
 import com.application.server.task.TaskService;
 import org.springframework.stereotype.Service;
 
@@ -32,22 +34,22 @@ public class ProjectService {
         this.projectStatusService = projectStatusService;
     }
 
-    public List<Project> getAllProjects() {
-        return projectRepository.findAll();
+    public List<ProjectResponseDto> getAllProjects() {
+        return projectRepository.findAll().stream().map(projectMapper::toProjectResponseDto).collect(Collectors.toList());
     }
 
     public List<ProjectsListDto> getAllProjectsNames() {
         return projectRepository.findAll().stream().map(projectMapper::toProjectsListDto).collect(Collectors.toList());
     }
 
-    public List<ProjectsListDto> getAllProjectsCretedByUser(String userEmail) {
+    public List<ProjectResponseDto> getAllProjectsCreatedByUser(String userEmail) {
         var allProjects = projectRepository.findAll();
-        return allProjects.stream().filter(project -> project.getUser().getEmail().equals(userEmail)).map(projectMapper::toProjectsListDto).collect(Collectors.toList());
+        return allProjects.stream().filter(project -> project.getUser().getEmail().equals(userEmail)).map(projectMapper::toProjectResponseDto).collect(Collectors.toList());
     }
 
-    public List<ProjectsListDto> getAllProjectsCretedByOtherUsers(UUID userId) {
+    public List<ProjectResponseDto> getAllProjectsCreatedByOtherUsers(UUID userId) {
         var projects = projectRepository.projectsFromOthers(userId);
-        return projects.stream().map(projectMapper::toProjectsListDto).collect(Collectors.toList());
+        return projects.stream().map(projectMapper::toProjectResponseDto).collect(Collectors.toList());
     }
 
     public Project getProjectById(UUID id) {
@@ -66,6 +68,28 @@ public class ProjectService {
             projectStatusService.addPredefinedStatusesOnProject(project.getId());
             return project;
         }
+    }
+
+    public ProjectResponseDto updateProject(ProjectUpdateDto projectUpdateDto) {
+        Project project = projectRepository.findById(projectUpdateDto.projectId()).orElse(null);
+
+        if (project != null) {
+            OnProject onProject = project.getOnProjects().stream().filter(op -> op.getUser().getId().equals(projectUpdateDto.userId())).findAny().orElse(null);
+
+            if (onProject.getRole().getName().equals("admin")) {
+                String newName = projectUpdateDto.name() != null ? projectUpdateDto.name() : project.getName();
+                String newDescription = projectUpdateDto.description() != null ? projectUpdateDto.description() : project.getDescription();
+                project.setName(newName);
+                project.setDescription(newDescription);
+
+                return projectMapper.toProjectResponseDto(projectRepository.save(project));
+            } else {
+                return projectMapper.toProjectResponseDto(project);
+            }
+        } else {
+            return null;
+        }
+
     }
 
     public String deleteProject(UUID projectId, UUID userId) {

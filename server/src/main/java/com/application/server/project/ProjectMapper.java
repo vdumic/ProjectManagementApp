@@ -9,7 +9,7 @@ import java.util.UUID;
 public class ProjectMapper {
 
     public Project toProject(ProjectDto projectDto) {
-        if(projectDto == null) {
+        if (projectDto == null) {
             throw new NullPointerException("The projectDto should not be null");
         }
 
@@ -26,5 +26,9 @@ public class ProjectMapper {
 
     public ProjectsListDto toProjectsListDto(Project project) {
         return new ProjectsListDto(project.getName(), project.getId());
+    }
+
+    public ProjectResponseDto toProjectResponseDto(Project project) {
+        return new ProjectResponseDto(project.getId(), project.getName(), project.getDescription(), project.getUser().getId(), project.getUser().getFirstname() + " " + project.getUser().getLastname(), project.getCreatedAt(), project.getUpdatedAt());
     }
 }

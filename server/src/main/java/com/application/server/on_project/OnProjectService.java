@@ -53,7 +53,6 @@ public class OnProjectService {
 
         onProjectRepository.delete(onProject);
         return "User successfully deleted from project!";
-
     }
 
     public void deleteAllUsersOnProject(UUID projectId) {
