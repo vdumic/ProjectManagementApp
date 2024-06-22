@@ -27,11 +27,6 @@ public class ProjectController {
         return projectService.getAllProjectsNames();
     }
 
-    @GetMapping("/projects_created_by/{user-email}")
-    public List<ProjectResponseDto> getAllProjectsCreatedByUser(@PathVariable("user-email") String userEmail) {
-        return projectService.getAllProjectsCreatedByUser(userEmail);
-    }
-
     @GetMapping("/projects_from_others/{user-id}")
     public List<ProjectResponseDto> getAllProjectsCreatedByOtherUsers(@PathVariable("user-id") UUID userId) {
         return projectService.getAllProjectsCreatedByOtherUsers(userId);
@@ -40,6 +35,16 @@ public class ProjectController {
     @GetMapping("/projects/{project-id}")
     public Project getProjectById(@PathVariable("project-id") UUID id) {
         return projectService.getProjectById(id);
+    }
+
+    @GetMapping("/projects/active/{user-id}")
+    public List<ProjectResponseDto> getActiveProjects(@PathVariable("user-id") UUID userId) {
+        return projectService.getActiveProjects(userId);
+    }
+
+    @GetMapping("/projects/unactive/{user-id}")
+    public List<ProjectResponseDto> getUnactiveProjects(@PathVariable("user-id") UUID userId) {
+        return projectService.getUnactiveProjects(userId);
     }
 
     @PostMapping("/projects")

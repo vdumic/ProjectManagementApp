@@ -3,13 +3,12 @@ package com.application.server.project;
 import com.application.server.on_project.OnProject;
 import com.application.server.on_project.OnProjectDto;
 import com.application.server.on_project.OnProjectService;
-import com.application.server.project_status.ProjectStatus;
 import com.application.server.project_status.ProjectStatusService;
 import com.application.server.role.RoleService;
-import com.application.server.task.Task;
 import com.application.server.task.TaskService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -42,11 +41,6 @@ public class ProjectService {
         return projectRepository.findAll().stream().map(projectMapper::toProjectsListDto).collect(Collectors.toList());
     }
 
-    public List<ProjectResponseDto> getAllProjectsCreatedByUser(String userEmail) {
-        var allProjects = projectRepository.findAll();
-        return allProjects.stream().filter(project -> project.getUser().getEmail().equals(userEmail)).map(projectMapper::toProjectResponseDto).collect(Collectors.toList());
-    }
-
     public List<ProjectResponseDto> getAllProjectsCreatedByOtherUsers(UUID userId) {
         var projects = projectRepository.projectsFromOthers(userId);
         return projects.stream().map(projectMapper::toProjectResponseDto).collect(Collectors.toList());
@@ -55,6 +49,37 @@ public class ProjectService {
     public Project getProjectById(UUID id) {
         return projectRepository.findById(id).orElse(null);
     }
+
+    public List<ProjectResponseDto> getActiveProjects(UUID userId) {
+        List<OnProject> userOnProjects = onProjectService.getAllUserProjects(userId);
+        List<Project> userProjects = new ArrayList<>();
+
+        if(!userOnProjects.isEmpty()) {
+            for (OnProject userProject: userOnProjects) {
+                if (userProject.getProject().isActive()) {
+                    userProjects.add(userProject.getProject());
+                }
+            }
+        }
+
+        return userProjects.stream().map(projectMapper::toProjectResponseDto).collect(Collectors.toList());
+    }
+
+    public List<ProjectResponseDto> getUnactiveProjects(UUID userId) {
+        List<OnProject> userOnProjects = onProjectService.getAllUserProjects(userId);
+        List<Project> userProjects = new ArrayList<>();
+
+        if(!userOnProjects.isEmpty()) {
+            for (OnProject userProject: userOnProjects) {
+                if (!userProject.getProject().isActive()) {
+                    userProjects.add(userProject.getProject());
+                }
+            }
+        }
+
+        return userProjects.stream().map(projectMapper::toProjectResponseDto).collect(Collectors.toList());
+    }
+
 
     public Project createProject(ProjectDto projectDto) {
         Project projectInDb = projectRepository.findAll().stream().filter(p -> p.getName().equals(projectDto.name()) && p.getUser().getId().toString().equals(projectDto.createdBy())).findAny().orElse(null);
@@ -96,6 +121,7 @@ public class ProjectService {
 
         if (project != null && project.getUser().getId().equals(userId)) {
             project.setActive(false);
+            projectRepository.save(project);
         }
         return projectMapper.toProjectResponseDto(project);
     }
@@ -105,6 +131,7 @@ public class ProjectService {
 
         if (project != null && project.getUser().getId().equals(userId)) {
             project.setActive(true);
+            projectRepository.save(project);
         }
         return projectMapper.toProjectResponseDto(project);
     }

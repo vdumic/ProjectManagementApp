@@ -62,4 +62,8 @@ public class OnProjectService {
             onProjectRepository.delete(onProject);
         }
     }
+
+    public List<OnProject> getAllUserProjects(UUID userId) {
+        return onProjectRepository.findAll().stream().filter(op -> op.getUser().getId().equals(userId)).collect(Collectors.toList());
+    }
 }
