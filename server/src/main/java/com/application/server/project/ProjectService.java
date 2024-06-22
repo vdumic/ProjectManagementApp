@@ -89,7 +89,24 @@ public class ProjectService {
         } else {
             return null;
         }
+    }
 
+    public ProjectResponseDto deactivateProject(UUID projectId, UUID userId) {
+        Project project = projectRepository.findById(projectId).orElse(null);
+
+        if (project != null && project.getUser().getId().equals(userId)) {
+            project.setActive(false);
+        }
+        return projectMapper.toProjectResponseDto(project);
+    }
+
+    public ProjectResponseDto activateProject(UUID projectId, UUID userId) {
+        Project project = projectRepository.findById(projectId).orElse(null);
+
+        if (project != null && project.getUser().getId().equals(userId)) {
+            project.setActive(true);
+        }
+        return projectMapper.toProjectResponseDto(project);
     }
 
     public String deleteProject(UUID projectId, UUID userId) {

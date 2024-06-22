@@ -52,6 +52,16 @@ public class ProjectController {
         return projectService.updateProject(projectUpdateDto);
     }
 
+    @PutMapping("/projects/deactivate/{project-id}/{user-id}")
+    public ProjectResponseDto deactivateProject(@PathVariable("project-id") UUID projectId, @PathVariable("user-id") UUID userId) {
+        return projectService.deactivateProject(projectId, userId);
+    }
+
+    @PutMapping("/projects/activate/{project-id}/{user-id}")
+    public ProjectResponseDto activateProject(@PathVariable("project-id") UUID projectId, @PathVariable("user-id") UUID userId) {
+        return projectService.activateProject(projectId, userId);
+    }
+
     @DeleteMapping("/projects/{project-id}/{user-id}")
     public String deleteProject(@PathVariable("project-id") UUID projectId, @PathVariable("user-id") UUID userId) {
         return projectService.deleteProject(projectId, userId);

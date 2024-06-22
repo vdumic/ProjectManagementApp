@@ -16,8 +16,10 @@ public class ProjectMapper {
         var project = new Project();
         project.setName(projectDto.name());
         project.setDescription(projectDto.description());
+        project.setActive(true);
 
         User user = new User();
+        user.setId(UUID.fromString(projectDto.createdBy()));
         user.setId(UUID.fromString(projectDto.createdBy()));
         project.setUser(user);
 
@@ -29,6 +31,6 @@ public class ProjectMapper {
     }
 
     public ProjectResponseDto toProjectResponseDto(Project project) {
-        return new ProjectResponseDto(project.getId(), project.getName(), project.getDescription(), project.getUser().getId(), project.getUser().getFirstname() + " " + project.getUser().getLastname(), project.getCreatedAt(), project.getUpdatedAt());
+        return new ProjectResponseDto(project.getId(), project.getName(), project.getDescription(), project.getUser().getId(), project.getUser().getFirstname() + " " + project.getUser().getLastname(), project.getCreatedAt(), project.getUpdatedAt(), project.isActive());
     }
 }

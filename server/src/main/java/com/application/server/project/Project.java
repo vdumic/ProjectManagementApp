@@ -45,6 +45,9 @@ public class Project {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @Column(name = "active")
+    private boolean active;
+
     @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Task> tasks;
 
@@ -54,12 +57,15 @@ public class Project {
     public Project() {
     }
 
-    public Project(User user, String name, String description, Date createdAt, Date updatedAt, List<OnProject> onProjects) {
+    public Project(UUID id, User user, String name, String description, Date createdAt, Date updatedAt, boolean active, List<Task> tasks, List<OnProject> onProjects) {
+        this.id = id;
         this.user = user;
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.active = active;
+        this.tasks = tasks;
         this.onProjects = onProjects;
     }
 
@@ -111,6 +117,14 @@ public class Project {
         this.createdAt = createdAt;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public List<Task> getTasks() {
         return tasks;
     }
@@ -136,6 +150,7 @@ public class Project {
                 ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", active=" + active +
                 ", tasks=" + tasks +
                 ", onProjects=" + onProjects +
                 '}';
