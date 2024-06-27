@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
+import WorkManagement from "./pages/WorkManagement";
 import UserHome from "./pages/UserHome";
 import ProjectBoard from "./pages/ProjectBoard";
 import Login from "./pages/Login";
@@ -15,6 +16,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/work-management" element={<WorkManagement />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<HankoProfile />} />
