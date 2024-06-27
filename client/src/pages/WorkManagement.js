@@ -4,7 +4,7 @@ import HeaderFooterLayout from "../layouts/HeaderFooterLayout";
 
 const WorkManagement = () => {
   return (
-    <HeaderFooterLayout title="Sprynt / Home">
+    <HeaderFooterLayout title="Sprynt / Work management">
       <div className="bg-bckgrnd-main container mx-auto my-6">
         <div className="flex items-center justify-between mx-40 pl-14">
           <div className="mx-16">
