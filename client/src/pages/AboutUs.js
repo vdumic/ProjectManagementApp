@@ -78,38 +78,38 @@ const AboutUs = () => {
             </p>
           </div>
         </div>
-        <div className="bg-bckgrnd-main container mx-auto my-6">
-          <div className="flex items-center justify-between mx-24 pl-14">
-            <div className="mx-24">
-              <h1 className="text-text-dark font-bold text-3xl py-4 break-normal">
-                Join the Sprynt Community
-              </h1>
-              <p className="text-text-dark font-medium text-lg break-normal py-2">
-                Be Part of Our Journey
-              </p>
-              <p className="text-text-dark font-normal text-lg break-normal py-2">
-                We invite you to join the Sprynt community and experience the
-                future of work management. Whether you’re a small team or a
-                large enterprise, Sprynt has the tools and expertise to help you
-                succeed. Try Sprynt today and see the difference for yourself.
-              </p>
-            </div>
+      </div>
+      <div className="bg-bckgrnd-main container mx-auto my-6">
+        <div className="flex items-center justify-between mx-24 pl-14">
+          <div className="mx-24">
+            <h1 className="text-text-dark font-bold text-3xl py-4 break-normal">
+              Join the Sprynt Community
+            </h1>
+            <p className="text-text-dark font-medium text-lg break-normal py-2">
+              Be Part of Our Journey
+            </p>
+            <p className="text-text-dark font-normal text-lg break-normal py-2">
+              We invite you to join the Sprynt community and experience the
+              future of work management. Whether you’re a small team or a large
+              enterprise, Sprynt has the tools and expertise to help you
+              succeed. Try Sprynt today and see the difference for yourself.
+            </p>
           </div>
         </div>
-        <div className="bg-bckgrnd-main container mx-auto my-6">
-          <div className="flex items-center justify-between mx-24 pl-14">
-            <div className="mx-24">
-              <h1 className="text-text-dark font-bold text-3xl py-4 break-normal">
-                Contact Us
-              </h1>
-              <p className="text-text-dark font-medium text-lg break-normal py-2">
-                We’d Love to Hear from You
-              </p>
-              <p className="text-text-dark font-normal text-lg break-normal py-2">
-                Have questions or want to learn more about Sprynt? Contact us
-                today. We’re here to help you every step of the way.
-              </p>
-            </div>
+      </div>
+      <div className="bg-bckgrnd-main container mx-auto my-6">
+        <div className="flex items-center justify-between mx-24 pl-14">
+          <div className="mx-24">
+            <h1 className="text-text-dark font-bold text-3xl py-4 break-normal">
+              Contact Us
+            </h1>
+            <p className="text-text-dark font-medium text-lg break-normal py-2">
+              We’d Love to Hear from You
+            </p>
+            <p className="text-text-dark font-normal text-lg break-normal py-2">
+              Have questions or want to learn more about Sprynt? Contact us
+              today. We’re here to help you every step of the way.
+            </p>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import WorkManagement from "./pages/WorkManagement";
 import AboutUs from "./pages/AboutUs";
+import Support from "./pages/Support";
 import UserHome from "./pages/UserHome";
 import ProjectBoard from "./pages/ProjectBoard";
 import Login from "./pages/Login";
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/work-management" element={<WorkManagement />} />
           <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/support" element={<Support />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<HankoProfile />} />
