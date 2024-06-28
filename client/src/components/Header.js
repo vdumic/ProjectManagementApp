@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import AppContext from "../store/app-context";
 import logo from "../assets/logo.png";
@@ -12,6 +12,7 @@ const Header = () => {
   const appCtx = useContext(AppContext);
 
   const isLoggedIn = appCtx.userData.isLoggedIn;
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,9 +42,21 @@ const Header = () => {
             <img src={logo} alt="Sprynt logo" width="110" />
           </Link>
           <div className="flex items-center justify-between mr-64">
-            <NavLink title="Work management" path="/work-management" />
-            <NavLink title="About us" path="/about-us" />
-            <NavLink title="Support" path="/support" />
+            <NavLink
+              title="Work management"
+              path="/work-management"
+              location={location.pathname}
+            />
+            <NavLink
+              title="About us"
+              path="/about-us"
+              location={location.pathname}
+            />
+            <NavLink
+              title="Support"
+              path="/support"
+              location={location.pathname}
+            />
             {isLoggedIn && <NavLink title="Projects board" path="user-home" />}
           </div>
           {!isLoggedIn && (
