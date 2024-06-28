@@ -3,7 +3,7 @@ import ProjectsHeader from "../components/ProjectsHeader";
 
 const HeaderLayout = ({ title, children, ...rest }) => {
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen overflow-hidden bg-bckgrnd-main">
       <Helmet>
         <meta charSet="utf-8" />
         <title>{title}</title>

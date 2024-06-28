@@ -3,8 +3,8 @@ import userIcon from "../assets/user_icon.png";
 
 const ProjectsHeader = () => {
   return (
-    <header className="fixed top-0 right-0 w-3/4 bg-bckgrnd-blue_light">
-      <main className="max-w-full flex-grow flex flex-col my-3 mx-24">
+    <header className="w-full bg-bckgrnd-blue_light">
+      <main className="max-w-full flex-grow flex flex-col py-3 mx-12">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start">
             <div className="flex items-center justify-between mr-8">
