@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import Header from "../components/Header";
+import ProjectsHeader from "../components/ProjectsHeader";
 
 const HeaderLayout = ({ title, children, ...rest }) => {
   return (
@@ -8,7 +8,7 @@ const HeaderLayout = ({ title, children, ...rest }) => {
         <meta charSet="utf-8" />
         <title>{title}</title>
       </Helmet>
-      <Header />
+      <ProjectsHeader />
       <main {...rest}>{children}</main>
     </div>
   );

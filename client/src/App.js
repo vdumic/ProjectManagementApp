@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import WorkManagement from "./pages/WorkManagement";
 import AboutUs from "./pages/AboutUs";
 import Support from "./pages/Support";
-import UserHome from "./pages/UserHome";
+import ProjectsPage from "./pages/ProjectsPage";
 import ProjectBoard from "./pages/ProjectBoard";
 import Login from "./pages/Login";
 import HankoProfile from "./components/Login/HankoProfile";
@@ -24,7 +24,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<HankoProfile />} />
-          <Route path="/user-home" element={<UserHome />} />
+          <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/project-board" element={<ProjectBoard />} />
         </Routes>
       </BrowserRouter>

@@ -57,7 +57,7 @@ const Header = () => {
               path="/support"
               location={location.pathname}
             />
-            {isLoggedIn && <NavLink title="Projects board" path="user-home" />}
+            {isLoggedIn && <NavLink title="Projects" path="projects" />}
           </div>
           {!isLoggedIn && (
             <div className="flex items-center justify-between">
