@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import logo from "../assets/logo_light.png";
-import HeaderLayout from "../layouts/HeaderLayout";
 import ProjectsHeader from "../components/ProjectsHeader";
-import CreateButton from "../components/Buttons/CreateButton";
+import TasksView from "../components/Projects page/TasksView";
+import UsersView from "../components/Projects page/UsersView";
+import ProjectInfoView from "../components/Projects page/ProjectInfoView";
 
 const myProjects = [
   {
@@ -27,6 +29,28 @@ const otherProjects = [
 ];
 
 const ProjectsPage = () => {
+  const [tasksClicked, setTasksClicked] = useState(true);
+  const [usersClicked, setUsersClicked] = useState(false);
+  const [projectInfoClicked, setProjectInfoClicked] = useState(false);
+
+  const handleTasksClicked = () => {
+    setTasksClicked(true);
+    setUsersClicked(false);
+    setProjectInfoClicked(false);
+  };
+
+  const handleUsersClicked = () => {
+    setTasksClicked(false);
+    setUsersClicked(true);
+    setProjectInfoClicked(false);
+  };
+
+  const handleProjectInfoClicked = () => {
+    setTasksClicked(false);
+    setUsersClicked(false);
+    setProjectInfoClicked(true);
+  };
+
   return (
     <div className="h-screen flex">
       <div className="w-1/4 bg-bckgrnd-blue_dark h-screen overflow-clip flex">
@@ -82,18 +106,36 @@ const ProjectsPage = () => {
         <div className="flex items-center justify-between pt-1.5 pb-3 pl-14 border-b-2 border-gray-400">
           <div className="flex items-center justify-start">
             <div className="flex items-center justify-between mr-8 mt-4">
-              <p className="font-medium text-text-dark text-xl underline mr-12">
+              <button
+                className={`font-medium text-text-dark text-xl mr-12 ${
+                  tasksClicked ? "underline" : ""
+                }`}
+                onClick={handleTasksClicked}
+              >
                 Tasks
-              </p>
-              <p className="font-medium text-text-dark text-xl px-2 mr-12">
+              </button>
+              <button
+                className={`font-medium text-text-dark text-xl px-2 mr-12 ${
+                  usersClicked ? "underline" : ""
+                }`}
+                onClick={handleUsersClicked}
+              >
                 Users
-              </p>
-              <p className="font-medium text-text-dark text-xl px-2">
+              </button>
+              <button
+                className={`font-medium text-text-dark text-xl px-2 ${
+                  projectInfoClicked ? "underline" : ""
+                }`}
+                onClick={handleProjectInfoClicked}
+              >
                 Project info
-              </p>
+              </button>
             </div>
           </div>
         </div>
+        {tasksClicked && <TasksView />}
+        {usersClicked && <UsersView />}
+        {projectInfoClicked && <ProjectInfoView />}
       </div>
     </div>
   );
