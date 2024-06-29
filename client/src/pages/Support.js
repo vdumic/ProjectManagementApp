@@ -67,6 +67,35 @@ const Support = () => {
           </div>
         </div>
       </div>
+      <div className="bg-bckgrnd-main container mx-auto my-6">
+        <div className="flex items-center justify-between mx-24 pl-14">
+          <div className="mx-24">
+            <h1 className="text-text-dark font-bold text-3xl py-4 break-normal">
+              System Status and Updates
+            </h1>
+            <p className="text-text-dark font-normal text-lg break-normal py-2">
+              Check the current status of Sprynt’s services and stay updated on
+              any scheduled maintenance or known issues. Our system status page
+              provides real-time information to keep you informed.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="bg-bckgrnd-main container mx-auto my-6">
+        <div className="flex items-center justify-between mx-24 pl-14">
+          <div className="mx-24">
+            <h1 className="text-text-dark font-bold text-3xl py-4 break-normal">
+              Feedback
+            </h1>
+            <p className="text-text-dark font-normal text-lg break-normal py-2">
+              We’re constantly looking to improve Sprynt, and your feedback
+              plays a crucial role in that process. Let us know what you love,
+              what can be improved, and any features you'd like to see in the
+              future.
+            </p>
+          </div>
+        </div>
+      </div>
     </HeaderFooterLayout>
   );
 };
