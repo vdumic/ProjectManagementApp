@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="flex items-center justify-between flex-wrap py-10 px-20">
           <div className="flex justify-items-center items-center w-full sm:w-2/3 lg:w-3/12">
             <div className="w-full flex items-center justify-center">
-              <Link to="/">
+              <Link to="/" onClick={() => window.scrollTo({ top: 0 })}>
                 <img src={logo} alt="Sprynt logo" height="100" width="150" />
               </Link>
             </div>
@@ -18,19 +18,28 @@ const Footer = () => {
             <div className="my-auto w-full">
               <ul>
                 <li className="flex items-center justify-center">
-                  <Link to="/work-management">
+                  <Link
+                    to="/work-management"
+                    onClick={() => window.scrollTo({ top: 0 })}
+                  >
                     <p className="text-text-dark text-lg py-2 px-1">
                       Work management
                     </p>
                   </Link>
                 </li>
                 <li className="flex items-center justify-center">
-                  <Link to="/about-us">
+                  <Link
+                    to="/about-us"
+                    onClick={() => window.scrollTo({ top: 0 })}
+                  >
                     <p className="text-text-dark text-lg py-2 px-1">About us</p>
                   </Link>
                 </li>
                 <li className="flex items-center justify-center">
-                  <Link to="/support">
+                  <Link
+                    to="/support"
+                    onClick={() => window.scrollTo({ top: 0 })}
+                  >
                     <p className="text-text-dark text-lg py-2 px-1">Support</p>
                   </Link>
                 </li>

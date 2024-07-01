@@ -27,13 +27,16 @@ const oldProjects = [
   {
     name: "Creation of a Data Analytics Dashboard for Business Insights",
   },
+  {
+    name: "Implementation of a Chatbot for Customer Support",
+  },
 ];
 
 const ProjectsPage = () => {
   const [tasksClicked, setTasksClicked] = useState(true);
   const [usersClicked, setUsersClicked] = useState(false);
   const [projectInfoClicked, setProjectInfoClicked] = useState(false);
-  const [chosenProject, setChosenProject] = useState(projects.at(0).name);
+  const [chosenProject, setChosenProject] = useState(projects.at(0));
 
   const handleTasksClicked = () => {
     setTasksClicked(true);
@@ -56,25 +59,25 @@ const ProjectsPage = () => {
   return (
     <div className="h-screen flex">
       <div className="w-1/4 bg-bckgrnd-blue_dark h-screen overflow-clip flex">
-        <div className="flex-grow flex flex-col justify-between">
-          <div className="flex flex-col justify-start">
-            <div className="flex justify-center my-5">
+        <div className="flex-grow flex flex-col justify-between h-screen">
+          <div className="flex flex-col justify-start h-screen">
+            <div className="flex justify-center my-5 h-fit">
               <Link to="/">
                 <img src={logo} alt="Sprynt logo" width="110" />
               </Link>
             </div>
-            <div className="flex flex-col justify-start mx-8 my-6">
+            <div className="flex flex-col justify-start mx-8 my-6 h-4/5 overflow-y-auto">
               <p className="text-2xl text-bckgrnd-main font-medium">Projects</p>
-              <div className="flex flex-col justify-start my-5">
+              <div className="flex flex-col justify-start my-5 overflow-y-auto">
                 {projects.map((project) => {
-                  const isChosen = project.name === chosenProject;
+                  const isChosen = project.name === chosenProject.name;
                   return (
                     <button
                       className={`text-lg text-bckgrnd-main text-start ${
                         isChosen ? "underline font-medium" : ""
                       }`}
                       key={project.name}
-                      onClick={() => setChosenProject(project.name)}
+                      onClick={() => setChosenProject(project)}
                     >
                       {project.name}
                     </button>
@@ -82,20 +85,20 @@ const ProjectsPage = () => {
                 })}
               </div>
             </div>
-            <div className="flex flex-col justify-start mx-8 my-6">
+            <div className="flex flex-col justify-start mx-8 my-6 h-3/5 overflow-y-auto">
               <p className="text-2xl text-bckgrnd-main font-medium">
                 Old projects
               </p>
-              <div className="flex flex-col justify-start my-5">
+              <div className="flex flex-col justify-start my-5 overflow-y-auto">
                 {oldProjects.map((project) => {
-                  const isChosen = project.name === chosenProject;
+                  const isChosen = project.name === chosenProject.name;
                   return (
                     <button
                       className={`text-lg text-bckgrnd-main text-start ${
                         isChosen ? "underline font-medium" : ""
                       }`}
                       key={project.name}
-                      onClick={() => setChosenProject(project.name)}
+                      onClick={() => setChosenProject(project)}
                     >
                       {project.name}
                     </button>
@@ -105,7 +108,7 @@ const ProjectsPage = () => {
             </div>
           </div>
           <div className="flex justify-center my-8">
-            <button className="bg-bckgrnd-light rounded-2xl drop-shadow-xl mx-2">
+            <button className="bg-bckgrnd-light rounded drop-shadow-xl mx-2">
               <p className="text-xl py-3 px-7 text-button-blue font-bold">
                 Create project
               </p>
@@ -114,7 +117,7 @@ const ProjectsPage = () => {
         </div>
       </div>
       <div className="w-3/4 h-full bg-bckgrnd-main flex-col justify-start">
-        <ProjectsHeader />
+        <ProjectsHeader project={chosenProject} />
         <div className="flex items-center justify-between pt-1.5 pb-3 pl-14 border-b-2 border-gray-400">
           <div className="flex items-center justify-start">
             <div className="flex items-center justify-between mr-8 mt-4">
@@ -145,9 +148,11 @@ const ProjectsPage = () => {
             </div>
           </div>
         </div>
-        {tasksClicked && <TasksView />}
-        {usersClicked && <UsersView />}
-        {projectInfoClicked && <ProjectInfoView />}
+        <div className="flex flex-col justify-start mx-12 pt-8 overflow-y-auto h-5/6">
+          {tasksClicked && <TasksView />}
+          {usersClicked && <UsersView />}
+          {projectInfoClicked && <ProjectInfoView />}
+        </div>
       </div>
     </div>
   );
