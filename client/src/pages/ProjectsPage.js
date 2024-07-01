@@ -7,24 +7,25 @@ import TasksView from "../components/Projects page/TasksView";
 import UsersView from "../components/Projects page/UsersView";
 import ProjectInfoView from "../components/Projects page/ProjectInfoView";
 
-const myProjects = [
+const projects = [
   {
     name: "Website Redesign for Cleaning Company",
   },
   {
     name: "Software Development: Mobile App Upgrade",
   },
-];
-
-const otherProjects = [
   {
     name: "Design and Development of a Video Conferencing Application",
   },
-  {
-    name: "Building an Inventory Management System for Retail",
-  },
+  { name: "Building an Inventory Management System for Retail" },
+];
+
+const oldProjects = [
   {
     name: "Implementation of a Chatbot for Customer Support",
+  },
+  {
+    name: "Creation of a Data Analytics Dashboard for Business Insights",
   },
 ];
 
@@ -32,6 +33,7 @@ const ProjectsPage = () => {
   const [tasksClicked, setTasksClicked] = useState(true);
   const [usersClicked, setUsersClicked] = useState(false);
   const [projectInfoClicked, setProjectInfoClicked] = useState(false);
+  const [chosenProject, setChosenProject] = useState(projects.at(0).name);
 
   const handleTasksClicked = () => {
     setTasksClicked(true);
@@ -64,18 +66,20 @@ const ProjectsPage = () => {
             <div className="flex flex-col justify-start mx-8 my-6">
               <p className="text-2xl text-bckgrnd-main font-medium">Projects</p>
               <div className="flex flex-col justify-start my-5">
-                <p className="text-lg text-bckgrnd-main font-medium underline">
-                  Website Redesign for Cleaning Company
-                </p>
-                <p className="text-lg text-bckgrnd-main">
-                  Software Development: Mobile App Upgrade
-                </p>
-                <p className="text-lg text-bckgrnd-main">
-                  Design and Development of a Video Conferencing Application
-                </p>
-                <p className="text-lg text-bckgrnd-main">
-                  Building an Inventory Management System for Retail
-                </p>
+                {projects.map((project) => {
+                  const isChosen = project.name === chosenProject;
+                  return (
+                    <button
+                      className={`text-lg text-bckgrnd-main text-start ${
+                        isChosen ? "underline font-medium" : ""
+                      }`}
+                      key={project.name}
+                      onClick={() => setChosenProject(project.name)}
+                    >
+                      {project.name}
+                    </button>
+                  );
+                })}
               </div>
             </div>
             <div className="flex flex-col justify-start mx-8 my-6">
@@ -83,12 +87,20 @@ const ProjectsPage = () => {
                 Old projects
               </p>
               <div className="flex flex-col justify-start my-5">
-                <p className="text-lg text-bckgrnd-main">
-                  Implementation of a Chatbot for Customer Support
-                </p>
-                <p className="text-lg text-bckgrnd-main">
-                  Creation of a Data Analytics Dashboard for Business Insights
-                </p>
+                {oldProjects.map((project) => {
+                  const isChosen = project.name === chosenProject;
+                  return (
+                    <button
+                      className={`text-lg text-bckgrnd-main text-start ${
+                        isChosen ? "underline font-medium" : ""
+                      }`}
+                      key={project.name}
+                      onClick={() => setChosenProject(project.name)}
+                    >
+                      {project.name}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
