@@ -27,9 +27,6 @@ const oldProjects = [
   {
     name: "Creation of a Data Analytics Dashboard for Business Insights",
   },
-  {
-    name: "Implementation of a Chatbot for Customer Support",
-  },
 ];
 
 const ProjectsPage = () => {

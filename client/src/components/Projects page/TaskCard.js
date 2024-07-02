@@ -6,7 +6,7 @@ const TaskCard = ({ title, priority, isAssigned, asignee }) => {
       <p className="text-text-dark font-medium text-sm">{title}</p>
       <div className="flex justify-between mt-2">
         <div
-          className={`w-fit h-fit mt-1 ${bckgrnd}  px-4 py-0.5 rounded-lg text-white text-sm`}
+          className={`w-fit h-fit mt-1 ${bckgrnd} px-4 py-0.5 rounded-lg text-white text-sm`}
         >
           {priority}
         </div>

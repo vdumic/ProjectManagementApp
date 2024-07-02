@@ -73,40 +73,7 @@ const TasksView = () => {
           })}
         </div>
       </div>
-      <div className="mb-12">
-        <div className="text-text-dark font-medium text-lg mb-4">
-          In progress
-        </div>
-        <div className="flex justify-start">
-          {inProgress.map((task) => {
-            return (
-              <TaskCard
-                title={task.name}
-                priority={task.priority}
-                isAssigned={task.assigned}
-                asignee={task.assignee}
-              />
-            );
-          })}
-        </div>
-      </div>
-      <div className="mb-12">
-        <div className="text-text-dark font-medium text-lg mb-4">
-          In progress
-        </div>
-        <div className="flex justify-start">
-          {inProgress.map((task) => {
-            return (
-              <TaskCard
-                title={task.name}
-                priority={task.priority}
-                isAssigned={task.assigned}
-                asignee={task.assignee}
-              />
-            );
-          })}
-        </div>
-      </div>
+
       <div className="mb-12">
         <div className="text-text-dark font-medium text-lg mb-4">
           In progress
