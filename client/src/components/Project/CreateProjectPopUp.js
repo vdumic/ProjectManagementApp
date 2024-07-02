@@ -1,11 +1,6 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
-import { Hanko, UnauthorizedError } from "@teamhanko/hanko-elements";
-
-import AppContext from "../../store/app-context";
-
-const hankoApi = process.env.REACT_APP_HANKO_API_URL;
 
 const CreateProjectPopUp = ({
   openPopUp,
@@ -13,12 +8,8 @@ const CreateProjectPopUp = ({
   openCreatedProjectPopUp,
   openFailedProjectPopUp,
 }) => {
-  const appCtx = useContext(AppContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [email, setEmail] = useState("");
-  const [userId, setUserId] = useState("");
-  const [response, setResponse] = useState({});
 
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
@@ -37,52 +28,32 @@ const CreateProjectPopUp = ({
     description: yup.string(),
   });
 
-  const addProjectToDatabase = async () => {
-    console.log(name, description, email, userId);
-    let response;
+  const handleCreateProject = async () => {
+    const project = {
+      name: name,
+      description: description,
+      createdBy: "72516c5b-6454-4e26-ae1b-a019e03dd9db",
+    };
+
     try {
-      const body = {
-        name: name,
-        description: description,
-        createdBy: userId,
-      };
-      await fetch("http://localhost:8080/projects", {
+      const response = await fetch("http://localhost:8080/projects", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      }).then((response) => {
-        if (response.status === 200) {
-          openCreatedProjectPopUp();
-        } else {
-          openFailedProjectPopUp();
-        }
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(project),
       });
-    } catch (error) {
-      console.error(error.message);
-    }
-    return response;
-  };
 
-  const getUserEmail = async () => {
-    const hanko = new Hanko(hankoApi);
-
-    try {
-      const { email } = await hanko.user.getCurrent();
-      setEmail(email);
-    } catch (e) {
-      if (e instanceof UnauthorizedError) {
-        appCtx.handleLogout();
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Project created successfully:", data);
+        openCreatedProjectPopUp();
+      } else {
+        console.error("Failed to create project:", response.statusText);
+        openFailedProjectPopUp();
       }
-    }
-  };
-
-  const getUserDatabaseId = async () => {
-    try {
-      const response = await fetch(`http://localhost:8080/users/id/${email}`);
-      const { id } = await response.json();
-      setUserId(id);
     } catch (error) {
-      console.error(error.message);
+      console.error("Error:", error);
     }
   };
 
@@ -110,9 +81,7 @@ const CreateProjectPopUp = ({
                 const { name, description } = { ...values };
                 setName(name);
                 setDescription(description);
-                getUserEmail();
-                getUserDatabaseId();
-                addProjectToDatabase();
+                handleCreateProject();
               }}
             >
               <Form className="flex flex-col w-1/2 justify-center items-center">
@@ -133,7 +102,7 @@ const CreateProjectPopUp = ({
                 </div>
                 <div className="w-full p-3 justify-center items-center py-5">
                   <div className="flex justify-center items-center">
-                    <button type="submit" className="bg-button-blue rounded-xl">
+                    <button type="submit" className="bg-button-blue rounded-md">
                       <p className="text-lg py-2 px-5 text-white font-medium">
                         Create project
                       </p>

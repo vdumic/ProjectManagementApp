@@ -10,7 +10,7 @@ const FailedProjectCreation = ({ openPopUp, closePopUp }) => {
   useEffect(() => {
     setTimeout(() => {
       closePopUp();
-    }, 4000);
+    }, 3500);
   }, [closePopUp]);
 
   if (openPopUp !== true) return null;

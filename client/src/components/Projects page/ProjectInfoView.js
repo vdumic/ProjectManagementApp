@@ -2,8 +2,8 @@ const ProjectInfoView = ({ project }) => {
   return (
     <div>
       <div className="flex justify-start mx-auto p-4">
-        <p className="text-xl py-3 text-text-dark font-bold">
-          Update project details
+        <p className="text-2xl py-3 text-text-dark font-medium">
+          Project details
         </p>
       </div>
       <div className="flex justify-start mx-auto p-4">

@@ -9,7 +9,7 @@ const ProjectsHeader = ({ project }) => {
           <div className="flex items-center justify-start w-5/6">
             <div className="flex items-center justify-between mr-8">
               <p className="font-medium text-text-dark text-2xl text-nowrap">
-                {project.name}
+                {project.projectName}
               </p>
             </div>
             <div className="flex items-center justify-between">

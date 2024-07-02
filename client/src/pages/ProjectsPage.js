@@ -1,44 +1,73 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import logo from "../assets/logo_light.png";
 import ProjectsHeader from "../components/ProjectsHeader";
 import TasksView from "../components/Projects page/TasksView";
 import UsersView from "../components/Projects page/UsersView";
 import ProjectInfoView from "../components/Projects page/ProjectInfoView";
-
-const projects = [
-  {
-    name: "Website Redesign for Cleaning Company",
-  },
-  {
-    name: "Software Development: Mobile App Upgrade",
-  },
-  {
-    name: "Design and Development of a Video Conferencing Application",
-  },
-  { name: "Building an Inventory Management System for Retail" },
-];
-
-const oldProjects = [
-  {
-    name: "Implementation of a Chatbot for Customer Support",
-  },
-  {
-    name: "Creation of a Data Analytics Dashboard for Business Insights",
-  },
-];
+import CreateProjectPopUp from "../components/Project/CreateProjectPopUp";
+import CreatedProjectPopUp from "../components/Project/CreatedProjectPopUp";
+import FailedProjectCreationPopUp from "../components/Project/FailedProjectCreationPopUp";
 
 const ProjectsPage = () => {
   const [tasksClicked, setTasksClicked] = useState(true);
   const [usersClicked, setUsersClicked] = useState(false);
   const [projectInfoClicked, setProjectInfoClicked] = useState(false);
-  const [chosenProject, setChosenProject] = useState(projects.at(0));
+  const [chosenProject, setChosenProject] = useState({});
+  const [activeProjects, setActiveProjects] = useState([]);
+  const [oldProjects, setOldProjects] = useState([]);
+
+  const [createProjectOpened, setCreateProjectOpened] = useState(false);
+  const [createdProjectPopUpOpened, setCreatedProjectPopUpOpened] =
+    useState(false);
+  const [failedProjectPopUpOpened, setFailedProjectPopUpOpened] =
+    useState(false);
+
+  useEffect(() => {
+    const getActiveProjects = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/projects/active/72516c5b-6454-4e26-ae1b-a019e03dd9db"
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setActiveProjects(data);
+          setChosenProject(data.at(0));
+        } else {
+          console.error("Failed to fetch projects:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    const getOldProjects = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/projects/unactive/72516c5b-6454-4e26-ae1b-a019e03dd9db"
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setOldProjects(data);
+        } else {
+          console.error("Failed to fetch projects:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    getActiveProjects();
+    getOldProjects();
+  }, []);
 
   const handleTasksClicked = () => {
     setTasksClicked(true);
     setUsersClicked(false);
     setProjectInfoClicked(false);
+    console.log(activeProjects);
+    console.log(oldProjects);
   };
 
   const handleUsersClicked = () => {
@@ -51,6 +80,28 @@ const ProjectsPage = () => {
     setTasksClicked(false);
     setUsersClicked(false);
     setProjectInfoClicked(true);
+  };
+
+  const handleCloseCreateProject = () => {
+    setCreateProjectOpened(false);
+  };
+
+  const handleOpenCreatedProjectPopUp = () => {
+    setCreatedProjectPopUpOpened(true);
+    setCreateProjectOpened(false);
+  };
+
+  const handleCloseCreatedProjectPopUp = () => {
+    setCreatedProjectPopUpOpened(false);
+  };
+
+  const handleOpenFailedProjectPopUp = () => {
+    setFailedProjectPopUpOpened(true);
+    setCreateProjectOpened(false);
+  };
+
+  const handleCloseFailedProjectPopUp = () => {
+    setFailedProjectPopUpOpened(false);
   };
 
   return (
@@ -66,17 +117,18 @@ const ProjectsPage = () => {
             <div className="flex flex-col justify-start mx-8 my-6 h-4/5 overflow-y-auto">
               <p className="text-2xl text-bckgrnd-main font-medium">Projects</p>
               <div className="flex flex-col justify-start my-5 overflow-y-auto">
-                {projects.map((project) => {
-                  const isChosen = project.name === chosenProject.name;
+                {activeProjects.map((project) => {
+                  const isChosen =
+                    project.projectName === chosenProject.projectName;
                   return (
                     <button
                       className={`text-lg text-bckgrnd-main text-start ${
                         isChosen ? "underline font-medium" : ""
                       }`}
-                      key={project.name}
+                      key={project.projectId}
                       onClick={() => setChosenProject(project)}
                     >
-                      {project.name}
+                      {project.projectName}
                     </button>
                   );
                 })}
@@ -105,7 +157,12 @@ const ProjectsPage = () => {
             </div>
           </div>
           <div className="flex justify-center my-8">
-            <button className="bg-bckgrnd-light rounded drop-shadow-xl mx-2">
+            <button
+              className="bg-bckgrnd-light rounded drop-shadow-xl mx-2"
+              onClick={() => {
+                setCreateProjectOpened(true);
+              }}
+            >
               <p className="text-xl py-3 px-7 text-button-blue font-bold">
                 Create project
               </p>
@@ -151,6 +208,20 @@ const ProjectsPage = () => {
           {projectInfoClicked && <ProjectInfoView />}
         </div>
       </div>
+      <CreateProjectPopUp
+        openPopUp={createProjectOpened}
+        closePopUp={handleCloseCreateProject}
+        openCreatedProjectPopUp={handleOpenCreatedProjectPopUp}
+        openFailedProjectPopUp={handleOpenFailedProjectPopUp}
+      />
+      <CreatedProjectPopUp
+        openPopUp={createdProjectPopUpOpened}
+        closePopUp={handleCloseCreatedProjectPopUp}
+      />
+      <FailedProjectCreationPopUp
+        openPopUp={failedProjectPopUpOpened}
+        closePopUp={handleCloseFailedProjectPopUp}
+      />
     </div>
   );
 };
