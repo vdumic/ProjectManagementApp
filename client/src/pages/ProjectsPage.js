@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 
 import logo from "../assets/logo_light.png";
 import ProjectsHeader from "../components/ProjectsHeader";
-import TasksView from "../components/Projects page/TasksView";
-import UsersView from "../components/Projects page/UsersView";
-import ProjectInfoView from "../components/Projects page/ProjectInfoView";
-import CreateProjectPopUp from "../components/Project/CreateProjectPopUp";
-import CreatedProjectPopUp from "../components/Project/CreatedProjectPopUp";
-import FailedProjectCreationPopUp from "../components/Project/FailedProjectCreationPopUp";
+import TasksView from "../components/Projects/TasksView";
+import UsersView from "../components/Projects/UsersView";
+import ProjectInfoView from "../components/Projects/ProjectInfoView";
+import CreateProjectPopUp from "../components/Projects/CreateProjectPopUp";
+import CreatedProjectPopUp from "../components/Projects/CreatedProjectPopUp";
+import FailedProjectCreationPopUp from "../components/Projects/FailedProjectCreationPopUp";
 
 const ProjectsPage = () => {
   const [tasksClicked, setTasksClicked] = useState(true);
@@ -205,7 +205,7 @@ const ProjectsPage = () => {
         <div className="flex flex-col justify-start mx-12 pt-8 overflow-y-auto h-5/6">
           {tasksClicked && <TasksView />}
           {usersClicked && <UsersView />}
-          {projectInfoClicked && <ProjectInfoView />}
+          {projectInfoClicked && <ProjectInfoView project={chosenProject} />}
         </div>
       </div>
       <CreateProjectPopUp
