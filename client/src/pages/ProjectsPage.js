@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import logo from "../assets/logo_light.png";
 import ProjectsHeader from "../components/ProjectsHeader";
 import TasksView from "../components/Projects/TasksView";
 import UsersView from "../components/Projects/UsersView";
 import ProjectInfoView from "../components/Projects/ProjectInfoView";
-import CreateProjectPopUp from "../components/Projects/CreateProjectPopUp";
-import CreatedProjectPopUp from "../components/Projects/CreatedProjectPopUp";
-import FailedProjectCreationPopUp from "../components/Projects/FailedProjectCreationPopUp";
+import CreateProjectPopUp from "../components/PopUps/CreateProjectPopUp";
+import CreatedProjectPopUp from "../components/PopUps/CreatedProjectPopUp";
+import FailedProjectCreationPopUp from "../components/PopUps/FailedProjectCreationPopUp";
 
 const ProjectsPage = () => {
   const [tasksClicked, setTasksClicked] = useState(true);
@@ -24,40 +24,45 @@ const ProjectsPage = () => {
   const [failedProjectPopUpOpened, setFailedProjectPopUpOpened] =
     useState(false);
 
+  const getActiveProjects = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/projects/active/72516c5b-6454-4e26-ae1b-a019e03dd9db"
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setActiveProjects(data);
+        setChosenProject(data.at(0));
+      } else {
+        console.error("Failed to fetch projects:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const getOldProjects = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/projects/unactive/72516c5b-6454-4e26-ae1b-a019e03dd9db"
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setOldProjects(data);
+      } else {
+        console.error("Failed to fetch projects:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleProjectChange = useCallback(() => {
+    getActiveProjects();
+    getOldProjects();
+  }, []);
+
   useEffect(() => {
-    const getActiveProjects = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8080/projects/active/72516c5b-6454-4e26-ae1b-a019e03dd9db"
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setActiveProjects(data);
-          setChosenProject(data.at(0));
-        } else {
-          console.error("Failed to fetch projects:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-
-    const getOldProjects = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8080/projects/unactive/72516c5b-6454-4e26-ae1b-a019e03dd9db"
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setOldProjects(data);
-        } else {
-          console.error("Failed to fetch projects:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-
     getActiveProjects();
     getOldProjects();
   }, []);
@@ -66,8 +71,6 @@ const ProjectsPage = () => {
     setTasksClicked(true);
     setUsersClicked(false);
     setProjectInfoClicked(false);
-    console.log(activeProjects);
-    console.log(oldProjects);
   };
 
   const handleUsersClicked = () => {
@@ -140,16 +143,17 @@ const ProjectsPage = () => {
               </p>
               <div className="flex flex-col justify-start my-5 overflow-y-auto">
                 {oldProjects.map((project) => {
-                  const isChosen = project.name === chosenProject.name;
+                  const isChosen =
+                    project.projectName === chosenProject.projectName;
                   return (
                     <button
                       className={`text-lg text-bckgrnd-main text-start ${
                         isChosen ? "underline font-medium" : ""
                       }`}
-                      key={project.name}
+                      key={project.projectId}
                       onClick={() => setChosenProject(project)}
                     >
-                      {project.name}
+                      {project.projectName}
                     </button>
                   );
                 })}
@@ -205,12 +209,18 @@ const ProjectsPage = () => {
         <div className="flex flex-col justify-start mx-12 pt-8 overflow-y-auto h-5/6">
           {tasksClicked && <TasksView />}
           {usersClicked && <UsersView />}
-          {projectInfoClicked && <ProjectInfoView project={chosenProject} />}
+          {projectInfoClicked && (
+            <ProjectInfoView
+              project={chosenProject}
+              projectChange={handleProjectChange}
+            />
+          )}
         </div>
       </div>
       <CreateProjectPopUp
         openPopUp={createProjectOpened}
         closePopUp={handleCloseCreateProject}
+        projectChange={handleProjectChange}
         openCreatedProjectPopUp={handleOpenCreatedProjectPopUp}
         openFailedProjectPopUp={handleOpenFailedProjectPopUp}
       />

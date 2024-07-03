@@ -1,6 +1,11 @@
 import DateFormat from "../../functions/DateFormat";
 
-const ProjectInfoTable = ({ project }) => {
+const ProjectInfoTable = ({
+  project,
+  updateName,
+  updateDescription,
+  updateStatus,
+}) => {
   return (
     <div className="flex justify-start mx-auto p-4">
       <table className="min-w-full bg-white border border-bckgrnd-blue_dark">
@@ -13,7 +18,10 @@ const ProjectInfoTable = ({ project }) => {
               {project.projectName}
             </td>
             <td className="py-2.5 px-4">
-              <button className="bg-bckgrnd-main text-text-dark border drop-shadow-md px-3 py-1 rounded mr-2">
+              <button
+                className="bg-bckgrnd-main text-text-dark border drop-shadow-md px-3 py-1 rounded mr-2"
+                onClick={updateName}
+              >
                 Update name
               </button>
             </td>
@@ -26,7 +34,10 @@ const ProjectInfoTable = ({ project }) => {
               {project.description}
             </td>
             <td className="py-2.5 px-4">
-              <button className="bg-bckgrnd-main text-text-dark border drop-shadow-md px-3 py-1 rounded mr-2">
+              <button
+                className="bg-bckgrnd-main text-text-dark border drop-shadow-md px-3 py-1 rounded mr-2"
+                onClick={updateDescription}
+              >
                 Update description
               </button>
             </td>
@@ -56,12 +67,18 @@ const ProjectInfoTable = ({ project }) => {
             </td>
             <td className="py-2.5 px-4">
               {project.active && (
-                <button className="bg-bckgrnd-high text-white border drop-shadow-md px-3 py-1 rounded mr-2">
+                <button
+                  className="bg-bckgrnd-high text-white border drop-shadow-md px-3 py-1 rounded mr-2"
+                  onClick={updateStatus}
+                >
                   Deactivate
                 </button>
               )}
               {!project.active && (
-                <button className="bg-bckgrnd-low text-white border drop-shadow-md px-3 py-1 rounded mr-2">
+                <button
+                  className="bg-bckgrnd-low text-white border drop-shadow-md px-3 py-1 rounded mr-2"
+                  onClick={updateStatus}
+                >
                   Activate
                 </button>
               )}
