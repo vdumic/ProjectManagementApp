@@ -135,6 +135,25 @@ public class ProjectService {
         }
     }
 
+    public ProjectResponseDto updateProjectDescription(ProjectUpdateDto projectUpdateDto) {
+        Project project = projectRepository.findById(projectUpdateDto.projectId()).orElse(null);
+
+        if (project != null) {
+            OnProject onProject = project.getOnProjects().stream().filter(op -> op.getUser().getId().equals(projectUpdateDto.userId())).findAny().orElse(null);
+
+            if (onProject.getRole().getName().equals("admin")) {
+                String newDescription = projectUpdateDto.description() != null ? projectUpdateDto.description() : project.getDescription();
+                project.setDescription(newDescription);
+
+                return projectMapper.toProjectResponseDto(projectRepository.save(project));
+            } else {
+                return projectMapper.toProjectResponseDto(project);
+            }
+        } else {
+            return null;
+        }
+    }
+
     public ProjectResponseDto deactivateProject(UUID projectId, UUID userId) {
         Project project = projectRepository.findById(projectId).orElse(null);
 
