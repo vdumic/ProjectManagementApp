@@ -57,6 +57,11 @@ public class ProjectController {
         return projectService.updateProject(projectUpdateDto);
     }
 
+    @PutMapping("/projects/name")
+    public ProjectResponseDto updateProjectName(@RequestBody ProjectUpdateDto projectUpdateDto) {
+        return projectService.updateProjectName(projectUpdateDto);
+    }
+
     @PutMapping("/projects/deactivate/{project-id}/{user-id}")
     public ProjectResponseDto deactivateProject(@PathVariable("project-id") UUID projectId, @PathVariable("user-id") UUID userId) {
         return projectService.deactivateProject(projectId, userId);
