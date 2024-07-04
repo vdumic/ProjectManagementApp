@@ -24,6 +24,37 @@ const ProjectsPage = () => {
   const [failedProjectPopUpOpened, setFailedProjectPopUpOpened] =
     useState(false);
 
+  const fetchProjects = useCallback(async () => {
+    try {
+      const activeResponse = await fetch(
+        "http://localhost:8080/projects/active/72516c5b-6454-4e26-ae1b-a019e03dd9db"
+      );
+      const oldResponse = await fetch(
+        "http://localhost:8080/projects/unactive/72516c5b-6454-4e26-ae1b-a019e03dd9db"
+      );
+
+      if (activeResponse.ok && oldResponse.ok) {
+        const activeData = await activeResponse.json();
+        const oldData = await oldResponse.json();
+        setActiveProjects(activeData);
+        setOldProjects(oldData);
+        setChosenProject(activeData[0] || oldData[0] || {});
+      } else {
+        console.error(
+          "Failed to fetch projects:",
+          activeResponse.statusText,
+          oldResponse.statusText
+        );
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
+
   const getActiveProjects = async () => {
     try {
       const response = await fetch(
@@ -56,16 +87,6 @@ const ProjectsPage = () => {
       console.error("Error:", error);
     }
   };
-
-  const handleProjectChange = useCallback(() => {
-    getActiveProjects();
-    getOldProjects();
-  }, []);
-
-  useEffect(() => {
-    getActiveProjects();
-    getOldProjects();
-  }, []);
 
   const handleTasksClicked = () => {
     setTasksClicked(true);
@@ -212,7 +233,7 @@ const ProjectsPage = () => {
           {projectInfoClicked && (
             <ProjectInfoView
               project={chosenProject}
-              projectChange={handleProjectChange}
+              projectChange={fetchProjects}
             />
           )}
         </div>
@@ -220,7 +241,7 @@ const ProjectsPage = () => {
       <CreateProjectPopUp
         openPopUp={createProjectOpened}
         closePopUp={handleCloseCreateProject}
-        projectChange={handleProjectChange}
+        projectChange={fetchProjects}
         openCreatedProjectPopUp={handleOpenCreatedProjectPopUp}
         openFailedProjectPopUp={handleOpenFailedProjectPopUp}
       />

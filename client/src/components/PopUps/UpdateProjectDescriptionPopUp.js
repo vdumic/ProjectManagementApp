@@ -39,6 +39,7 @@ const UpdateProjectDescriptionPopUp = ({
         const data = await response.json();
         console.log("Project updated successfully:", data);
         closePopUp();
+        projectChange();
       } else {
         console.error("Failed to update project:", response.statusText);
       }
@@ -63,13 +64,11 @@ const UpdateProjectDescriptionPopUp = ({
           <div className="flex justify-center items-center">
             <Formik
               initialValues={{
-                description: "",
+                description: project.description,
               }}
               onSubmit={(values) => {
                 const { description } = { ...values };
-                console.log(description);
                 handleUpdateProjectDescription(description);
-                projectChange();
               }}
             >
               <Form className="flex flex-col w-1/2 justify-center items-center">

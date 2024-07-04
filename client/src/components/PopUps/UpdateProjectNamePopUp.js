@@ -45,6 +45,7 @@ const UpdateProjectNamePopUp = ({
         const data = await response.json();
         console.log("Project updated successfully:", data);
         closePopUp();
+        projectChange();
       } else {
         console.error("Failed to update project:", response.statusText);
       }
@@ -69,14 +70,12 @@ const UpdateProjectNamePopUp = ({
           <div className="flex justify-center items-center">
             <Formik
               initialValues={{
-                name: "",
+                name: project.projectName,
               }}
               validationSchema={ValidationSchema}
               onSubmit={(values) => {
                 const { name } = { ...values };
-                console.log(name);
                 handleUpdateProjectName(name);
-                projectChange();
               }}
             >
               <Form className="flex flex-col w-1/2 justify-center items-center">

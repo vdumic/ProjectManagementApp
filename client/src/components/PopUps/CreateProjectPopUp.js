@@ -26,7 +26,6 @@ const CreateProjectPopUp = ({
   });
 
   const handleCreateProject = async (name, description) => {
-    console.log(name, description);
     const project = {
       name: name,
       description: description,

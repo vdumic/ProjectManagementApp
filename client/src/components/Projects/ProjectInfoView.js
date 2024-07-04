@@ -3,11 +3,15 @@ import ProjectInfoTable from "./ProjectInfoTable";
 import UpdateProjectNamePopUp from "../PopUps/UpdateProjectNamePopUp";
 import UpdateProjectDescriptionPopUp from "../PopUps/UpdateProjectDescriptionPopUp";
 import UpdateProjectStatusPopUp from "../PopUps/UpdateProjectStatusPopUp";
+import DeleteProjectPopUp from "../PopUps/DeleteProjectPopUp";
+import DeletedProjectPopUp from "../PopUps/DeletedProjectPopUp";
 
 const ProjectInfoView = ({ project, projectChange }) => {
   const [updateNamePopUp, setUpdateNamePopUp] = useState(false);
   const [updateDescriptionPopUp, setUpdateDescriptionPopUp] = useState(false);
   const [updateStatusPopUp, setUpdateStatusPopUp] = useState(false);
+  const [deleteProjectPopUp, setDeleteProjectPopUp] = useState(false);
+  const [deletedProjectPopUp, setDeletedProjectPopUp] = useState(false);
 
   const handleUpdateNameOpen = () => {
     setUpdateNamePopUp(true);
@@ -19,6 +23,14 @@ const ProjectInfoView = ({ project, projectChange }) => {
 
   const handleUpdateStatusOpen = () => {
     setUpdateStatusPopUp(true);
+  };
+
+  const handleDeleteProjectOpen = () => {
+    setDeleteProjectPopUp(true);
+  };
+
+  const handleDeletedProjectOpen = () => {
+    setDeletedProjectPopUp(true);
   };
 
   return (
@@ -51,6 +63,25 @@ const ProjectInfoView = ({ project, projectChange }) => {
         openPopUp={updateStatusPopUp}
         closePopUp={() => setUpdateStatusPopUp(false)}
         projectChange={projectChange}
+      />
+      <div className="flex justify-start mx-auto p-4">
+        <button
+          className="bg-bckgrnd-high text-white text-lg border drop-shadow-md px-6 py-3 rounded mr-2"
+          onClick={handleDeleteProjectOpen}
+        >
+          Delete project
+        </button>
+      </div>
+      <DeleteProjectPopUp
+        project={project}
+        openPopUp={deleteProjectPopUp}
+        closePopUp={() => setDeleteProjectPopUp(false)}
+        projectChange={projectChange}
+        openDeletedProjectPopUp={handleDeletedProjectOpen}
+      />
+      <DeletedProjectPopUp
+        openPopUp={deletedProjectPopUp}
+        closePopUp={() => setDeletedProjectPopUp(false)}
       />
     </div>
   );
