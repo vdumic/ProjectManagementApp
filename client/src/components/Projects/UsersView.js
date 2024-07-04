@@ -1,11 +1,29 @@
-const users = [
-  { name: "Amelia Price", role: "Admin" },
-  { name: "Jacob Evans", role: "Guest" },
-  { name: "Mia Jenkins", role: "Guest" },
-  { name: "Harper Reed", role: "Admin" },
-];
+import { useState, useEffect, useCallback } from "react";
 
-const UsersView = () => {
+const UsersView = ({ project }) => {
+  const [users, setUsers] = useState([]);
+
+  const fetchUsers = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/users_on_project/${project.projectId}`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(data);
+      } else {
+        console.error("Failed to fetch users:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
   return (
     <div>
       <div className="flex justify-start mx-auto p-4">
@@ -21,7 +39,7 @@ const UsersView = () => {
             {users.map((user) => (
               <tr key={user.id} className="border border-bckgrnd-blue_dark">
                 <td className="py-2.5 px-4 text-lg text-text-dark font-medium">
-                  {user.name}
+                  {`${user.firstname} ${user.lastname}`}
                 </td>
                 <td className="py-2.5 px-4 text-lg text-text-dark">
                   {user.role}

@@ -1,4 +1,4 @@
-const TaskCard = ({ title, priority, isAssigned, asignee }) => {
+const TaskCard = ({ title, priority, isAssigned, assignee }) => {
   const bckgrnd = "bg-bckgrnd-" + priority.toLowerCase();
 
   return (
@@ -12,7 +12,7 @@ const TaskCard = ({ title, priority, isAssigned, asignee }) => {
         </div>
         {isAssigned && (
           <div className="flex flex-col justify-center bg-bckgrnd-blue_dark rounded-full w-7 h-fit">
-            <p className="text-center text-white px-1 py-0.5">{asignee}</p>
+            <p className="text-center text-white px-1 py-0.5">{assignee}</p>
           </div>
         )}
       </div>

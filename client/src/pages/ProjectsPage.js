@@ -11,9 +11,9 @@ import CreatedProjectPopUp from "../components/PopUps/CreatedProjectPopUp";
 import FailedProjectCreationPopUp from "../components/PopUps/FailedProjectCreationPopUp";
 
 const ProjectsPage = () => {
-  const [tasksClicked, setTasksClicked] = useState(true);
+  const [tasksClicked, setTasksClicked] = useState(false);
   const [usersClicked, setUsersClicked] = useState(false);
-  const [projectInfoClicked, setProjectInfoClicked] = useState(false);
+  const [projectInfoClicked, setProjectInfoClicked] = useState(true);
   const [chosenProject, setChosenProject] = useState({});
   const [activeProjects, setActiveProjects] = useState([]);
   const [oldProjects, setOldProjects] = useState([]);
@@ -54,39 +54,6 @@ const ProjectsPage = () => {
   useEffect(() => {
     fetchProjects();
   }, [fetchProjects]);
-
-  const getActiveProjects = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:8080/projects/active/72516c5b-6454-4e26-ae1b-a019e03dd9db"
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setActiveProjects(data);
-        setChosenProject(data.at(0));
-      } else {
-        console.error("Failed to fetch projects:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const getOldProjects = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:8080/projects/unactive/72516c5b-6454-4e26-ae1b-a019e03dd9db"
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setOldProjects(data);
-      } else {
-        console.error("Failed to fetch projects:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   const handleTasksClicked = () => {
     setTasksClicked(true);
@@ -228,8 +195,8 @@ const ProjectsPage = () => {
           </div>
         </div>
         <div className="flex flex-col justify-start mx-12 pt-8 overflow-y-auto h-5/6">
-          {tasksClicked && <TasksView />}
-          {usersClicked && <UsersView />}
+          {tasksClicked && <TasksView project={chosenProject} />}
+          {usersClicked && <UsersView project={chosenProject} />}
           {projectInfoClicked && (
             <ProjectInfoView
               project={chosenProject}
