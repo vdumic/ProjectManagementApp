@@ -14,7 +14,7 @@ const ProjectsHeader = ({ project }) => {
             </div>
             <div className="flex items-center justify-between">
               <Link
-                to="/project-board"
+                to={`/projects/${project.projectId}`}
                 className="bg-white rounded border-2 border-gray-500 shadow-lg"
               >
                 <p className="text-lg py-0.5 px-4 text-text-dark font-medium">
