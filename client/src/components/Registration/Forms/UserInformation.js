@@ -14,41 +14,25 @@ const UserInformation = () => {
   );
 
   const ValidationSchema = yup.object().shape({
-    email: yup.string().email("Email not valid").required("Email is required"),
     firstname: yup.string().required("Firstname is required"),
     lastname: yup.string().required("Lastname is required"),
+    username: yup.string().required("Username is required"),
   });
 
   return (
     <Formik
       initialValues={{
-        email: "",
         firstname: "",
         lastname: "",
+        username: "",
       }}
       validationSchema={ValidationSchema}
-      onSubmit={async (values) => {
-        let userExists = false;
+      onSubmit={ (values) => {
+        console.log('uslooo');
         const data = { ...formData, ...values };
+        console.log(data);
         setFormData(data);
-
-        try {
-          const response = await fetch(
-            `http://localhost:8080/users/exist/${formData.email}`
-          );
-          const jsonData = await response.json();
-          userExists = jsonData;
-        } catch (error) {
-          console.error(error.message);
-        }
-
-        console.log(userExists);
-
-        if (userExists) {
-          setActiveStepIndex(4);
-        } else {
-          setActiveStepIndex(activeStepIndex + 1);
-        }
+        setActiveStepIndex(activeStepIndex + 1);
       }}
     >
       <Form className="flex flex-col w-1/5 justify-center items-center">
@@ -71,14 +55,14 @@ const UserInformation = () => {
           <ErrorMessage name="lastname" render={renderError} />
         </div>
         <div className="flex flex-col items-start mb-6 w-full">
-          <label className="font-medium text-text-dark">Email</label>
+          <label className="font-medium text-text-dark">Username</label>
           <Field
-            name="email"
+            name="username"
             className="border-2 py-2 w-full px-4"
-            placeholder="example@mail.com"
+            placeholder="username"
           />
+          <ErrorMessage name="username" render={renderError} />
         </div>
-        <ErrorMessage name="email" render={renderError} />
         <ContinueButton />
       </Form>
     </Formik>

@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
 
-const UserLogin = () => {
-  const [formData, setFormData] = useState([]);
+import { FormContext } from "../../../pages/Register";
+
+const PasswordCreation = () => {
+  const { activeStepIndex, setActiveStepIndex, formData, setFormData } =
+    useContext(FormContext);
 
   const renderError = (message) => (
     <p className="italic text-red-500 text-center w-full pt-6">{message}</p>
@@ -24,10 +27,9 @@ const UserLogin = () => {
         password: "",
       }}
       validationSchema={ValidationSchema}
-      onSubmit={(values) => {
-        const data = { ...values };
+      onSubmit={ (values) => {
+        const data = { ...formData, ...values };
         setFormData(data);
-        console.log(formData);
       }}
     >
       <Form className="flex flex-col w-1/5 justify-center items-center">
@@ -38,8 +40,8 @@ const UserLogin = () => {
             className="border-2 py-2 w-full px-4"
             placeholder="example@mail.com"
           />
-          <ErrorMessage name="email" render={renderError} />
         </div>
+        <ErrorMessage name="email" render={renderError} />
         <div className="flex flex-col items-start mb-6 w-full">
           <label className="font-medium text-text-dark">Password</label>
           <Field
@@ -51,14 +53,14 @@ const UserLogin = () => {
           <ErrorMessage name="password" render={renderError} />
         </div>
         <button
-          className="flex justify-center text-white font-medium mt-8 px-3.5 py-2 bg-button-blue rounded-xl shadow-xl "
+          className="flex justify-center text-white font-medium mt-10 py-2 px-3 bg-button-blue rounded-xl shadow-xl "
           type="submit"
         >
-          Login
+          Register
         </button>
       </Form>
     </Formik>
   );
 };
 
-export default UserLogin;
+export default PasswordCreation;

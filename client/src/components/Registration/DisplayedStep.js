@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { FormContext } from "../../pages/Register";
 import UserInformation from "./Forms/UserInformation";
 import AdditionalInfo from "./Forms/AdditionalInfo";
-import PasskeyCreation from "./Forms/PasskeyCreation";
+import PasswordCreation from "./Forms/PasswordCreation";
 
 const DisplayedStep = () => {
   const { activeStepIndex } = useContext(FormContext);
@@ -16,7 +16,7 @@ const DisplayedStep = () => {
       stepContent = <AdditionalInfo />;
       break;
     case 2:
-      stepContent = <PasskeyCreation />;
+      stepContent = <PasswordCreation />;
       break;
     default:
       break;
