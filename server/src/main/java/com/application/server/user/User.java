@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = " `user`")
+@Table(name = "app_user")
 public class User {
 
     @Id
@@ -29,6 +29,15 @@ public class User {
 
     @Column(name = "username")
     private String username;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "passkeyId")
+    private String passkeyId;
+
+    @Column(name = "login")
+    private String login;
 
     @Column(name = "organization")
     private String organization;

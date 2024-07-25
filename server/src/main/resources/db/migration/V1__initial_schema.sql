@@ -1,6 +1,9 @@
-CREATE TABLE "user" (
+CREATE TABLE "app_user" (
     "id" UUID NOT NULL,
     "email" VARCHAR(50) NOT NULL,
+    "password" VARCHAR(250) NOT NULL,
+    "passkeyId" VARCHAR(250),
+    "login" VARCHAR(250),
     "firstname" VARCHAR(50) NOT NULL,
     "lastname" VARCHAR(50) NOT NULL,
     "username" VARCHAR(50) NOT NULL,
@@ -11,7 +14,7 @@ CREATE TABLE "user" (
 
 CREATE TABLE "project" (
     "id" UUID NOT NULL,
-    "created_by" UUID references "user"("id"),
+    "created_by" UUID references "app_user"("id"),
     "name" VARCHAR(100) NOT NULL,
     "description" VARCHAR(500),
     "created_at" TIMESTAMP NOT NULL DEFAULT now()::timestamp(0),
@@ -26,7 +29,7 @@ CREATE TABLE "role" (
 );
 
 CREATE TABLE "on_project" (
-    "user_id" UUID references "user"("id"),
+    "user_id" UUID references "app_user"("id"),
     "project_id" UUID references "project"("id"),
     "role_id" UUID references "role"("id"),
     PRIMARY KEY("user_id", "project_id")
@@ -55,7 +58,7 @@ CREATE TABLE "task" (
     "project_id" UUID references "project"("id"),
     "status_id" UUID references "status"("id"),
     "priority_id" UUID references "priority"("id"),
-    "created_by" UUID references "user"("id"),
+    "created_by" UUID references "app_user"("id"),
     "name" VARCHAR(50) NOT NULL,
     "description" VARCHAR(200) NOT NULL,
     "created_at" TIMESTAMP NOT NULL DEFAULT now()::timestamp(0),
