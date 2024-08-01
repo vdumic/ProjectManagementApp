@@ -1,5 +1,6 @@
 package com.application.server.config;
 
+import com.application.server.exceptions.AppException;
 import com.application.server.user.UserDto;
 import com.application.server.user.UserService;
 import com.auth0.jwt.JWT;
@@ -8,6 +9,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -35,7 +37,7 @@ public class UserAuthProvider {
 
     public String createToken(String email) {
         Date now = new Date();
-        Date validity = new Date(now.getTime() + 3_600_000);
+        Date validity = new Date(now.getTime() + 3600000);
 
         return JWT.create()
                 .withIssuer(email)
@@ -46,11 +48,15 @@ public class UserAuthProvider {
 
     public Authentication validateToken(String token) {
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secretKey)).build();
-
         DecodedJWT decodedJWT = verifier.verify(token);
 
-        UserDto user = userService.findByEmail(decodedJWT.getIssuer());
+        String email = decodedJWT.getIssuer();
+        UserDto user = userService.findByEmail(email);
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        if (user != null) {
+            return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        } else {
+            throw new AppException("User not found!", HttpStatus.NOT_FOUND);
+        }
     }
 }
