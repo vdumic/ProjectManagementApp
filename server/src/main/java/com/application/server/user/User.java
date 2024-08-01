@@ -33,7 +33,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "passkeyId")
+    @Column(name = "passkey_id")
     private String passkeyId;
 
     @Column(name = "login")
@@ -61,18 +61,17 @@ public class User {
     public User() {
     }
 
-    public User(UUID id, String email, String firstname, String lastname, String username, String organization, String jobTitle, List<Task> createdTasks, List<Task> assignedTasks, List<Project> projects, List<OnProject> onProjects) {
+    public User(UUID id, String email, String firstname, String lastname, String username, String password, String passkeyId, String login, String organization, String jobTitle) {
         this.id = id;
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
+        this.password = password;
+        this.passkeyId = passkeyId;
+        this.login = login;
         this.organization = organization;
         this.jobTitle = jobTitle;
-        this.createdTasks = createdTasks;
-        this.assignedTasks = assignedTasks;
-        this.projects = projects;
-        this.onProjects = onProjects;
     }
 
     public UUID getId() {
@@ -131,6 +130,30 @@ public class User {
         this.jobTitle = jobTitle;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasskeyId() {
+        return passkeyId;
+    }
+
+    public void setPasskeyId(String passkeyId) {
+        this.passkeyId = passkeyId;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public List<Task> getCreatedTasks() {
         return createdTasks;
     }
@@ -171,6 +194,9 @@ public class User {
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", passkeyId='" + passkeyId + '\'' +
+                ", login='" + login + '\'' +
                 ", organization='" + organization + '\'' +
                 ", jobTitle='" + jobTitle + '\'' +
                 ", createdTasks=" + createdTasks +

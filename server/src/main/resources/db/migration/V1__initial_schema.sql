@@ -2,7 +2,7 @@ CREATE TABLE "app_user" (
     "id" UUID NOT NULL,
     "email" VARCHAR(50) NOT NULL,
     "password" VARCHAR(250) NOT NULL,
-    "passkeyId" VARCHAR(250),
+    "passkey_id" VARCHAR(250),
     "login" VARCHAR(250),
     "firstname" VARCHAR(50) NOT NULL,
     "lastname" VARCHAR(50) NOT NULL,

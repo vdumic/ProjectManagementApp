@@ -1,5 +1,6 @@
 package com.application.server.user;
 
+import org.mapstruct.Mapping;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,5 +12,29 @@ public class UserMapper {
 
     public UserIdDto toUserIdDto(User user) {
         return new UserIdDto(user.getId());
+    }
+
+    public UserDto toUserDto(User user) {
+        return new UserDto(user.getId(),
+                user.getEmail(),
+                user.getFirstname(),
+                user.getLastname(),
+                user.getLogin(),
+                null,
+                user.getPasskeyId());
+    }
+
+    @Mapping(target = "password", ignore = true)
+    public User signUpToUser(SignUpDto userDto) {
+        return new User(null,
+                userDto.email(),
+                userDto.firstname(),
+                userDto.lastname(),
+                userDto.username(),
+                userDto.password().toString(),
+                "passkey",
+                userDto.login(),
+                userDto.organization(),
+                userDto.jobtitle());
     }
 }

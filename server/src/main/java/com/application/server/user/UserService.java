@@ -1,9 +1,14 @@
 package com.application.server.user;
 
+import com.application.server.exceptions.AppException;
 import com.application.server.on_project.OnProject;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.CharBuffer;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -12,10 +17,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> getAllUsers() {
@@ -83,5 +90,39 @@ public class UserService {
     public String getUserJobtitle(UUID userId) {
         User user = userRepository.findById(userId).orElse(null);
         return user.getJobTitle();
+    }
+
+    public UserDto findByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
+
+        return userMapper.toUserDto(user);
+    }
+
+    public UserDto login(CredentialsDto credentialsDto) {
+        User user = userRepository.findByEmail(credentialsDto.email())
+                .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
+
+        if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.password()), user.getPassword())) {
+            return userMapper.toUserDto(user);
+        }
+
+        throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
+    }
+
+    public UserDto register(SignUpDto userDto) {
+        Optional<User> optionalUser = userRepository.findByEmail(userDto.email());
+
+        if (optionalUser.isPresent()) {
+            throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
+        }
+
+        User user = userMapper.signUpToUser(userDto);
+
+        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.password())));
+
+        User savedUser = userRepository.save(user);
+
+        return userMapper.toUserDto(user);
     }
 }

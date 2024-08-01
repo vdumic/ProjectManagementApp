@@ -1,17 +1,14 @@
 package com.application.server.user;
 
-import jakarta.validation.constraints.NotEmpty;
+
+import java.util.UUID;
 
 public record UserDto(
-        @NotEmpty(message = "Email should not be empty")
+        UUID id,
         String email,
-        @NotEmpty(message = "Firstname should not be empty")
-        String firstname,
-        @NotEmpty(message = "Lastname should not be empty")
-        String lastname,
-        @NotEmpty(message = "Username should not be empty")
-        String username,
-        String organization,
-        String jobTitle
-) {
+        String firstName,
+        String lastName,
+        String login,
+        String token,
+        String passkeyId) {
 }
