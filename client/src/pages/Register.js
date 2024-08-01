@@ -2,10 +2,10 @@ import { createContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-import StepCounter from "../components/Registration/StepCounter";
-import DisplayedStep from "../components/Registration/DisplayedStep";
-import Success from "../components/Registration/Forms/Success";
-import Failure from "../components/Registration/Forms/Failure";
+import StepCounter from "../components - registration/StepCounter";
+import DisplayedStep from "../components - registration/DisplayedStep";
+import Success from "../components - registration/Success";
+import Failure from "../components - registration/Failure";
 
 import logo from "../assets/logo.png";
 
@@ -15,16 +15,20 @@ const Register = () => {
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const [formData, setFormData] = useState({});
 
+  const handleBeginRegistration = () => {
+    setActiveStepIndex(0);
+  }
+
   if (activeStepIndex === 3) {
     window.scrollTo(0, 0);
 
-    return <Success email={formData.email} />;
+    return <Success email={formData.email} userId={formData.userId}/>;
   }
 
   if (activeStepIndex === 4) {
     window.scrollTo(0, 0);
 
-    return <Failure email={formData.email} />;
+    return <Failure email={formData.email} handleBeginRegistration={handleBeginRegistration}/>;
   }
 
   return (

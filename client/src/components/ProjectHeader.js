@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import logo from "../assets/logo.png";
 import userIcon from "../assets/user_icon.png";
-import NavLink from "./Buttons/NavLink";
+import HeaderLink from "../components - main header/Buttons/HeaderLink";
 
 const ProjectHeader = () => {
   const location = useLocation();
@@ -16,7 +16,7 @@ const ProjectHeader = () => {
               <img src={logo} alt="Sprynt logo" width="110" />
             </Link>
             <div className="flex items-center justify-between ml-32">
-              <NavLink
+              <HeaderLink
                 title="All projects"
                 path="/projects"
                 location={location.pathname}

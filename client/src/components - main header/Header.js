@@ -5,7 +5,7 @@ import AppContext from "../store/app-context";
 import logo from "../assets/logo.png";
 import userIcon from "../assets/user_icon.png";
 import HeaderButton from "./Buttons/HeaderButton";
-import NavLink from "./Buttons/NavLink";
+import HeaderLink from "./Buttons/HeaderLink";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,26 +38,26 @@ const Header = () => {
     >
       <main className="max-w-full flex-grow flex flex-col my-3 mx-48">
         <div className="flex items-center justify-between">
-          <Link to="/">
+          <Link to="/" onClick={() => window.scrollTo({ top: 0 })}>
             <img src={logo} alt="Sprynt logo" width="110" />
           </Link>
           <div className="flex items-center justify-between mr-64">
-            <NavLink
+            <HeaderLink
               title="Work management"
               path="/work-management"
               location={location.pathname}
             />
-            <NavLink
+            <HeaderLink
               title="About us"
               path="/about-us"
               location={location.pathname}
             />
-            <NavLink
+            <HeaderLink
               title="Support"
               path="/support"
               location={location.pathname}
             />
-            {isLoggedIn && <NavLink title="Projects" path="projects" />}
+            {isLoggedIn && <HeaderLink title="Projects" path="projects" />}
           </div>
           {!isLoggedIn && (
             <div className="flex items-center justify-between">

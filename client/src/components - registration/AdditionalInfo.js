@@ -3,8 +3,8 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
 import { SlArrowLeft } from "react-icons/sl";
 
-import { FormContext } from "../../../pages/Register";
-import ContinueButton from "../../Buttons/ContinueButton";
+import { FormContext } from "../pages/Register";
+import ContinueButton from "../components/Buttons/ContinueButton";
 
 const AdditionalInfo = () => {
   const { activeStepIndex, setActiveStepIndex, formData, setFormData } =
@@ -27,7 +27,6 @@ const AdditionalInfo = () => {
   return (
     <Formik
       initialValues={{
-        username: "",
         organization: "",
         jobtitle: "",
       }}

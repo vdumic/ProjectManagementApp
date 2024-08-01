@@ -1,3 +1,6 @@
+import { useParams } from "react-router-dom";
+import { request } from "../../axios/axios_helper";
+
 const DeleteProjectPopUp = ({
   project,
   openPopUp,
@@ -5,6 +8,8 @@ const DeleteProjectPopUp = ({
   projectChange,
   openDeletedProjectPopUp,
 }) => {
+  const {userId} = useParams();
+
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
       closePopUp();
@@ -14,27 +19,20 @@ const DeleteProjectPopUp = ({
   if (openPopUp !== true) return null;
 
   const handleDeleteProject = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/projects/${project.projectId}/72516c5b-6454-4e26-ae1b-a019e03dd9db`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.ok) {
+    request("DELETE",
+      `/projects/${project.projectId}/${userId}`,
+      {}
+    ).then(async response => {
+      if (response.status === 200) {
         closePopUp();
         openDeletedProjectPopUp();
         projectChange();
       } else {
         console.error("Failed to delete project:", response.statusText);
       }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    }).catch(error => {
+      console.log(error);
+    });
   };
 
   return (

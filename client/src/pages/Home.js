@@ -1,5 +1,5 @@
-import Examples from "../components/Home/Examples";
-import HeroSection from "../components/Home/HeroSection";
+import Examples from "../components - home/Examples";
+import HeroSection from "../components - home/HeroSection";
 import Spacer from "../components/Spacer";
 import HeaderFooterLayout from "../layouts/HeaderFooterLayout";
 

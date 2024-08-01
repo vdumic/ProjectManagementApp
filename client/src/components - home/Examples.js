@@ -1,5 +1,5 @@
-import projectsPage from "../../assets/projects_page.png";
-import projectBoard from "../../assets/project_board.png";
+import projectsPage from "../assets/projects_page.png";
+import projectBoard from "../assets/project_board.png";
 
 const Examples = () => {
   return (

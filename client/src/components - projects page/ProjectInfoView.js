@@ -1,10 +1,10 @@
 import { useState } from "react";
 import ProjectInfoTable from "./ProjectInfoTable";
-import UpdateProjectNamePopUp from "../PopUps/UpdateProjectNamePopUp";
-import UpdateProjectDescriptionPopUp from "../PopUps/UpdateProjectDescriptionPopUp";
-import UpdateProjectStatusPopUp from "../PopUps/UpdateProjectStatusPopUp";
-import DeleteProjectPopUp from "../PopUps/DeleteProjectPopUp";
-import DeletedProjectPopUp from "../PopUps/DeletedProjectPopUp";
+import UpdateProjectNamePopUp from "./PopUps/UpdateProjectNamePopUp";
+import UpdateProjectDescriptionPopUp from "./PopUps/UpdateProjectDescriptionPopUp";
+import UpdateProjectStatusPopUp from "./PopUps/UpdateProjectStatusPopUp";
+import DeleteProjectPopUp from "./PopUps/DeleteProjectPopUp";
+import DeletedProjectPopUp from "./PopUps/DeletedProjectPopUp";
 
 const ProjectInfoView = ({ project, projectChange }) => {
   const [updateNamePopUp, setUpdateNamePopUp] = useState(false);

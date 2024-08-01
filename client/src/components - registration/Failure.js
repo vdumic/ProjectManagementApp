@@ -1,8 +1,7 @@
 import { BsXCircle } from "react-icons/bs";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
 
-const Failure = ({ email }) => {
+const Failure = ({ email, handleBeginRegistration }) => {
   return (
     <div className="flex flex-col h-screen items-center pt-20">
       <Helmet>
@@ -18,13 +17,12 @@ const Failure = ({ email }) => {
       <div className="text-xl font-light pt-5 sm:text-center">
         User with email already exists: {email}
       </div>
-      <Link
-        to="/login"
+      <button
+        onClick={handleBeginRegistration}
         className="flex justify-center text-lg text-white font-medium mt-10 py-2.5 px-5 bg-button-blue rounded-xl shadow-xl "
-        type="submit"
       >
-        Sign in
-      </Link>
+        Try with another email
+      </button>
     </div>
   );
 };

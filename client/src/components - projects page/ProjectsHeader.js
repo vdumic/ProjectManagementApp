@@ -1,7 +1,15 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import DropDownMenu from "./DropDownMenu";
 import userIcon from "../assets/user_icon.png";
 
 const ProjectsHeader = ({ project }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <header className="w-full bg-bckgrnd-blue_light">
       <main className="max-w-full flex-grow flex flex-col py-3 mx-12">
@@ -24,7 +32,7 @@ const ProjectsHeader = ({ project }) => {
             </div>
           </div>
           <div className="flex items-center justify-between ml-44">
-            <Link to="/profile">
+            <button onClick={toggleMenu}>
               <img
                 src={userIcon}
                 alt="User icon"
@@ -32,7 +40,8 @@ const ProjectsHeader = ({ project }) => {
                 width="45"
                 className="bg-bckgrnd-main rounded-full"
               />
-            </Link>
+              {isMenuOpen &&  <DropDownMenu />}
+            </button>
           </div>
         </div>
       </main>

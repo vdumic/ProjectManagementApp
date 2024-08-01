@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { BsCheckCircle } from "react-icons/bs";
 
-const Success = ({ email }) => {
+const Success = ({ email, userId }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
-      navigate("/user-home");
+      navigate(`/projects-list/${userId}`);
     }, 4000);
   }, [navigate]);
 
@@ -25,7 +25,7 @@ const Success = ({ email }) => {
         </div>
       </div>
       <div className="text-xl font-light pt-5 sm:text-center">
-        Confirmation email was sent to: {email}
+        Registered email: {email}
       </div>
     </div>
   );

@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { request, setAuthHeader } from "../axios/axios_helper";
 import * as yup from "yup";
 
-const UserLogin = () => {
+const UserLogin = ({handleError}) => {
   const [formData, setFormData] = useState([]);
+  const navigate = useNavigate();
 
   const renderError = (message) => (
     <p className="italic text-red-500 text-center w-full pt-6">{message}</p>
@@ -17,6 +20,25 @@ const UserLogin = () => {
       .min(8, "Password is too short - should be 8 chars minimum."),
   });
 
+  const loginUser = () => {
+    request("POST", 
+            "/login", 
+            {
+              email: formData.email,
+              password: formData.password
+            }).then(
+              (response) => {
+                setAuthHeader(response.data.token);
+                navigate(`/projects-list/${response.data.id}`);
+              }
+            ).catch(
+              (error) => {
+                setAuthHeader(null);
+                handleError(error.response.data);
+              }
+            )
+  }
+
   return (
     <Formik
       initialValues={{
@@ -27,7 +49,7 @@ const UserLogin = () => {
       onSubmit={(values) => {
         const data = { ...values };
         setFormData(data);
-        console.log(formData);
+        loginUser();
       }}
     >
       <Form className="flex flex-col w-1/5 justify-center items-center">

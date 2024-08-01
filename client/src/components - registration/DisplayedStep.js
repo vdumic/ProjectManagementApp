@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
-import { FormContext } from "../../pages/Register";
-import UserInformation from "./Forms/UserInformation";
-import AdditionalInfo from "./Forms/AdditionalInfo";
-import PasswordCreation from "./Forms/PasswordCreation";
+import { FormContext } from "../pages/Register";
+import UserInformation from "./UserInformation";
+import AdditionalInfo from "./AdditionalInfo";
+import PasswordCreation from "./PasswordCreation";
 
 const DisplayedStep = () => {
   const { activeStepIndex } = useContext(FormContext);

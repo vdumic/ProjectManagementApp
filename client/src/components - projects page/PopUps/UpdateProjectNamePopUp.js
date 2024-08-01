@@ -1,5 +1,7 @@
+import { useParams } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
+import { request } from "../../axios/axios_helper";
 
 const UpdateProjectNamePopUp = ({
   project,
@@ -7,6 +9,8 @@ const UpdateProjectNamePopUp = ({
   closePopUp,
   projectChange,
 }) => {
+  const { userId } = useParams();
+
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
       closePopUp();
@@ -24,41 +28,32 @@ const UpdateProjectNamePopUp = ({
   });
 
   const handleUpdateProjectName = async (projectName) => {
-    console.log(projectName);
-    const updatedProject = {
+    request("PUT", "/projects/name", {
       projectId: project.projectId,
-      userId: "72516c5b-6454-4e26-ae1b-a019e03dd9db",
+      userId: userId,
       name: projectName,
       description: null,
-    };
-
-    try {
-      const response = await fetch("http://localhost:8080/projects/name", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedProject),
+    })
+      .then(async (response) => {
+        if (response.status === 200) {
+          const data = await response.data;
+          console.log("Project updated successfully:", data);
+          closePopUp();
+          projectChange();
+        } else {
+          console.log("Failed to update project!")
+        }
+      })
+      .catch((error) => {
+        console.log(error);
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Project updated successfully:", data);
-        closePopUp();
-        projectChange();
-      } else {
-        console.error("Failed to update project:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
   };
 
   return (
     <div
       id="ModelContainer"
       onClick={handleClosePopUp}
-      className="fixed inset-0 bg-black flex justify-center items-center bg-opacity-20 backdrop-blur-sm"
+      className="fixed z-10 inset-0 bg-black flex justify-center items-center bg-opacity-20 backdrop-blur-sm"
     >
       <div className="p-2 bg-white w-10/12 md:w-1/2 lg:1/3 shadow-inner border-e-emerald-600 rounded-lg py-5">
         <div className="w-full p-3 justify-center items-center">

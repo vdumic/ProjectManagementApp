@@ -1,4 +1,4 @@
-import DateFormat from "../../functions/DateFormat";
+import DateFormat from "../functions/DateFormat";
 
 const ProjectInfoTable = ({
   project,
@@ -55,7 +55,7 @@ const ProjectInfoTable = ({
               Created at
             </td>
             <td className="py-2.5 px-4 text-lg text-text-dark">
-              <DateFormat dateString={project.createdAt} />
+              <DateFormat timestamp={project.createdAt} />
             </td>
           </tr>
           <tr className="border border-bckgrnd-blue_dark">

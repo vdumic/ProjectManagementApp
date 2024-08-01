@@ -3,7 +3,7 @@ import AppContext from "./app-context";
 
 const defaultAppState = {
   userState: {
-    isLoggedIn: false,
+    userId: "",
   },
 };
 
@@ -11,15 +11,7 @@ const appReducer = (state, action) => {
   if (action.type === "LOGIN") {
     return {
       userState: {
-        isLoggedIn: true,
-      },
-    };
-  }
-
-  if (action.type === "LOGOUT") {
-    return {
-      userState: {
-        isLoggedIn: false,
+        userId: true,
       },
     };
   }
@@ -28,17 +20,11 @@ const appReducer = (state, action) => {
 const AppContextProvider = (props) => {
   const [appState, dispatchAction] = useReducer(appReducer, defaultAppState);
 
-  const loginHandler = () => {
+  const userIdHandler = () => {
     dispatchAction({ type: "LOGIN" });
   };
 
-  const logoutHandler = async () => {
-    dispatchAction({ type: "LOGOUT" });
-  };
-
   const appContext = {
-    handleLogin: loginHandler,
-    handleLogout: logoutHandler,
     userData: appState.userState,
   };
 

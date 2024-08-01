@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
 
-import { FormContext } from "../../../pages/Register";
-import ContinueButton from "../../Buttons/ContinueButton";
+import { FormContext } from "../pages/Register";
+import ContinueButton from "../components/Buttons/ContinueButton";
 
 const UserInformation = () => {
   const { activeStepIndex, setActiveStepIndex, formData, setFormData } =
@@ -28,9 +28,7 @@ const UserInformation = () => {
       }}
       validationSchema={ValidationSchema}
       onSubmit={ (values) => {
-        console.log('uslooo');
         const data = { ...formData, ...values };
-        console.log(data);
         setFormData(data);
         setActiveStepIndex(activeStepIndex + 1);
       }}
@@ -41,7 +39,6 @@ const UserInformation = () => {
           <Field
             name="firstname"
             className="border-2 py-2 w-full px-4"
-            placeholder="firstname"
           />
           <ErrorMessage name="firstname" render={renderError} />
         </div>
@@ -50,7 +47,6 @@ const UserInformation = () => {
           <Field
             name="lastname"
             className="border-2 py-2 w-full px-4"
-            placeholder="lastname"
           />
           <ErrorMessage name="lastname" render={renderError} />
         </div>
@@ -59,7 +55,6 @@ const UserInformation = () => {
           <Field
             name="username"
             className="border-2 py-2 w-full px-4"
-            placeholder="username"
           />
           <ErrorMessage name="username" render={renderError} />
         </div>

@@ -1,16 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 
 import logo from "../assets/logo_light.png";
-import ProjectsHeader from "../components/ProjectsHeader";
+import ProjectsHeader from "../components - projects page/ProjectsHeader";
 import TasksView from "../components/Projects/TasksView";
 import UsersView from "../components/Projects/UsersView";
-import ProjectInfoView from "../components/Projects/ProjectInfoView";
-import CreateProjectPopUp from "../components/PopUps/CreateProjectPopUp";
-import CreatedProjectPopUp from "../components/PopUps/CreatedProjectPopUp";
-import FailedProjectCreationPopUp from "../components/PopUps/FailedProjectCreationPopUp";
+import ProjectInfoView from "../components - projects page/ProjectInfoView";
+import CreateProjectPopUp from "../components - projects page/PopUps/CreateProjectPopUp";
+import CreatedProjectPopUp from "../components - projects page/PopUps/CreatedProjectPopUp";
+import FailedProjectCreationPopUp from "../components - projects page/PopUps/FailedProjectCreationPopUp";
+import { request } from "../axios/axios_helper";
 
 const ProjectsPage = () => {
+  const { userId } = useParams();
   const [tasksClicked, setTasksClicked] = useState(false);
   const [usersClicked, setUsersClicked] = useState(false);
   const [projectInfoClicked, setProjectInfoClicked] = useState(true);
@@ -25,30 +27,25 @@ const ProjectsPage = () => {
     useState(false);
 
   const fetchProjects = useCallback(async () => {
-    try {
-      const activeResponse = await fetch(
-        "http://localhost:8080/projects/active/72516c5b-6454-4e26-ae1b-a019e03dd9db"
-      );
-      const oldResponse = await fetch(
-        "http://localhost:8080/projects/unactive/72516c5b-6454-4e26-ae1b-a019e03dd9db"
-      );
+    request("GET", `/projects/active/${userId}`, {})
+      .then(async (response) => {
+        const data = await response.data;
+        setActiveProjects(data);
+        console.log(activeProjects);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-      if (activeResponse.ok && oldResponse.ok) {
-        const activeData = await activeResponse.json();
-        const oldData = await oldResponse.json();
-        setActiveProjects(activeData);
-        setOldProjects(oldData);
-        setChosenProject(activeData[0] || oldData[0] || {});
-      } else {
-        console.error(
-          "Failed to fetch projects:",
-          activeResponse.statusText,
-          oldResponse.statusText
-        );
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    request("GET", `/projects/unactive/${userId}`, {})
+      .then(async (response) => {
+        const data = await response.data;
+        setOldProjects(data);
+        console.log(oldProjects);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   useEffect(() => {
@@ -162,8 +159,11 @@ const ProjectsPage = () => {
           </div>
         </div>
       </div>
+
       <div className="w-3/4 h-full bg-bckgrnd-main flex-col justify-start">
-        <ProjectsHeader project={chosenProject} />
+        <ProjectsHeader
+          project={chosenProject}
+        />
         <div className="flex items-center justify-between pt-1.5 pb-3 pl-14 border-b-2 border-gray-400">
           <div className="flex items-center justify-start">
             <div className="flex items-center justify-between mr-8 mt-4">
@@ -204,6 +204,11 @@ const ProjectsPage = () => {
             />
           )}
         </div>
+        {activeProjects.length === 0 && oldProjects.length === 0 && (
+          <div className="flex m-10 font-bold text-text-dark text-lg">
+            No projects found!
+          </div>
+        )}
       </div>
       <CreateProjectPopUp
         openPopUp={createProjectOpened}

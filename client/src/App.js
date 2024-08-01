@@ -11,6 +11,7 @@ import HankoProfile from "./components/Login/HankoProfile";
 import AppContextProvider from "./store/AppContextProvider";
 import Register from "./pages/Register";
 import "./index.css";
+import AuthComponent from "./components/AuthContent";
 
 const App = () => {
   return (
@@ -24,8 +25,9 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<HankoProfile />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/projects/:projectId" element={<ProjectPage />} />
+          <Route path="/projects-list/:userId" element={<ProjectsPage />} />
+          <Route path="/projects/:userid/:projectId" element={<ProjectPage />} />
+          <Route path="/dummy" element={<AuthComponent />} />
         </Routes>
       </BrowserRouter>
     </AppContextProvider>

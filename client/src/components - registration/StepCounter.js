@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { FormContext } from "../../pages/Register";
+import { FormContext } from "../pages/Register";
 
 const Steps = () => {
   const { activeStepIndex } = useContext(FormContext);

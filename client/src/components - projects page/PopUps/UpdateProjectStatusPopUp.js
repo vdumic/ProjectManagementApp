@@ -1,9 +1,14 @@
+import { useParams } from "react-router-dom";
+import { request } from "../../axios/axios_helper";
+
 const UpdateProjectStatusPopUp = ({
   project,
   openPopUp,
   closePopUp,
   projectChange,
 }) => {
+  const { userId } = useParams();
+
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
       closePopUp();
@@ -13,53 +18,37 @@ const UpdateProjectStatusPopUp = ({
   if (openPopUp !== true) return null;
 
   const handleActivateProject = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/projects/activate/${project.projectId}/72516c5b-6454-4e26-ae1b-a019e03dd9db`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
+    request("PUT", `/projects/activate/${project.projectId}/${userId}`, {})
+      .then(async (response) => {
+        if (response.status === 200) {
+          const data = await response.data;
+          console.log("Project updated successfully:", data);
+          closePopUp();
+          projectChange();
+        } else {
+          console.error("Failed to update project:", response.statusText);
         }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Project updated successfully:", data);
-        closePopUp();
-        projectChange();
-      } else {
-        console.error("Failed to update project:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleDeactivateProject = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/projects/deactivate/${project.projectId}/72516c5b-6454-4e26-ae1b-a019e03dd9db`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
+    request("PUT", `/projects/deactivate/${project.projectId}/${userId}`, {})
+      .then(async (response) => {
+        if (response.status === 200) {
+          const data = await response.data;
+          console.log("Project updated successfully:", data);
+          closePopUp();
+          projectChange();
+        } else {
+          console.error("Failed to update project:", response.statusText);
         }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Project updated successfully:", data);
-        closePopUp();
-        projectChange();
-      } else {
-        console.error("Failed to update project:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
