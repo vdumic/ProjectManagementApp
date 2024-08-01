@@ -1,14 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import AppContext from "../../store/app-context";
-
 const hankoApi = process.env.REACT_APP_HANKO_API_URL;
 
 function LogoutBtn() {
   const navigate = useNavigate();
   const [hanko, setHanko] = useState("");
-  const appCtx = useContext(AppContext);
 
   useEffect(() => {
     import("@teamhanko/hanko-elements").then(({ Hanko }) =>
@@ -17,7 +14,6 @@ function LogoutBtn() {
   }, []);
 
   const handleLogout = () => {
-    appCtx.handleLogout();
   };
 
   const logout = async () => {

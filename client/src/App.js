@@ -8,14 +8,14 @@ import ProjectsPage from "./pages/ProjectsPage";
 import ProjectPage from "./pages/ProjectPage";
 import Login from "./pages/Login";
 import HankoProfile from "./components/Login/HankoProfile";
-import AppContextProvider from "./store/AppContextProvider";
 import Register from "./pages/Register";
-import "./index.css";
 import AuthComponent from "./components/AuthContent";
+
+import "./index.css";
+
 
 const App = () => {
   return (
-    <AppContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -30,7 +30,6 @@ const App = () => {
           <Route path="/dummy" element={<AuthComponent />} />
         </Routes>
       </BrowserRouter>
-    </AppContextProvider>
   );
 };
 

@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import AppContext from "../store/app-context";
 import logo from "../assets/logo.png";
 import userIcon from "../assets/user_icon.png";
 import HeaderButton from "./Buttons/HeaderButton";
@@ -9,9 +8,6 @@ import HeaderLink from "./Buttons/HeaderLink";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const appCtx = useContext(AppContext);
-
-  const isLoggedIn = appCtx.userData.isLoggedIn;
   const location = useLocation();
 
   useEffect(() => {
@@ -57,9 +53,7 @@ const Header = () => {
               path="/support"
               location={location.pathname}
             />
-            {isLoggedIn && <HeaderLink title="Projects" path="projects" />}
           </div>
-          {!isLoggedIn && (
             <div className="flex items-center justify-between">
               <Link to="/login" className="py-2 px-2">
                 <p className="text-text-dark text-lg font-medium mr-6">
@@ -68,20 +62,6 @@ const Header = () => {
               </Link>
               <HeaderButton title="Get started" path="/register" />
             </div>
-          )}
-          {isLoggedIn && (
-            <div className="flex items-center justify-between ml-44">
-              <Link to="/profile">
-                <img
-                  src={userIcon}
-                  alt="User icon"
-                  height="45"
-                  width="45"
-                  className="bg-bckgrnd-main rounded-full"
-                />
-              </Link>
-            </div>
-          )}
         </div>
       </main>
     </header>
