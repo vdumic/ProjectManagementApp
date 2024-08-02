@@ -8,6 +8,7 @@ const DropDownMenu = () => {
     e.preventDefault();
     setAuthHeader(null);
     navigate("/");
+    window.location.reload();
   };
 
   return (

@@ -4,12 +4,25 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import HeaderButton from "./Buttons/HeaderButton";
 import HeaderLink from "./Buttons/HeaderLink";
+import { getAuthToken } from "../axios/axios_helper";
+import userIcon from "../assets/user_icon.png";
+import DropDownMenu from "../components - projects page/DropDownMenu";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [token, setToken] = useState(getAuthToken());
+
   const location = useLocation();
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   useEffect(() => {
+    setToken(getAuthToken());
+    console.log(token);
+
     const handleScroll = () => {
       if (window.scrollY > 0) {
         setIsScrolled(true);
@@ -23,7 +36,7 @@ const Header = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  });
+  }, [token]);
 
   return (
     <header
@@ -53,6 +66,7 @@ const Header = () => {
               location={location.pathname}
             />
           </div>
+          {(token === null || token === "null") && (
             <div className="flex items-center justify-between">
               <Link to="/login" className="py-2 px-2">
                 <p className="text-text-dark text-lg font-medium mr-6">
@@ -61,6 +75,21 @@ const Header = () => {
               </Link>
               <HeaderButton title="Get started" path="/register" />
             </div>
+          )}
+          {!(token === null || token === "null") && (
+            <div className="flex items-center justify-between ml-44">
+            <button onClick={toggleMenu}>
+              <img
+                src={userIcon}
+                alt="User icon"
+                height="45"
+                width="45"
+                className="bg-bckgrnd-main rounded-full"
+              />
+              {isMenuOpen &&  <DropDownMenu />}
+            </button>
+          </div>
+          )}
         </div>
       </main>
     </header>

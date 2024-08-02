@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { request, setAuthHeader } from "../axios/axios_helper";
 import * as yup from "yup";
 
-const UserLogin = ({handleError}) => {
-  const [formData, setFormData] = useState([]);
+const UserLogin = ({ handleError }) => {
   const navigate = useNavigate();
 
   const renderError = (message) => (
@@ -20,24 +18,20 @@ const UserLogin = ({handleError}) => {
       .min(8, "Password is too short - should be 8 chars minimum."),
   });
 
-  const loginUser = () => {
-    request("POST", 
-            "/login", 
-            {
-              email: formData.email,
-              password: formData.password
-            }).then(
-              (response) => {
-                setAuthHeader(response.data.token);
-                navigate(`/projects-list/${response.data.id}`);
-              }
-            ).catch(
-              (error) => {
-                setAuthHeader(null);
-                handleError(error.response.data);
-              }
-            )
-  }
+  const loginUser = (email, password) => {
+    request("POST", "/login", {
+      email,
+      password,
+    })
+      .then((response) => {
+        setAuthHeader(response.data.token);
+        navigate(`/projects-list/${response.data.id}`);
+      })
+      .catch((error) => {
+        setAuthHeader(null);
+        handleError(error.response.data);
+      });
+  };
 
   return (
     <Formik
@@ -47,9 +41,7 @@ const UserLogin = ({handleError}) => {
       }}
       validationSchema={ValidationSchema}
       onSubmit={(values) => {
-        const data = { ...values };
-        setFormData(data);
-        loginUser();
+        loginUser(values.email, values.password);
       }}
     >
       <Form className="flex flex-col w-1/5 justify-center items-center">

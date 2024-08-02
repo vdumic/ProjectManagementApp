@@ -7,7 +7,7 @@ import { request, setAuthHeader } from "../axios/axios_helper";
 
 const PasswordCreation = () => {
 
-  const { activeStepIndex, setActiveStepIndex, formData, setFormData } =
+  const { setActiveStepIndex, formData, setFormData } =
     useContext(FormContext);
 
   const renderError = (message) => (
@@ -22,7 +22,7 @@ const PasswordCreation = () => {
       .min(8, "Password is too short - should be 8 chars minimum."),
   });
 
-  const registerUser = () => {
+  const registerUser = (email, password) => {
     request("POST", 
             "/register", 
             {
@@ -30,8 +30,8 @@ const PasswordCreation = () => {
               lastname: formData.lastname,
               username: formData.username,
               login: formData.username,
-              email: formData.email,
-              password: formData.password,
+              email,
+              password,
               organization: formData.organization,
               jobtitle: formData.jobtitle
             }).then(
@@ -61,7 +61,7 @@ const PasswordCreation = () => {
       onSubmit={ (values) => {
         const data = { ...formData, ...values };
         setFormData(data);
-        registerUser();
+        registerUser(values.email, values.password);
       }}
     >
       <Form className="flex flex-col w-1/5 justify-center items-center">
