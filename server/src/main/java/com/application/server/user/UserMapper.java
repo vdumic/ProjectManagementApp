@@ -1,5 +1,6 @@
 package com.application.server.user;
 
+import com.application.server.role.Role;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Service;
 
@@ -7,7 +8,8 @@ import org.springframework.stereotype.Service;
 public class UserMapper {
 
     public UsersListDto toUserListDto(User user) {
-        return new UsersListDto(user.getFirstname(), user.getLastname());
+
+        return new UsersListDto(user.getId(), user.getEmail(), user.getFirstname(), user.getLastname(), null);
     }
 
     public UserIdDto toUserIdDto(User user) {

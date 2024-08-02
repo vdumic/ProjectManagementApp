@@ -17,7 +17,7 @@ public class OnProjectController {
     }
 
     @GetMapping("/on_projects")
-    public List<OnProjectResponseDto> getAllOnProjects() {
+    public List<OnProject> getAllOnProjects() {
         return onProjectService.getAllOnProject();
     }
 

@@ -20,6 +20,11 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/users_to_add/{project-id}")
+    public List<User> getUsersToAdd(@PathVariable("project-id") UUID projectId) {
+        return userService.getUsersToAdd(projectId);
+    }
+
     @GetMapping("/users/{user-id}")
     public User getUserById(@PathVariable("user-id") UUID id) {
         return userService.getUserById(id);
