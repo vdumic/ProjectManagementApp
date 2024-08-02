@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import DropDownMenu from "./DropDownMenu";
 import userIcon from "../assets/user_icon.png";
 
-const ProjectsHeader = ({ project }) => {
+const ProjectsHeader = ({ project, activeProjects, oldProjects }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -21,6 +21,7 @@ const ProjectsHeader = ({ project }) => {
               </p>
             </div>
             <div className="flex items-center justify-between">
+            {(activeProjects.length !== 0 || oldProjects.length !== 0) &&
               <Link
                 to={`/projects/${project.projectId}`}
                 className="bg-white rounded border-2 border-gray-500 shadow-lg"
@@ -29,6 +30,7 @@ const ProjectsHeader = ({ project }) => {
                   Open project
                 </p>
               </Link>
+}
             </div>
           </div>
           <div className="flex items-center justify-between ml-44">

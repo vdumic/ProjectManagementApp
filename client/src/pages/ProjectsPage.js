@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import logo from "../assets/logo_light.png";
 import ProjectsHeader from "../components - projects page/ProjectsHeader";
 import TasksView from "../components/Projects/TasksView";
-import UsersView from "../components/Projects/UsersView";
+import UsersView from "../components - projects page/UsersView";
 import ProjectInfoView from "../components - projects page/ProjectInfoView";
 import CreateProjectPopUp from "../components - projects page/PopUps/CreateProjectPopUp";
 import CreatedProjectPopUp from "../components - projects page/PopUps/CreatedProjectPopUp";
@@ -159,51 +159,61 @@ const ProjectsPage = () => {
           </div>
         </div>
       </div>
-
       <div className="w-3/4 h-full bg-bckgrnd-main flex-col justify-start">
         <ProjectsHeader
           project={chosenProject}
+          activeProjects={activeProjects}
+          oldProjects={oldProjects}
         />
-        <div className="flex items-center justify-between pt-1.5 pb-3 pl-14 border-b-2 border-gray-400">
-          <div className="flex items-center justify-start">
-            <div className="flex items-center justify-between mr-8 mt-4">
-              <button
-                className={`font-medium text-text-dark text-xl mr-12 ${
-                  tasksClicked ? "underline" : ""
-                }`}
-                onClick={handleTasksClicked}
-              >
-                Tasks
-              </button>
-              <button
-                className={`font-medium text-text-dark text-xl px-2 mr-12 ${
-                  usersClicked ? "underline" : ""
-                }`}
-                onClick={handleUsersClicked}
-              >
-                Users
-              </button>
-              <button
-                className={`font-medium text-text-dark text-xl px-2 ${
-                  projectInfoClicked ? "underline" : ""
-                }`}
-                onClick={handleProjectInfoClicked}
-              >
-                Project info
-              </button>
+        {(activeProjects.length !== 0 || oldProjects.length !== 0) && (
+          <>
+            <div className="flex items-center justify-between pt-1.5 pb-3 pl-14 border-b-2 border-gray-400">
+              <div className="flex items-center justify-start">
+                <div className="flex items-center justify-between mr-8 mt-4">
+                  <button
+                    className={`font-medium text-text-dark text-xl mr-12 ${
+                      tasksClicked ? "underline" : ""
+                    }`}
+                    onClick={handleTasksClicked}
+                  >
+                    Tasks
+                  </button>
+                  <button
+                    className={`font-medium text-text-dark text-xl px-2 mr-12 ${
+                      usersClicked ? "underline" : ""
+                    }`}
+                    onClick={handleUsersClicked}
+                  >
+                    Users
+                  </button>
+                  <button
+                    className={`font-medium text-text-dark text-xl px-2 ${
+                      projectInfoClicked ? "underline" : ""
+                    }`}
+                    onClick={handleProjectInfoClicked}
+                  >
+                    Project info
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="flex flex-col justify-start mx-12 pt-8 overflow-y-auto h-5/6">
-          {tasksClicked && <TasksView project={chosenProject} />}
-          {usersClicked && <UsersView project={chosenProject} />}
-          {projectInfoClicked && (
-            <ProjectInfoView
-              project={chosenProject}
-              projectChange={fetchProjects}
-            />
-          )}
-        </div>
+            <div className="flex flex-col justify-start mx-12 pt-8 overflow-y-auto h-5/6">
+              {tasksClicked && <TasksView project={chosenProject} />}
+              {usersClicked && (
+                <UsersView
+                  project={chosenProject}
+                  projectChange={fetchProjects}
+                />
+              )}
+              {projectInfoClicked && (
+                <ProjectInfoView
+                  project={chosenProject}
+                  projectChange={fetchProjects}
+                />
+              )}
+            </div>{" "}
+          </>
+        )}
         {activeProjects.length === 0 && oldProjects.length === 0 && (
           <div className="flex m-10 font-bold text-text-dark text-lg">
             No projects found!
