@@ -32,6 +32,11 @@ public class ProjectStatusController {
         return projectStatusService.createProjectStatus(projectStatusDto);
     }
 
+    @PostMapping("/project_statuses/new_status")
+    public ProjectStatusResponseDto createNewProjectStatus(@RequestBody ProjectStatusNameDto projectStatusNameDto) {
+        return projectStatusService.createNewProjectStatus(projectStatusNameDto);
+    }
+
     @DeleteMapping("/project_statuses/{project-id}/{status-id}")
     @ResponseStatus(HttpStatus.OK)
     public String deleteProjectStatus(@PathVariable("project-id") UUID projectId, @PathVariable("status-id") UUID statusId) {

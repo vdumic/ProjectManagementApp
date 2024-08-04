@@ -1,5 +1,6 @@
 package com.application.server.project_status;
 
+import com.application.server.status.Status;
 import com.application.server.status.StatusService;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,11 @@ public class ProjectStatusService {
         }
     }
 
+    public ProjectStatusResponseDto createNewProjectStatus(ProjectStatusNameDto projectStatusNameDto) {
+        Status status = statusService.createStatus(new Status(projectStatusNameDto.statusName()));
+        return createProjectStatus(new ProjectStatusDto(projectStatusNameDto.projectId(), status.getId()));
+    }
+
     public String deleteProjectStatus(UUID projectId, UUID statusId) {
         var projectStatus = projectStatusRepository.findAll().stream().filter(ps -> ps.getProject().getId().equals(projectId) && ps.getStatus().getId().equals(statusId)).findAny().orElse(null);
 
@@ -67,7 +73,7 @@ public class ProjectStatusService {
     public void addPredefinedStatusesOnProject(UUID projectId) {
         for (String status : predefinedStatuses) {
             UUID statusId = statusService.getStatusId(status);
-            createProjectStatus(new ProjectStatusDto(projectId.toString(), statusId.toString()));
+            createProjectStatus(new ProjectStatusDto(projectId, statusId));
         }
     }
 

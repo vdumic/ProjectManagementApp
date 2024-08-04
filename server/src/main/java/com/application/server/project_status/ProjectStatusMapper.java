@@ -8,21 +8,20 @@ import java.util.UUID;
 
 @Service
 public class ProjectStatusMapper {
-
     public ProjectStatus toProjectStatus(ProjectStatusDto projectStatusDto) {
         if (projectStatusDto == null) {
             throw new NullPointerException("The projectStatusDto should not be null");
         }
         var projectStatus = new ProjectStatus();
-        ProjectStatusId projectStatusId = new ProjectStatusId(UUID.fromString(projectStatusDto.projectId()), UUID.fromString(projectStatusDto.statusId()));
+        ProjectStatusId projectStatusId = new ProjectStatusId(projectStatusDto.projectId(), projectStatusDto.statusId());
         projectStatus.setId(projectStatusId);
 
         Project project = new Project();
-        project.setId(UUID.fromString(projectStatusDto.projectId()));
+        project.setId(projectStatusDto.projectId());
         projectStatus.setProject(project);
 
         Status status = new Status();
-        status.setId(UUID.fromString(projectStatusDto.statusId()));
+        status.setId(projectStatusDto.statusId());
         projectStatus.setStatus(status);
 
         return projectStatus;

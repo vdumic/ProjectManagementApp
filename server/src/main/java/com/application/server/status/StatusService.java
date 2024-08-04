@@ -31,7 +31,7 @@ public class StatusService {
     }
 
     public Status createStatus(Status status) {
-        Status statusInDb = statusRepository.findAll().stream().filter(s -> s.getName().equals(status.getName())).findAny().orElse(null);
+        Status statusInDb = statusRepository.findAll().stream().filter(s -> s.getName().equalsIgnoreCase(status.getName())).findAny().orElse(null);
 
         if (statusInDb != null) {
             return statusInDb;
@@ -58,6 +58,15 @@ public class StatusService {
         Status status = statusRepository.findById(statusId).orElse(null);
         if (status != null) {
             return status.getName();
+        } else {
+            return null;
+        }
+    }
+
+    public Status getStatusByName(String statusName) {
+        Status status = statusRepository.findAll().stream().filter(s -> s.getName().equalsIgnoreCase(statusName)).findAny().orElse(null);
+        if (status != null) {
+            return status;
         } else {
             return null;
         }
