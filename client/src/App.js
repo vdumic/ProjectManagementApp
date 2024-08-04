@@ -26,7 +26,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<HankoProfile />} />
           <Route path="/projects-list/:userId" element={<ProjectsPage />} />
-          <Route path="/projects/:userid/:projectId" element={<ProjectPage />} />
+          <Route path="/projects/:userId/:projectId" element={<ProjectPage />} />
           <Route path="/dummy" element={<AuthComponent />} />
         </Routes>
       </BrowserRouter>

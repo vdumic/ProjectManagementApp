@@ -30,13 +30,6 @@ const UsersView = ({ project, projectChange }) => {
       });
   }, []);
 
-  const fetchRoles = async () => {
-    request("GET", "/roles", {}).then(async (response) => {
-      const data = await response.data;
-      setRoles(data);
-    });
-  };
-
   const fetchAllUsers = async () => {
     request("GET", `/users_to_add/${project.projectId}`, {})
       .then(async (response) => {
@@ -50,13 +43,22 @@ const UsersView = ({ project, projectChange }) => {
       });
   };
 
-  console.log(allUsers);
+  const fetchRoles = async () => {
+    request("GET", "/roles", {})
+      .then((response) => response.data)
+      .then((data) => {
+        console.log(data);
+        setRoles(data);
+      });
+  };
 
   useEffect(() => {
     fetchUsers();
     fetchRoles();
     fetchAllUsers();
   }, [fetchUsers]);
+
+  console.log(roles);
 
   const handleAddUserClicked = () => {
     setAddUserPopUp(true);

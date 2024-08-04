@@ -2,13 +2,13 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 
 import logo from "../assets/logo_light.png";
-import ProjectsHeader from "../components - projects page/ProjectsHeader";
+import ProjectsHeader from "../components - projects list/ProjectsHeader";
 import TasksView from "../components/Projects/TasksView";
-import UsersView from "../components - projects page/UsersView";
-import ProjectInfoView from "../components - projects page/ProjectInfoView";
-import CreateProjectPopUp from "../components - projects page/PopUps/CreateProjectPopUp";
-import CreatedProjectPopUp from "../components - projects page/PopUps/CreatedProjectPopUp";
-import FailedProjectCreationPopUp from "../components - projects page/PopUps/FailedProjectCreationPopUp";
+import UsersView from "../components - projects list/UsersView";
+import ProjectInfoView from "../components - projects list/ProjectInfoView";
+import CreateProjectPopUp from "../components - projects list/PopUps/CreateProjectPopUp";
+import CreatedPopUp from "../components - projects list/PopUps/CreatedPopUp";
+import FailedCreationPopUp from "../components - projects list/PopUps/FailedCreationPopUp";
 import { request } from "../axios/axios_helper";
 
 const ProjectsPage = () => {
@@ -31,6 +31,8 @@ const ProjectsPage = () => {
       .then(async (response) => {
         const data = await response.data;
         setActiveProjects(data);
+        setChosenProject(data[0]);
+        console.log(chosenProject);
         console.log(activeProjects);
       })
       .catch((error) => {
@@ -227,13 +229,15 @@ const ProjectsPage = () => {
         openCreatedProjectPopUp={handleOpenCreatedProjectPopUp}
         openFailedProjectPopUp={handleOpenFailedProjectPopUp}
       />
-      <CreatedProjectPopUp
+      <CreatedPopUp
         openPopUp={createdProjectPopUpOpened}
         closePopUp={handleCloseCreatedProjectPopUp}
+        title="Project"
       />
-      <FailedProjectCreationPopUp
+      <FailedCreationPopUp
         openPopUp={failedProjectPopUpOpened}
         closePopUp={handleCloseFailedProjectPopUp}
+        title="Project"
       />
     </div>
   );

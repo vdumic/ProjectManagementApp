@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 
-const ProjectTitle = ({ project }) => {
+const ProjectTitle = ({
+  project,
+  handleAddUser,
+  handleCreateStatus,
+  handleCreateTask,
+}) => {
   return (
     <div className="flex items-center justify-start mx-28 my-8">
       <div className="flex items-center justify-between mr-8">
@@ -9,30 +14,30 @@ const ProjectTitle = ({ project }) => {
         </p>
       </div>
       <div className="flex flex-grow items-center justify-end">
-        <Link
-          to={`/projects/${project.projectId}`}
+        <button
           className="bg-white rounded border-2 border-gray-500 shadow-lg w-40 mx-6"
+          onClick={handleCreateStatus}
         >
           <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
             Create status
           </p>
-        </Link>
-        <Link
-          to={`/projects/${project.projectId}`}
+        </button>
+        <button
           className="bg-white rounded border-2 border-gray-500 shadow-lg w-40 mx-6"
+          onClick={handleCreateTask}
         >
           <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
             Create task
           </p>
-        </Link>
-        <Link
-          to={`/projects/${project.projectId}`}
+        </button>
+        <button
           className="bg-white rounded border-2 border-gray-500 shadow-lg w-40 mx-6"
+          onClick={handleAddUser}
         >
           <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
             Add user
           </p>
-        </Link>
+        </button>
       </div>
     </div>
   );

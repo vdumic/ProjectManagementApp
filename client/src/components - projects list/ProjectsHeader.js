@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import DropDownMenu from "./DropDownMenu";
 import userIcon from "../assets/user_icon.png";
 
 const ProjectsHeader = ({ project, activeProjects, oldProjects }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { userId } = useParams();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -21,16 +22,16 @@ const ProjectsHeader = ({ project, activeProjects, oldProjects }) => {
               </p>
             </div>
             <div className="flex items-center justify-between">
-            {(activeProjects.length !== 0 || oldProjects.length !== 0) &&
-              <Link
-                to={`/projects/${project.projectId}`}
-                className="bg-white rounded border-2 border-gray-500 shadow-lg"
-              >
-                <p className="text-lg py-0.5 px-4 text-text-dark font-medium">
-                  Open project
-                </p>
-              </Link>
-}
+              {(activeProjects.length !== 0 || oldProjects.length !== 0) && (
+                <Link
+                  to={`/projects/${userId}/${project.projectId}`}
+                  className="bg-white rounded border-2 border-gray-500 shadow-lg"
+                >
+                  <p className="text-lg py-0.5 px-4 text-text-dark font-medium">
+                    Open project
+                  </p>
+                </Link>
+              )}
             </div>
           </div>
           <div className="flex items-center justify-between ml-44">
@@ -42,7 +43,7 @@ const ProjectsHeader = ({ project, activeProjects, oldProjects }) => {
                 width="45"
                 className="bg-bckgrnd-main rounded-full"
               />
-              {isMenuOpen &&  <DropDownMenu />}
+              {isMenuOpen && <DropDownMenu />}
             </button>
           </div>
         </div>

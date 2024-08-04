@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const FailedProjectCreation = ({ openPopUp, closePopUp }) => {
+const FailedCreationPopUp = ({ openPopUp, closePopUp, title }) => {
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
       closePopUp();
@@ -24,7 +24,7 @@ const FailedProjectCreation = ({ openPopUp, closePopUp }) => {
       <div className="p-2 bg-white w-10/12 md:w-1/2 lg:1/3 shadow-inner border-e-emerald-600 rounded-lg py-5">
         <div className="w-full p-3 justify-center items-center">
           <h2 className="font-semibold py-3 text-center text-xl">
-            Project creation failed! <br /> Please try again.
+            {title} creation failed! <br /> Please try again.
           </h2>
         </div>
       </div>
@@ -32,4 +32,4 @@ const FailedProjectCreation = ({ openPopUp, closePopUp }) => {
   );
 };
 
-export default FailedProjectCreation;
+export default FailedCreationPopUp;

@@ -1,11 +1,18 @@
-import { Link, useLocation } from "react-router-dom";
-
+import { Link, useParams, useLocation } from "react-router-dom";
+import { useState } from "react";
 import logo from "../assets/logo.png";
 import userIcon from "../assets/user_icon.png";
 import HeaderLink from "../components - main header/Buttons/HeaderLink";
+import DropDownMenu from "../components - projects list/DropDownMenu";
 
 const ProjectHeader = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { userId, projectId } = useParams();
   const location = useLocation();
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
     <header className="sticky z-50 top-0 flex items-center bg-bckgrnd-blue_light">
@@ -18,21 +25,22 @@ const ProjectHeader = () => {
             <div className="flex items-center justify-between ml-32">
               <HeaderLink
                 title="All projects"
-                path="/projects"
+                path={`/projects-list/${userId}`}
                 location={location.pathname}
               />
             </div>
           </div>
           <div className="flex items-center justify-between ml-44">
-            <Link to="/profile">
-              <img
+            <button onClick={toggleMenu}>
+            <img
                 src={userIcon}
                 alt="User icon"
                 height="45"
                 width="45"
                 className="bg-bckgrnd-main rounded-full"
               />
-            </Link>
+              {isMenuOpen && <DropDownMenu />}
+            </button>
           </div>
         </div>
       </main>

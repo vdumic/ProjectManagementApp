@@ -1,102 +1,141 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ProjectHeader from "../components/ProjectHeader";
-import ProjectTitle from "../components/Project/ProjectTitle";
-
-const inBacklog = [
-  {
-    name: "Collect analytics data to track user engagement",
-    isAssigned: false,
-  },
-  {
-    name: "Coordinate with app stores for publishing the updated version",
-    isAssigned: false,
-  },
-  {
-    name: "Provide customer support to address any issues",
-    isAssigned: false,
-  },
-];
-
-const inProgress = [
-  {
-    name: "Design user-friendly navigation and intuitive interactions",
-    isAssigned: true,
-    user: "Jacob Evans",
-  },
-  {
-    name: "Upgrade server infrastructure",
-    isAssigned: true,
-    user: "Harper Reed",
-  },
-  {
-    name: "Update user documentation and help guides",
-    isAssigned: true,
-    user: "Mia Jenkins",
-  },
-];
-
-const waitingForReview = [
-  {
-    name: "Add new feature for in-app messaging",
-    isAssigned: true,
-    user: "Mia Jenkins",
-  },
-  {
-    name: "Documents API endpoints and data schemas",
-    isAssigned: true,
-    user: "Amelia Price",
-  },
-];
-
-const done = [
-  {
-    name: "Create wireframes and mockups",
-    isAssigned: true,
-    user: "Amelia Price",
-  },
-  {
-    name: "Implement updated design elements",
-    isAssigned: true,
-    user: "Jacob Evans",
-  },
-];
+import ProjectHeader from "../components - project page/ProjectHeader";
+import ProjectTitle from "../components - project page/ProjectTitle";
+import StatusTasksBox from "../components/Project/StatusTasksBox";
+import { request } from "../axios/axios_helper";
+import AddNewUserPopUp from "../components - projects list/PopUps/AddNewUserPopUp";
+import NoUsersToAddPopUp from "../components - projects list/PopUps/NoUsersToAddPopUp";
+import CreateStatusPopUp from "../components - project page/PopUps/CreateStatusPopUp";
+import CreateTaskPopUp from "../components - project page/PopUps/CreateTaskPopUp";
+import CreatedPopUp from "../components - projects list/PopUps/CreatedPopUp";
+import FailedCreationPopUp from "../components - projects list/PopUps/FailedCreationPopUp";
 
 const ProjectPage = () => {
-  const { projectId } = useParams();
+  const { userId, projectId } = useParams();
   const [project, setProject] = useState({});
+  const [roles, setRoles] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const [statuses, setStatuses] = useState([]);
+  const [priorities, setPriorities] = useState([]);
+  const [addNewUserPopUp, setAddNewUserPopUp] = useState(false);
+  const [noUsersToAddPopUp, setNoUsersToAdd] = useState(false);
+  const [createStatusPopUp, setCreateStatusPopUp] = useState(false);
+  const [createTaskPopUp, setCreateTaskPopUp] = useState(false);
+  const [createdTaskPopUpOpened, setCreatedTaskPopUpOpened] = useState(false);
+  const [failedTaskPopUpOpened, setFailedTaskPopUpOpened] = useState(false);
 
   const fetchProject = useCallback(async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/projects/${projectId}`
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setProject(data);
-      } else {
-        console.error("Failed to fetch project:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    request("GET", `/projects/${projectId}`, {})
+      .then(async (response) => {
+        if (response.status === 200) {
+          const data = await response.data;
+          setProject(data);
+          console.log(data);
+        } else {
+          console.log("Failed to fetch projects", response.statusText);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
+
+  const fetchRoles = async () => {
+    request("GET", "/roles", {})
+      .then((response) => response.data)
+      .then((data) => {
+        console.log(data);
+        setRoles(data);
+      });
+  };
+
+  const fetchAllUsers = async () => {
+    request("GET", `/users_to_add/${projectId}`, {})
+      .then((response) => response.data)
+      .then((data) => {
+        console.log(data);
+        setAllUsers(data);
+      })
+      .catch((error) => {
+        console.log(error);
+        setAllUsers(null);
+      });
+  };
+
+  const fetchStatuses = async () => {
+    request("GET", `/project_statuses/${projectId}`, {})
+      .then((response) => response.data)
+      .then((data) => {
+        console.log(data);
+        setStatuses(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const fetchPriorities = async () => {
+    request("GET", `/priorities`, {})
+      .then((response) => response.data)
+      .then((data) => {
+        setPriorities(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     fetchProject();
+    fetchRoles();
+    fetchAllUsers();
+    fetchStatuses();
+    fetchPriorities();
   }, [fetchProject]);
 
-  console.log(projectId);
+  const handleAddUserClicked = () => {
+    setAddNewUserPopUp(true);
+    setNoUsersToAdd(true);
+  };
 
-  console.log(project);
+  const handleCreateStatusClicked = () => {
+    setCreateStatusPopUp(true);
+  };
+
+  const handleCreateTaskClicked = () => {
+    setCreateTaskPopUp(true);
+  };
+
+  const handleOpenCreatedTaskPopUp = () => {
+    setCreatedTaskPopUpOpened(true);
+    setCreateTaskPopUp(false);
+  };
+
+  const handleCloseCreatedTaskPopUp = () => {
+    setCreatedTaskPopUpOpened(false);
+  };
+
+  const handleOpenFailedTaskPopUp = () => {
+    setFailedTaskPopUpOpened(true);
+    setCreateTaskPopUp(false);
+  };
+
+  const handleCloseFailedTaskPopUp = () => {
+    setFailedTaskPopUpOpened(false);
+  };
 
   return (
     <div className="h-screen flex">
       <div className="w-full h-full bg-bckgrnd-main flex-col justify-start">
         <div className="h-1/6">
-          <ProjectHeader />
-          <ProjectTitle project={project} />
+          <ProjectHeader userId={userId} />
+          <ProjectTitle
+            project={project}
+            handleAddUser={handleAddUserClicked}
+            handleCreateStatus={handleCreateStatusClicked}
+            handleCreateTask={handleCreateTaskClicked}
+          />
         </div>
         <div className="h-5/6 overflow-y-auto mx-8">
           <p>TASK</p>
@@ -107,23 +146,52 @@ const ProjectPage = () => {
           <p>TASK</p>
         </div>
       </div>
+      <CreateStatusPopUp
+        openPopUp={createStatusPopUp}
+        closePopUp={() => setCreateStatusPopUp(false)}
+        projectChange={fetchProject}
+      />
+      <CreateTaskPopUp
+        openPopUp={createTaskPopUp}
+        closePopUp={() => setCreateTaskPopUp(false)}
+        openCreatedTaskPopUp={handleOpenCreatedTaskPopUp}
+        openFailedTaskPopUp={handleOpenFailedTaskPopUp}
+        priorities={priorities}
+        statuses={statuses}
+      />
+      <CreatedPopUp
+        openPopUp={createdTaskPopUpOpened}
+        closePopUp={handleCloseCreatedTaskPopUp}
+        title="Task"
+      />
+      <FailedCreationPopUp
+        openPopUp={failedTaskPopUpOpened}
+        closePopUp={handleCloseFailedTaskPopUp}
+        title="Task"
+      />
+      {allUsers !== null && (
+        <AddNewUserPopUp
+          project={project}
+          openPopUp={addNewUserPopUp}
+          closePopUp={() => {
+            setAddNewUserPopUp(false);
+            setNoUsersToAdd(false);
+          }}
+          handleAddUserClicked={handleAddUserClicked}
+          roles={roles}
+          allUsers={allUsers}
+        />
+      )}
+      {allUsers === null && (
+        <NoUsersToAddPopUp
+          openPopUp={noUsersToAddPopUp}
+          closePopUp={() => {
+            setAddNewUserPopUp(false);
+            setNoUsersToAdd(false);
+          }}
+        />
+      )}
     </div>
-    //   <div className="flex h-svh w-full flex-wrap">
-    //     <div className="flex h-fit w-full mx-48 my-6">
-    //       <div className="flex h-full w-full flex-wrap justify-start">
-    //         <ProjectTitle title="Software Development: Mobile App Upgrade" />
-    //       </div>
-    //     </div>
-    //     <div className="flex flex-col flex-wrap overflow-auto w-full h-full mx-24">
-    //       <StatusTasksBox status="In backlog" tasks={inBacklog} />
-    //       <StatusTasksBox status="In progress" tasks={inProgress} />
-    //       <StatusTasksBox
-    //         status="Waiting for review"
-    //         tasks={waitingForReview}
-    //       />
-    //       <StatusTasksBox status="Done" tasks={done} />
-    //     </div>
-    //   </div>
   );
 };
 

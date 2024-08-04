@@ -6,7 +6,7 @@ import HeaderButton from "./Buttons/HeaderButton";
 import HeaderLink from "./Buttons/HeaderLink";
 import { getAuthToken } from "../axios/axios_helper";
 import userIcon from "../assets/user_icon.png";
-import DropDownMenu from "../components - projects page/DropDownMenu";
+import DropDownMenu from "../components - projects list/DropDownMenu";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -76,19 +76,20 @@ const Header = () => {
               <HeaderButton title="Get started" path="/register" />
             </div>
           )}
+
           {!(token === null || token === "null") && (
-            <div className="flex items-center justify-between ml-44">
-            <button onClick={toggleMenu}>
-              <img
-                src={userIcon}
-                alt="User icon"
-                height="45"
-                width="45"
-                className="bg-bckgrnd-main rounded-full"
-              />
-              {isMenuOpen &&  <DropDownMenu />}
-            </button>
-          </div>
+              <div className="flex items-center justify-between ml-44">
+                <button onClick={toggleMenu}>
+                  <img
+                    src={userIcon}
+                    alt="User icon"
+                    height="45"
+                    width="45"
+                    className="bg-bckgrnd-main rounded-full"
+                  />
+                  {isMenuOpen && <DropDownMenu />}
+                </button>
+              </div>
           )}
         </div>
       </main>
