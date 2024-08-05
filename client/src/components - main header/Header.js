@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { getAuthToken } from "../axios/axios_helper";
 
 import logo from "../assets/logo.png";
+import userIcon from "../assets/user_icon.png";
+
 import HeaderButton from "./Buttons/HeaderButton";
 import HeaderLink from "./Buttons/HeaderLink";
-import { getAuthToken } from "../axios/axios_helper";
-import userIcon from "../assets/user_icon.png";
-import DropDownMenu from "../components - projects list/DropDownMenu";
+import MainDropDownMenu from "./MainDropDown";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -87,7 +88,7 @@ const Header = () => {
                     width="45"
                     className="bg-bckgrnd-main rounded-full"
                   />
-                  {isMenuOpen && <DropDownMenu />}
+                  {isMenuOpen && <MainDropDownMenu />}
                 </button>
               </div>
           )}

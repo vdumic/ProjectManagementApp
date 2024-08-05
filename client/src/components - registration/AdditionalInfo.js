@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { SlArrowLeft } from "react-icons/sl";
 
 import { FormContext } from "../pages/Register";
-import ContinueButton from "../components/Buttons/ContinueButton";
+import ContinueButton from "./Buttons/ContinueButton";
 
 const AdditionalInfo = () => {
   const { activeStepIndex, setActiveStepIndex, formData, setFormData } =

@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 const ProjectTitle = ({
   project,
   handleAddUser,
@@ -7,7 +5,7 @@ const ProjectTitle = ({
   handleCreateTask,
 }) => {
   return (
-    <div className="flex items-center justify-start mx-28 my-8">
+    <div className="flex align-middle justify-start mx-28 mt-4">
       <div className="flex items-center justify-between mr-8">
         <p className="font-medium text-text-dark text-2xl text-nowrap">
           {project.name}
@@ -15,7 +13,7 @@ const ProjectTitle = ({
       </div>
       <div className="flex flex-grow items-center justify-end">
         <button
-          className="bg-white rounded border-2 border-gray-500 shadow-lg w-40 mx-6"
+          className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-40 mx-6"
           onClick={handleCreateStatus}
         >
           <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
@@ -23,7 +21,7 @@ const ProjectTitle = ({
           </p>
         </button>
         <button
-          className="bg-white rounded border-2 border-gray-500 shadow-lg w-40 mx-6"
+          className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-40 mx-6"
           onClick={handleCreateTask}
         >
           <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
@@ -31,7 +29,7 @@ const ProjectTitle = ({
           </p>
         </button>
         <button
-          className="bg-white rounded border-2 border-gray-500 shadow-lg w-40 mx-6"
+          className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-40 mx-6"
           onClick={handleAddUser}
         >
           <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">

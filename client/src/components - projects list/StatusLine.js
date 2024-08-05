@@ -1,24 +1,15 @@
 import { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
+import { request } from "../axios/axios_helper";
 
 const StatusLine = ({ status, project }) => {
   const [tasks, setTasks] = useState([]);
 
   const fetchTasks = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/tasks/status/${project.projectId}/${status.statusId}`
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setTasks(data);
-      } else {
-        console.error("Failed to fetch tasks:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    request("GET", `/tasks/status/${project.projectId}/${status.statusId}`, {})
+      .then((response) => response.data)
+      .then((data) => setTasks(data))
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {

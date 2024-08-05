@@ -3,7 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
 
 import { FormContext } from "../pages/Register";
-import ContinueButton from "../components/Buttons/ContinueButton";
+import ContinueButton from "./Buttons/ContinueButton";
 
 const UserInformation = () => {
   const { activeStepIndex, setActiveStepIndex, formData, setFormData } =

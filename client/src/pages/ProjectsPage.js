@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 
 import logo from "../assets/logo_light.png";
 import ProjectsHeader from "../components - projects list/ProjectsHeader";
-import TasksView from "../components/Projects/TasksView";
+import TasksView from "../components - projects list/TasksView";
 import UsersView from "../components - projects list/UsersView";
 import ProjectInfoView from "../components - projects list/ProjectInfoView";
 import CreateProjectPopUp from "../components - projects list/PopUps/CreateProjectPopUp";
@@ -199,7 +199,7 @@ const ProjectsPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col justify-start mx-12 pt-8 overflow-y-auto h-5/6">
+            <div className="flex flex-col justify-start mx-12 pt-8 overflow-auto h-5/6">
               {tasksClicked && <TasksView project={chosenProject} />}
               {usersClicked && (
                 <UsersView
@@ -213,7 +213,7 @@ const ProjectsPage = () => {
                   projectChange={fetchProjects}
                 />
               )}
-            </div>{" "}
+            </div>
           </>
         )}
         {activeProjects.length === 0 && oldProjects.length === 0 && (
