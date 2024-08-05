@@ -190,7 +190,7 @@ const ProjectPage = () => {
             })}
           </div>
           <div className="w-1/4 h-5/6 bg-transparent ml-6">
-            {taskClicked == true && (
+            {taskClicked === true && (
               <TaskInfo
                 task={task}
                 handleEditTask={handleEditTaskClicked}

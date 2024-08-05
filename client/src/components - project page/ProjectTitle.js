@@ -5,7 +5,7 @@ const ProjectTitle = ({
   handleCreateTask,
 }) => {
   return (
-    <div className="flex align-middle justify-start mx-28 mt-4">
+    <div className="flex align-middle justify-start mx-28 mt-3">
       <div className="flex items-center justify-between mr-8">
         <p className="font-medium text-text-dark text-2xl text-nowrap">
           {project.name}

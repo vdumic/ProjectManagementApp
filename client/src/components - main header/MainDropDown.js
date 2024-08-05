@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { request, setAuthHeader } from "../axios/axios_helper";
+import { request, getAuthToken, setAuthHeader } from "../axios/axios_helper";
 
 const MainDropDownMenu = () => {
     const [user, setUser] = useState([]);
@@ -14,10 +14,8 @@ const MainDropDownMenu = () => {
     window.location.reload();
   };
 
-  console.log(window.localStorage.getItem("auth_token"));
-
   const fetchUser = () => {
-    request("GET", `/signed_user/${window.localStorage.getItem("auth_token")}`)
+    request("GET", `/signed_user/${getAuthToken()}`)
       .then((response) => response.data)
       .then((data) => setUser(data))
       .catch((error) => console.log(error));

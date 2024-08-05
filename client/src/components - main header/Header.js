@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getAuthToken } from "../axios/axios_helper";
+import { getAuthToken, request } from "../axios/axios_helper";
 
 import logo from "../assets/logo.png";
 import userIcon from "../assets/user_icon.png";
@@ -13,6 +13,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [token, setToken] = useState(getAuthToken());
+  const [validToken, setValidToken] = useState(false);
 
   const location = useLocation();
 
@@ -20,9 +21,16 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const checkToken = useCallback(() => {
+    request("GET", `/validation/${token}`, {})
+      .then((response) => response.data)
+      .then((data) => setValidToken(data))
+      .catch((error) => console.log(error));
+  }, []);
+
   useEffect(() => {
     setToken(getAuthToken());
-    console.log(token);
+    checkToken();
 
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -37,7 +45,7 @@ const Header = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [token]);
+  }, [token, checkToken]);
 
   return (
     <header
@@ -67,7 +75,7 @@ const Header = () => {
               location={location.pathname}
             />
           </div>
-          {(token === null || token === "null") && (
+          {(token === null || token === "null" || validToken === false) && (
             <div className="flex items-center justify-between">
               <Link to="/login" className="py-2 px-2">
                 <p className="text-text-dark text-lg font-medium mr-6">
@@ -78,19 +86,19 @@ const Header = () => {
             </div>
           )}
 
-          {!(token === null || token === "null") && (
-              <div className="flex items-center justify-between ml-44">
-                <button onClick={toggleMenu}>
-                  <img
-                    src={userIcon}
-                    alt="User icon"
-                    height="45"
-                    width="45"
-                    className="bg-bckgrnd-main rounded-full"
-                  />
-                  {isMenuOpen && <MainDropDownMenu />}
-                </button>
-              </div>
+          {!(token === null || token === "null" || validToken === false) && (
+            <div className="flex items-center justify-between ml-44">
+              <button onClick={toggleMenu}>
+                <img
+                  src={userIcon}
+                  alt="User icon"
+                  height="45"
+                  width="45"
+                  className="bg-bckgrnd-main rounded-full"
+                />
+                {isMenuOpen && <MainDropDownMenu />}
+              </button>
+            </div>
           )}
         </div>
       </main>
