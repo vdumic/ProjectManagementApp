@@ -7,12 +7,15 @@ import com.application.server.user.UserService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
@@ -69,5 +72,27 @@ public class UserAuthProvider {
         UserDto user = userService.findByEmail(email);
 
         return user;
+    }
+
+    public boolean checkIsTokenValid(String token) {
+        try {
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secretKey)).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            String email = decodedJWT.getIssuer();
+            UserDto user = userService.findByEmail(email);
+
+            if (user != null) {
+                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList()));
+                return true;
+            } else {
+                throw new AppException("User not found!", HttpStatus.NOT_FOUND);
+            }
+        } catch (TokenExpiredException e) {
+            System.out.println("Token has expired");
+            return false;
+        } catch (JWTVerificationException e) {
+            System.out.println("Invalid token");
+            return false;
+        }
     }
 }

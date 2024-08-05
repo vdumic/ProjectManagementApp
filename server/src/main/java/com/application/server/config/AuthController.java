@@ -42,4 +42,9 @@ public class AuthController {
     public UserDto getSignedUser(@PathVariable String token) {
         return userAuthProvider.retrieveUserFromToken(token);
     }
+
+    @GetMapping("/validation/{token}")
+    public boolean checkIsTokenValid(@PathVariable String token) {
+        return userAuthProvider.checkIsTokenValid(token);
+    }
 }
