@@ -138,7 +138,6 @@ public class TaskService {
         Task task = taskRepository.findById(taskUpdateAsigneeDto.taskId()).orElse(null);
 
         if (task != null) {
-
             if (task.getCreatedByUser().getId().equals(taskUpdateAsigneeDto.userId())) {
                 task.setAssignedToUser(task.getCreatedByUser());
             } else {
@@ -147,6 +146,9 @@ public class TaskService {
                 user.setEmail(userService.getUserEmail(taskUpdateAsigneeDto.userId()));
                 user.setFirstname(userService.getUserFirstname(taskUpdateAsigneeDto.userId()));
                 user.setLastname(userService.getUserLastname(taskUpdateAsigneeDto.userId()));
+                user.setPassword(userService.getUserPassword(taskUpdateAsigneeDto.userId()));
+                user.setPasskeyId(userService.getUserPasskeyId(taskUpdateAsigneeDto.userId()));
+                user.setLogin(userService.getUserLogin(taskUpdateAsigneeDto.userId()));
                 user.setUsername(userService.getUsername(taskUpdateAsigneeDto.userId()));
                 user.setOrganization(userService.getUserOrganization(taskUpdateAsigneeDto.userId()));
                 user.setJobTitle(userService.getUserJobtitle(taskUpdateAsigneeDto.userId()));

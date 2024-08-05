@@ -119,6 +119,21 @@ public class UserService {
         return user.getUsername();
     }
 
+    public String getUserPassword(UUID userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user.getPassword();
+    }
+
+    public String getUserPasskeyId(UUID userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user.getPasskeyId();
+    }
+
+    public String getUserLogin(UUID userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user.getLogin();
+    }
+
     public String getUserOrganization(UUID userId) {
         User user = userRepository.findById(userId).orElse(null);
         return user.getOrganization();

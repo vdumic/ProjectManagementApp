@@ -1,15 +1,12 @@
 package com.application.server.config;
 
-import com.application.server.user.CredentialsDto;
-import com.application.server.user.SignUpDto;
-import com.application.server.user.UserDto;
-import com.application.server.user.UserService;
+import com.application.server.user.*;
+import org.mapstruct.control.MappingControl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 public class AuthController {
@@ -39,5 +36,10 @@ public class AuthController {
         UserDto tokenUser = new UserDto(user.id(), user.email(), user.firstName(), user.lastName(), user.login(), token, user.passkeyId());
 
         return ResponseEntity.created(URI.create("/users/" + tokenUser.id())).body(tokenUser);
+    }
+
+    @GetMapping("/signed_user/{token}")
+    public UserDto getSignedUser(@PathVariable String token) {
+        return userAuthProvider.retrieveUserFromToken(token);
     }
 }

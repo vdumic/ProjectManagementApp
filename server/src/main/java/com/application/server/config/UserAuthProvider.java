@@ -1,6 +1,7 @@
 package com.application.server.config;
 
 import com.application.server.exceptions.AppException;
+import com.application.server.user.User;
 import com.application.server.user.UserDto;
 import com.application.server.user.UserService;
 import com.auth0.jwt.JWT;
@@ -58,5 +59,15 @@ public class UserAuthProvider {
         } else {
             throw new AppException("User not found!", HttpStatus.NOT_FOUND);
         }
+    }
+
+    public UserDto retrieveUserFromToken(String token) {
+        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secretKey)).build();
+        DecodedJWT decodedJWT = verifier.verify(token);
+
+        String email = decodedJWT.getIssuer();
+        UserDto user = userService.findByEmail(email);
+
+        return user;
     }
 }
