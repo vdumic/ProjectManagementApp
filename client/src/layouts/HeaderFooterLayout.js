@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import Header from "../components - main header/Header";
-import Footer from "../components/Footer";
-import Spacer from "../components/Spacer";
+import Footer from "../components - footer/Footer";
+import Spacer from "../components - home/Spacer";
 
 const HeaderFooterLayout = ({ title, children, ...rest }) => {
   return (

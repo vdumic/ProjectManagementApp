@@ -25,6 +25,7 @@ const StatusLine = ({ status, project }) => {
         {tasks.map((task) => {
           return (
             <TaskCard
+              key={task.id}
               title={task.taskName}
               priority={task.priorityName}
               isAssigned={task.assignedTo}

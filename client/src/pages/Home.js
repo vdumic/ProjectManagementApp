@@ -1,9 +1,9 @@
 import Examples from "../components - home/Examples";
 import HeroSection from "../components - home/HeroSection";
-import Spacer from "../components/Spacer";
+import Spacer from "../components - home/Spacer";
 import HeaderFooterLayout from "../layouts/HeaderFooterLayout";
 
-const Home = () => {
+const Home =  () => {
   return (
     <HeaderFooterLayout title="Sprynt / Home">
       <HeroSection />

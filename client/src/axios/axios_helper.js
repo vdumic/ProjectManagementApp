@@ -19,6 +19,7 @@ export const request = (method, url, data) => {
   let headers = {};
   if (getAuthToken() !== null && getAuthToken() !== "null") {
     headers = {"Authorization": `Bearer ${getAuthToken()}`};
+    console.log(headers);
   }
 
   return axios({

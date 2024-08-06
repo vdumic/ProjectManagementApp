@@ -1,5 +1,5 @@
 import projectManageemnt from "../assets/project_management_work.jpg";
-import Spacer from "../components/Spacer";
+import Spacer from "../components - home/Spacer";
 import HeaderFooterLayout from "../layouts/HeaderFooterLayout";
 
 const WorkManagement = () => {

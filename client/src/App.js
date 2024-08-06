@@ -9,9 +9,9 @@ import ProjectPage from "./pages/ProjectPage";
 import Login from "./pages/Login";
 import HankoProfile from "./components/Login/HankoProfile";
 import Register from "./pages/Register";
-import AuthComponent from "./components/AuthContent";
 
 import "./index.css";
+import PasskeyLogin from "./components - passkeys/PasskeyLogin";
 
 
 const App = () => {
@@ -27,7 +27,7 @@ const App = () => {
           <Route path="/profile" element={<HankoProfile />} />
           <Route path="/projects-list/:userId" element={<ProjectsPage />} />
           <Route path="/projects/:userId/:projectId" element={<ProjectPage />} />
-          <Route path="/dummy" element={<AuthComponent />} />
+          <Route path="/passkey" element={<PasskeyLogin />} />
         </Routes>
       </BrowserRouter>
   );

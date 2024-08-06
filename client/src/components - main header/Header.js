@@ -26,7 +26,7 @@ const Header = () => {
       .then((response) => response.data)
       .then((data) => setValidToken(data))
       .catch((error) => console.log(error));
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     setToken(getAuthToken());

@@ -1,3 +1,5 @@
+import Initials from "../functions/Initials";
+
 const TaskCard = ({ title, priority, isAssigned, assignee }) => {
   const bckgrnd = "bg-bckgrnd-" + priority.toLowerCase();
 
@@ -12,7 +14,7 @@ const TaskCard = ({ title, priority, isAssigned, assignee }) => {
         </div>
         {isAssigned && (
           <div className="flex flex-col justify-center bg-bckgrnd-blue_dark rounded-full w-7 h-fit">
-            <p className="text-center text-white px-1 py-0.5">{assignee}</p>
+            <p className="text-center text-white px-1 py-0.5">{Initials(assignee)}</p>
           </div>
         )}
       </div>
