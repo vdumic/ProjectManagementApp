@@ -1,16 +1,17 @@
-import { useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useCallback } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { register, Hanko } from "@teamhanko/hanko-elements";
+
+import logo from "../assets/logo.png";
 import { request, setAuthHeader } from "../axios/axios_helper";
 
 const hankoApi = process.env.REACT_APP_HANKO_API_URL;
 
 const PasskeyLogin = () => {
-
   const navigate = useNavigate();
   const hanko = useMemo(() => new Hanko(hankoApi), []);
 
-  const loginUser = async () => {
+  const loginUser = useCallback(async () => {
     const { id, email } = await hanko.user.getCurrent();
     request("GET", `/user/passkey/${email}/${id}`, {})
       .then((response) => {
@@ -19,7 +20,7 @@ const PasskeyLogin = () => {
         navigate(`/projects-list/${userId}`);
       })
       .catch((error) => console.log(error));
-  };
+  }, [hanko.user, navigate]);
 
   useEffect(() => {
     if (hanko) {
@@ -28,7 +29,7 @@ const PasskeyLogin = () => {
       });
       return () => unsubscribe();
     }
-  }, [hanko]);
+  }, [hanko, loginUser]);
 
   useEffect(() => {
     if (hankoApi) {
@@ -38,14 +39,17 @@ const PasskeyLogin = () => {
     } else {
       console.error("Hanko API URL is not defined");
     }
-  }, [hankoApi]);
+  }, []);
 
   if (!hankoApi) {
     return <div>Error: Hanko API URL is not configured</div>;
   }
 
   return (
-    <div className="flex justify-center place-items-center bg-bckgrnd-main h-screen ">
+    <div className="flex flex-col justify-center place-items-center bg-bckgrnd-main h-screen ">
+      <Link to="/" className="mb-10">
+        <img src={logo} alt="Sprynt logo" width="150" />
+      </Link>
       <hanko-auth />
     </div>
   );

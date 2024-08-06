@@ -15,11 +15,21 @@ export const setAuthHeader = (token) => {
   }
 };
 
+export const setHankoSession = (token) => {
+  if (token !== null) {
+    window.localStorage.setItem("hanko_session", token);
+    window.localStorage.setItem("hanko", token);
+  } else {
+    console.log("ušloo");
+    window.localStorage.removeItem("hanko_session");
+    window.localStorage.removeItem("hanko");
+  }
+}
+
 export const request = (method, url, data) => {
   let headers = {};
   if (getAuthToken() !== null && getAuthToken() !== "null") {
     headers = {"Authorization": `Bearer ${getAuthToken()}`};
-    console.log(headers);
   }
 
   return axios({

@@ -21,9 +21,15 @@ const Login = () => {
       </div>
       <UserLogin handleError={handleError} />
       <div className="flex justify-center mt-6 text-red-800 font-semibold">{error.message}</div>
+      <Link to="/passkey">
+        <button className="flex justify-center text-white font-medium mt-4 px-3.5 py-2 bg-bckgrnd-blue_dark rounded-xl shadow-xl">
+          Sign in with passkey
+          <SlArrowRight className="h-5 w-5 sm:inline cursor-pointer pt-1" />
+        </button>
+      </Link>
       <Link to="/register">
         <button className="flex justify-center bg-bckgrnd-dark text-[#252526] text-sm font-medium mt-8 py-2 pl-5 pr-3.5 border-2 border-bckgrnd-dark rounded-xl shadow-xl">
-          {`Don't have an accout? Signup`}
+          Don't have an accout? Signup
           <SlArrowRight className="h-4 w-4 sm:inline cursor-pointer pt-1" />
         </button>
       </Link>

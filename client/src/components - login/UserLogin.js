@@ -65,7 +65,7 @@ const UserLogin = ({ handleError }) => {
           <ErrorMessage name="password" render={renderError} />
         </div>
         <button
-          className="flex justify-center text-white font-medium mt-8 px-3.5 py-2 bg-button-blue rounded-xl shadow-xl "
+          className="flex justify-center text-white font-medium mt-8 px-3.5 py-2 bg-bckgrnd-blue_dark rounded-xl shadow-xl"
           type="submit"
         >
           Login

@@ -32,8 +32,6 @@ const ProjectsPage = () => {
         const data = await response.data;
         setActiveProjects(data);
         setChosenProject(data[0]);
-        console.log(chosenProject);
-        console.log(activeProjects);
       })
       .catch((error) => {
         console.log(error);
@@ -43,12 +41,11 @@ const ProjectsPage = () => {
       .then(async (response) => {
         const data = await response.data;
         setOldProjects(data);
-        console.log(oldProjects);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     fetchProjects();
