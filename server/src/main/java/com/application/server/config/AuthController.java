@@ -1,12 +1,10 @@
 package com.application.server.config;
 
 import com.application.server.user.*;
-import org.mapstruct.control.MappingControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.UUID;
 
 @RestController
 public class AuthController {
@@ -36,6 +34,15 @@ public class AuthController {
         UserDto tokenUser = new UserDto(user.id(), user.email(), user.firstName(), user.lastName(), user.login(), token, user.passkeyId());
 
         return ResponseEntity.created(URI.create("/users/" + tokenUser.id())).body(tokenUser);
+    }
+
+   @GetMapping("/user/passkey/{user-email}/{passkey-id}")
+    public ResponseEntity<UserDto> loginWithPasskey(@PathVariable("user-email") String userEmail, @PathVariable("passkey-id") String passkeyId) {
+        User user = userService.findUser(userEmail, passkeyId);
+
+        UserDto tokenUser = new UserDto(user.getId(), user.getEmail(), user.getFirstname(), user.getLastname(), user.getLogin(), userAuthProvider.createToken(user.getEmail()), user.getPasskeyId());
+
+        return ResponseEntity.ok(tokenUser);
     }
 
     @GetMapping("/signed_user/{token}")

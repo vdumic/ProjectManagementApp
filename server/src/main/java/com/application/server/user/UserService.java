@@ -1,5 +1,6 @@
 package com.application.server.user;
 
+import com.application.server.config.UserAuthProvider;
 import com.application.server.exceptions.AppException;
 import com.application.server.on_project.OnProject;
 import com.application.server.on_project.OnProjectService;
@@ -176,5 +177,16 @@ public class UserService {
         User savedUser = userRepository.save(user);
 
         return userMapper.toUserDto(user);
+    }
+
+    public User findUser(String userEmail, String passkeyId) {
+        User user = userRepository.findByEmail(userEmail).orElse(null);
+
+        if (user.getPasskeyId().equals("passkey")) {
+            user.setPasskeyId(passkeyId);
+            userRepository.save(user);
+        }
+
+        return user;
     }
 }
