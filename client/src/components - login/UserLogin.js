@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { request, setAuthHeader } from "../axios/axios_helper";
 import * as yup from "yup";
+
+import { request, setAuthHeader } from "../axios/axios_helper";
 
 const UserLogin = ({ handleError }) => {
   const navigate = useNavigate();
 
   const renderError = (message) => (
-    <p className="italic text-red-500 text-center w-full pt-6">{message}</p>
+    <p className="italic text-red-500 text-center w-full pt-2 sm:pt-4">{message}</p>
   );
 
   const ValidationSchema = yup.object().shape({
@@ -44,28 +45,28 @@ const UserLogin = ({ handleError }) => {
         loginUser(values.email, values.password);
       }}
     >
-      <Form className="flex flex-col w-1/5 justify-center items-center">
-        <div className="flex flex-col items-start mb-6 w-full">
+      <Form className="flex flex-col w-full max-w-md sm:max-w-lg justify-center items-center">
+        <div className="flex flex-col items-start mb-4 w-full">
           <label className="font-medium text-text-dark">Email</label>
           <Field
             name="email"
-            className="border-2 py-2 w-full px-4"
+            className="border-2 py-2 w-full px-4 rounded-md"
             placeholder="example@mail.com"
           />
           <ErrorMessage name="email" render={renderError} />
         </div>
-        <div className="flex flex-col items-start mb-6 w-full">
+        <div className="flex flex-col items-start mb-4 w-full">
           <label className="font-medium text-text-dark">Password</label>
           <Field
             name="password"
-            className="border-2 py-2 w-full px-4"
+            className="border-2 py-2 w-full px-4 rounded-md"
             type="password"
             placeholder="(minimum 8 characters)"
           />
           <ErrorMessage name="password" render={renderError} />
         </div>
         <button
-          className="flex justify-center text-white font-medium mt-8 px-3.5 py-2 bg-bckgrnd-blue_dark rounded-xl shadow-xl"
+          className="flex justify-center items-center text-white font-medium mt-6 sm:mt-8 px-4 py-2 bg-bckgrnd-blue_dark rounded-xl shadow-xl"
           type="submit"
         >
           Login

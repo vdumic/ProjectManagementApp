@@ -2,8 +2,10 @@ import { useEffect, useMemo, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { register, Hanko } from "@teamhanko/hanko-elements";
 
-import logo from "../assets/logo.png";
 import { request, setAuthHeader } from "../axios/axios_helper";
+
+import logo from "../assets/logo.png";
+
 
 const hankoApi = process.env.REACT_APP_HANKO_API_URL;
 
@@ -47,7 +49,7 @@ const PasskeyLogin = () => {
 
   return (
     <div className="flex flex-col justify-center place-items-center bg-bckgrnd-main h-screen ">
-      <Link to="/" className="mb-10">
+      <Link to="/" className="mb-10 pt-8">
         <img src={logo} alt="Sprynt logo" width="150" />
       </Link>
       <hanko-auth />

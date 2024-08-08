@@ -5,56 +5,51 @@ import { SocialIcon } from "react-social-icons";
 const Footer = () => {
   return (
     <footer className="relative z-50 bg-bckgrnd-main">
-      <div className="container mx-auto">
-        <div className="flex items-center justify-between flex-wrap py-10 px-20">
-          <div className="flex justify-items-center items-center w-full sm:w-2/3 lg:w-3/12">
-            <div className="w-full flex items-center justify-center">
-              <Link to="/" onClick={() => window.scrollTo({ top: 0 })}>
-                <img src={logo} alt="Sprynt logo" height="100" width="150" />
-              </Link>
-            </div>
+      <div className="container mx-auto px-4 sm:px-8 lg:px-20 lg:py-10 sm:py-4 md:py-4">
+        <div className="flex flex-col lg:flex-row items-center justify-between">
+          <div className="w-full lg:w-40 mb-6 lg:mb-0 flex justify-center lg:justify-start">
+            <Link to="/" onClick={() => window.scrollTo({ top: 0 })}>
+              <img src={logo} alt="Sprynt logo" className="h-12 w-auto" />
+            </Link>
           </div>
-          <div className="w-full align-middle sm:w-1/2 lg:w-2/12">
-            <div className="my-auto w-full">
-              <ul>
-                <li className="flex items-center justify-center">
-                  <Link
-                    to="/work-management"
-                    onClick={() => window.scrollTo({ top: 0 })}
-                  >
-                    <p className="text-text-dark text-lg py-2 px-1">
-                      Work management
-                    </p>
-                  </Link>
-                </li>
-                <li className="flex items-center justify-center">
-                  <Link
-                    to="/about-us"
-                    onClick={() => window.scrollTo({ top: 0 })}
-                  >
-                    <p className="text-text-dark text-lg py-2 px-1">About us</p>
-                  </Link>
-                </li>
-                <li className="flex items-center justify-center">
-                  <Link
-                    to="/support"
-                    onClick={() => window.scrollTo({ top: 0 })}
-                  >
-                    <p className="text-text-dark text-lg py-2 px-1">Support</p>
-                  </Link>
-                </li>
-              </ul>
-            </div>
+
+          <div className="w-full lg:w-2/12 mb-6 lg:mb-0">
+            <ul className="flex flex-col justify-center items-center">
+              <li className="mb-2">
+                <Link
+                  to="/work-management"
+                  onClick={() => window.scrollTo({ top: 0 })}
+                  className="text-text-dark text-lg py-2 px-1 text-center lg:text-left"
+                >
+                  Work management
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link
+                  to="/about-us"
+                  onClick={() => window.scrollTo({ top: 0 })}
+                  className="text-text-dark text-lg py-2 px-1 text-center lg:text-left"
+                >
+                  About us
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link
+                  to="/support"
+                  onClick={() => window.scrollTo({ top: 0 })}
+                  className="text-text-dark text-lg py-2 px-1 text-center lg:text-left"
+                >
+                  Support
+                </Link>
+              </li>
+            </ul>
           </div>
-          <div className="w-full mx-10 sm:w-1/2 lg:w-2/12">
-            <div className="flex justify-items-center items-center w-full px-4">
-              <div className="w-full mb-8">
-                <h1 className="text-text-dark font-semibold text-center text-xl">
-                  Follow us
-                </h1>
-              </div>
-            </div>
-            <div className="flex justify-center items-center w-full">
+
+          <div className="w-full lg:w-2/12 flex flex-col items-center lg:items-start">
+            <h1 className="text-text-dark font-semibold text-xl mb-4 text-center lg:text-left">
+              Follow us
+            </h1>
+            <div className="flex justify-center lg:justify-start">
               <SocialIcon
                 network="facebook"
                 url="https://facebook.com"
