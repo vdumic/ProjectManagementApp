@@ -152,6 +152,33 @@ public class UserService {
         return userMapper.toUserDto(user);
     }
 
+    public UserProfileDto getUserProfile(UUID userId) {
+        User user = userRepository.findById(userId).orElse(null);
+
+        if(user != null) {
+            return userMapper.toUserProfileDto(user);
+        } else {
+            return null;
+        }
+    }
+
+
+    public UserProfileDto updateUserProfile(UserProfileDto userProfileDto) {
+        User user = userRepository.findById(userProfileDto.id()).orElse(null);
+
+        if(user != null) {
+            user.setFirstname(userProfileDto.firstname());
+            user.setLastname(userProfileDto.lastname());
+            user.setUsername(userProfileDto.username());
+            user.setOrganization(userProfileDto.organization());
+            user.setJobTitle(userProfileDto.jobtitle());
+
+            return userMapper.toUserProfileDto(userRepository.save(user));
+        } else {
+            return null;
+        }
+    }
+
     public UserDto login(CredentialsDto credentialsDto) {
         User user = userRepository.findByEmail(credentialsDto.email())
                 .orElseThrow(() -> new AppException("Unknown user! Please register in the application!", HttpStatus.NOT_FOUND));

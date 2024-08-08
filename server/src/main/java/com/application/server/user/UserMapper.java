@@ -26,6 +26,15 @@ public class UserMapper {
                 user.getPasskeyId());
     }
 
+    public UserProfileDto toUserProfileDto(User user) {
+        return new UserProfileDto(user.getId(),
+                user.getFirstname(),
+                user.getLastname(),
+                user.getUsername(),
+                user.getOrganization(),
+                user.getJobTitle());
+    }
+
     @Mapping(target = "password", ignore = true)
     public User signUpToUser(SignUpDto userDto) {
         return new User(null,

@@ -47,9 +47,19 @@ public class UserController {
         return userService.getAllUsersOnProject(projectId);
     }
 
+    @GetMapping("/users/profile/{user-id}")
+    public UserProfileDto getUserProfile(@PathVariable("user-id") UUID userId) {
+        return userService.getUserProfile(userId);
+    }
+
     @PostMapping("/users")
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
+    }
+
+    @PutMapping("/users/profile")
+    public UserProfileDto updateUserProfile(@RequestBody UserProfileDto userProfileDto) {
+        return userService.updateUserProfile(userProfileDto);
     }
 
     @DeleteMapping("/users/{user-id}")
