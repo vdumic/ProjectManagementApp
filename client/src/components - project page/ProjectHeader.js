@@ -7,7 +7,7 @@ import DropDownMenu from "../components - projects list/DropDownMenu";
 
 const ProjectHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { userId, projectId } = useParams();
+  const { userId } = useParams();
   const location = useLocation();
 
   const toggleMenu = () => {
@@ -15,14 +15,14 @@ const ProjectHeader = () => {
   };
 
   return (
-    <header className="sticky z-50 top-0 flex items-center bg-bckgrnd-blue_light">
-      <main className="w-full flex-grow flex flex-col my-3 mx-48">
+    <header className="sticky z-50 top-0 bg-bckgrnd-blue_light">
+      <main className="w-full flex-grow flex flex-col px-4 sm:px-8 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex justify-start items-center">
+          <div className="flex items-center">
             <Link to="/">
-              <img src={logo} alt="Sprynt logo" width="110" />
+              <img src={logo} alt="Sprynt logo" className="h-10 sm:h-12" />
             </Link>
-            <div className="flex items-center justify-between ml-32">
+            <div className="hidden md:flex items-center ml-6 sm:ml-16">
               <HeaderLink
                 title="All projects"
                 path={`/projects-list/${userId}`}
@@ -30,18 +30,23 @@ const ProjectHeader = () => {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between ml-44">
+          <div className="flex items-center">
             <button onClick={toggleMenu}>
-            <img
+              <img
                 src={userIcon}
                 alt="User icon"
-                height="45"
-                width="45"
-                className="bg-bckgrnd-main rounded-full"
+                className="h-10 w-10 sm:h-12 sm:w-12 bg-bckgrnd-main rounded-full"
               />
               {isMenuOpen && <DropDownMenu />}
             </button>
           </div>
+        </div>
+        <div className="flex md:hidden mt-3">
+          <HeaderLink
+            title="All projects"
+            path={`/projects-list/${userId}`}
+            location={location.pathname}
+          />
         </div>
       </main>
     </header>
