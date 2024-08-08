@@ -33,7 +33,7 @@ const MobileNavigation = ({
       {(token === null || token === "null" || validToken === false) && (
         <>
           <Link to="/login">
-            <p className="text-text-dark text-lg font-medium">Sign in</p>
+            <p className="text-text-dark text-lg font-medium px-1">Sign in</p>
           </Link>
           <HeaderButton title="Get started" path="/register" />
         </>
