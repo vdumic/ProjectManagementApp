@@ -1,17 +1,16 @@
 import { useContext } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import * as yup from "yup";
-import { SlArrowLeft } from "react-icons/sl";
 
 import { FormContext } from "../pages/Register";
-import ContinueButton from "./Buttons/ContinueButton";
 
 const AdditionalInfo = () => {
   const { activeStepIndex, setActiveStepIndex, formData, setFormData } =
     useContext(FormContext);
 
   const renderError = (message) => (
-    <p className="italic text-red-500 text-center w-full pt-6">{message}</p>
+    <p className="italic text-red-500 text-center w-full pt-4">{message}</p>
   );
 
   const ValidationSchema = yup.object().shape({
@@ -37,7 +36,7 @@ const AdditionalInfo = () => {
         setActiveStepIndex(activeStepIndex + 1);
       }}
     >
-      <Form className="flex flex-col w-1/5 justify-center items-center">
+      <Form className="flex flex-col w-full max-w-md px-4 sm:px-0 justify-center items-center">
         <div className="flex flex-col items-start mb-6 w-full">
           <label className="font-medium text-text-dark">Organization</label>
           <Field name="organization" className="border-2 py-2 w-full px-4" />
@@ -48,15 +47,21 @@ const AdditionalInfo = () => {
           <Field name="jobtitle" className="border-2 py-2 w-full px-4" />
           <ErrorMessage name="jobtitle" render={renderError} />
         </div>
-        <div className="flex justify-center">
+        <div className="flex flex-col sm:flex-row justify-center w-full">
           <button
-            className="flex justify-center text-white font-medium mt-10 py-2.5 pr-5 pl-3.5 bg-button-blue rounded-xl shadow-xl mr-6"
+            className="flex items-center justify-center text-white font-medium mt-10 py-2 px-4 bg-button-blue rounded-xl shadow-xl mb-4 sm:mb-0 sm:mr-4"
             onClick={handleGoingBack}
           >
-            <SlArrowLeft className="h-5 w-5 sm:inline cursor-pointer pt-1 pr-1" />
+            <SlArrowLeft className="h-5 w-5 mr-2" />
             Back
           </button>
-          <ContinueButton />
+          <button
+            className="flex items-center justify-center text-white font-medium mt-10 py-2 px-4 bg-button-blue rounded-xl shadow-xl mb-4 sm:mb-0 sm:mr-4"
+            type="submit"
+          >
+            Continue
+            <SlArrowRight className="h-5 w-5" />
+          </button>
         </div>
       </Form>
     </Formik>

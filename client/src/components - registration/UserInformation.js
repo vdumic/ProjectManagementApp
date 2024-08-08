@@ -10,7 +10,7 @@ const UserInformation = () => {
     useContext(FormContext);
 
   const renderError = (message) => (
-    <p className="italic text-red-500 text-center w-full pt-6">{message}</p>
+    <p className="italic text-red-500 text-center w-full pt-4">{message}</p>
   );
 
   const ValidationSchema = yup.object().shape({
@@ -27,35 +27,26 @@ const UserInformation = () => {
         username: "",
       }}
       validationSchema={ValidationSchema}
-      onSubmit={ (values) => {
+      onSubmit={(values) => {
         const data = { ...formData, ...values };
         setFormData(data);
         setActiveStepIndex(activeStepIndex + 1);
       }}
     >
-      <Form className="flex flex-col w-1/5 justify-center items-center">
-        <div className="flex flex-col items-start mb-6 w-full">
+      <Form className="flex flex-col w-full max-w-md px-4 sm:px-6 lg:px-8 mx-auto">
+        <div className="flex flex-col items-start mb-6">
           <label className="font-medium text-text-dark">Firstname</label>
-          <Field
-            name="firstname"
-            className="border-2 py-2 w-full px-4"
-          />
+          <Field name="firstname" className="border-2 py-2 px-4 w-full" />
           <ErrorMessage name="firstname" render={renderError} />
         </div>
-        <div className="flex flex-col items-start mb-6 w-full">
+        <div className="flex flex-col items-start mb-6">
           <label className="font-medium text-text-dark">Lastname</label>
-          <Field
-            name="lastname"
-            className="border-2 py-2 w-full px-4"
-          />
+          <Field name="lastname" className="border-2 py-2 px-4 w-full" />
           <ErrorMessage name="lastname" render={renderError} />
         </div>
-        <div className="flex flex-col items-start mb-6 w-full">
+        <div className="flex flex-col items-start mb-6">
           <label className="font-medium text-text-dark">Username</label>
-          <Field
-            name="username"
-            className="border-2 py-2 w-full px-4"
-          />
+          <Field name="username" className="border-2 py-2 px-4 w-full" />
           <ErrorMessage name="username" render={renderError} />
         </div>
         <ContinueButton />

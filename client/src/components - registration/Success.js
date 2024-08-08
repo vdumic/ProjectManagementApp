@@ -10,22 +10,22 @@ const Success = ({ email, userId }) => {
     setTimeout(() => {
       navigate(`/projects-list/${userId}`);
     }, 4000);
-  }, [navigate]);
+  }, [navigate, userId]);
 
   return (
-    <div className="flex flex-col h-screen items-center pt-20">
+    <div className="flex flex-col h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
       <Helmet>
         <meta charSet="utf-8" />
         <title>Sprynt / Registration</title>
       </Helmet>
-      <div className="flex flex-col items-center">
-        <BsCheckCircle size="5em" />
-        <div className="text-3xl font-medium pt-10">
+      <div className="flex flex-col items-center text-center">
+        <BsCheckCircle size="4em" className="text-green-500" />
+        <div className="text-2xl sm:text-3xl font-semibold mt-4">
           Successful registration to Sprynt!
         </div>
-      </div>
-      <div className="text-xl font-light pt-5 sm:text-center">
-        Registered email: {email}
+        <div className="text-lg sm:text-xl font-light mt-2">
+          Registered email: <span className="font-medium">{email}</span>
+        </div>
       </div>
     </div>
   );
