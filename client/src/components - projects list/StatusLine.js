@@ -17,18 +17,17 @@ const StatusLine = ({ status, project }) => {
   }, []);
 
   return (
-    <div className="mb-12">
-      <div className="text-text-dark font-medium text-lg mb-4">
+    <div className="flex h-full flex-col justify-start w-1/5 mx-4">
+      <div className="text-text-dark text-lg font-medium mb-4 break-normal text-nowrap">
         {status.status}
       </div>
-      <div className="flex justify-start">
+      <div className="flex flex-col w-full justify-start h-3/4">
         {tasks.map((task) => {
           return (
             <TaskCard
               key={task.id}
               title={task.taskName}
               priority={task.priorityName}
-              isAssigned={task.assignedTo}
               assignee={task.assignedTo}
             />
           );

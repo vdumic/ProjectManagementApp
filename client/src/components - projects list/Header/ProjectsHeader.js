@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+
+import userIcon from "../../assets/user_icon.png";
+
 import DropDownMenu from "./DropDownMenu";
-import userIcon from "../assets/user_icon.png";
 
 const ProjectsHeader = ({ project, activeProjects, oldProjects }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,7 +14,7 @@ const ProjectsHeader = ({ project, activeProjects, oldProjects }) => {
   };
 
   return (
-    <header className="w-full bg-bckgrnd-blue_light">
+    <header className="hidden md:flex w-full bg-bckgrnd-blue_light">
       <main className="max-w-full flex-grow flex flex-col py-3 mx-12">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start w-5/6">

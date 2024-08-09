@@ -1,20 +1,53 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import userIcon from "../assets/user_icon.png";
+import {
+  request,
+  setAuthHeader,
+  setHankoSession,
+  getAuthToken,
+} from "../axios/axios_helper";
 
 import HeaderLink from "./Buttons/HeaderLink";
 import HeaderButton from "./Buttons/HeaderButton";
-import MainDropDownMenu from "./MainDropDown";
 
-const MobileNavigation = ({
-  location,
-  token,
-  validToken,
-  toggleMenu,
-  isMenuOpen,
-}) => {
+const hankoApi = process.env.REACT_APP_HANKO_API_URL;
+
+const MobileNavigation = ({ location, token, validToken }) => {
+  const [user, setUser] = useState([]);
+  const [hanko, setHanko] = useState("");
+
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    try {
+      await hanko?.user.logout();
+      setHankoSession(null);
+      setAuthHeader(null);
+      navigate("/");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
+
+  const fetchUser = () => {
+    request("GET", `/signed_user/${getAuthToken()}`)
+      .then((response) => response.data)
+      .then((data) => setUser(data))
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    import("@teamhanko/hanko-elements").then(({ Hanko }) =>
+      setHanko(new Hanko(hankoApi ?? ""))
+    );
+
+    fetchUser();
+  }, []);
+
   return (
-    <div className="md:hidden flex flex-col space-y-4 pb-4">
+    <div className="md:hidden flex flex-col">
       <HeaderLink
         title="Work management"
         path="/work-management"
@@ -33,23 +66,30 @@ const MobileNavigation = ({
       {(token === null || token === "null" || validToken === false) && (
         <>
           <Link to="/login">
-            <p className="text-text-dark text-lg font-medium px-1">Sign in</p>
+            <p className="text-text-dark text-lg font-medium px-1 py-2">
+              Sign in
+            </p>
           </Link>
           <HeaderButton title="Get started" path="/register" />
         </>
       )}
 
       {!(token === null || token === "null" || validToken === false) && (
-        <button onClick={toggleMenu}>
-          <img
-            src={userIcon}
-            alt="User icon"
-            height="45"
-            width="45"
-            className="bg-bckgrnd-main rounded-full"
-          />
-          {isMenuOpen && <MainDropDownMenu />}
-        </button>
+        <>
+          <Link to={`/projects-list/${user.id}`}>
+            <p className="text-text-dark text-lg font-medium px-1 py-2">
+              Projects
+            </p>
+          </Link>
+          <Link to={`/profile/${user.id}`}>
+            <p className="text-text-dark text-lg font-medium px-1 py-2">
+              Profile
+            </p>
+          </Link>
+          <div className="py-2 px-3 text-white bg-bckgrnd-blue_dark rounded-md font-semibold w-fit mb-2">
+            <button onClick={logout}>Logout</button>
+          </div>
+        </>
       )}
     </div>
   );

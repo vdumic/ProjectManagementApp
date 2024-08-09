@@ -17,7 +17,7 @@ const TasksView = ({ project }) => {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-row justify-start w-full">
       {statuses.map((status) => {
         return (
           <StatusLine key={status.statusId} status={status} project={project} />

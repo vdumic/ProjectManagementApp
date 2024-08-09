@@ -8,6 +8,7 @@ import { request } from "../axios/axios_helper";
 import ProjectHeader from "../components - project page/ProjectHeader";
 import EditButton from "./Buttons/EditButton";
 import EditProfilePopUp from "./PopUps/EditProfilePopUp";
+import MobileHeader from "../components - projects list/Header/MobileHeader";
 
 const hankoApi = process.env.REACT_APP_HANKO_API_URL;
 
@@ -43,6 +44,7 @@ const UserProfile = () => {
         <title>Sprynt / Profile</title>
       </Helmet>
       <ProjectHeader userId={userId} />
+      <MobileHeader />
       <div className="flex flex-col w-full items-center px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-lg mt-12 bg-white rounded-lg shadow-lg p-6 sm:p-8">
           <div className="text-center mb-8">

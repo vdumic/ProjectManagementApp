@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 
-import { setAuthHeader, setHankoSession } from "../axios/axios_helper";
+import { setAuthHeader, setHankoSession } from "../../axios/axios_helper";
 
 const hankoApi = process.env.REACT_APP_HANKO_API_URL;
 

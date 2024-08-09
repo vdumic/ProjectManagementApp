@@ -3,7 +3,7 @@ import { useState } from "react";
 import logo from "../assets/logo.png";
 import userIcon from "../assets/user_icon.png";
 import HeaderLink from "../components - main header/Buttons/HeaderLink";
-import DropDownMenu from "../components - projects list/DropDownMenu";
+import DropDownMenu from "../components - projects list/Header/DropDownMenu";
 
 const ProjectHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,7 +15,7 @@ const ProjectHeader = () => {
   };
 
   return (
-    <header className="sticky z-50 top-0 bg-bckgrnd-blue_light">
+    <header className="hidden md:flex sticky z-50 top-0 bg-bckgrnd-blue_light">
       <main className="w-full flex-grow flex flex-col px-4 sm:px-8 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center">

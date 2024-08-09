@@ -82,8 +82,6 @@ const Header = () => {
             location={location}
             token={token}
             validToken={validToken}
-            toggleMenu={toggleMenu}
-            isMenuOpen={isMenuOpen}
           />
         )}
       </main>

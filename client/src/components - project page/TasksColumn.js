@@ -2,9 +2,8 @@ import Capitalize from "../functions/Capitalize";
 
 const TasksColumn = ({ tasks, selectTask }) => {
   return (
-    <div className="flex flex-col w-full justify-starth-3/4">
+    <div className="flex flex-col w-full justify-start h-3/4">
       {tasks.map((task) => {
-        const bckgrnd = "bg-bckgrnd-" + task.priorityName.toLowerCase();
         return (
           <button
             key={task.taskId}
@@ -18,7 +17,13 @@ const TasksColumn = ({ tasks, selectTask }) => {
               {task.assignedTo}
             </p>
             <div
-              className={`w-fit h-fit mt-1 ${bckgrnd} px-4 py-0.5 rounded-lg text-white text-sm`}
+              className={`w-fit h-fit mt-1 px-4 py-0.5 rounded-lg text-white text-sm ${
+                task.priorityName.toLowerCase() === "high"
+                  ? "bg-bckgrnd-high"
+                  : task.priorityName.toLowerCase() === "medium"
+                  ? "bg-bckgrnd-medium"
+                  : "bg-bckgrnd-low"
+              }`}
             >
               {Capitalize(task.priorityName)}
             </div>
