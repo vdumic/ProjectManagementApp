@@ -1,4 +1,5 @@
 import { Field, Form, Formik } from "formik";
+
 import { request } from "../../axios/axios_helper";
 
 const ChangeRolePopUp = ({
@@ -23,18 +24,11 @@ const ChangeRolePopUp = ({
       projectId: project.projectId,
       roleId,
     })
-      .then(async (response) => {
-        if (response.status === 200) {
-          console.log("Role changed successfully");
-          projectChange();
-        } else {
-          console.error("Failed to change role:", response.statusText);
-        }
+      .then(() => {
+        projectChange();
         closePopUp();
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
   return (

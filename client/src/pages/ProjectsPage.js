@@ -1,7 +1,10 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 
+import { request } from "../axios/axios_helper";
+
 import logo from "../assets/logo_light.png";
+
 import ProjectsHeader from "../components - projects list/ProjectsHeader";
 import TasksView from "../components - projects list/TasksView";
 import UsersView from "../components - projects list/UsersView";
@@ -9,16 +12,15 @@ import ProjectInfoView from "../components - projects list/ProjectInfoView";
 import CreateProjectPopUp from "../components - projects list/PopUps/CreateProjectPopUp";
 import CreatedPopUp from "../components - projects list/PopUps/CreatedPopUp";
 import FailedCreationPopUp from "../components - projects list/PopUps/FailedCreationPopUp";
-import { request } from "../axios/axios_helper";
 
 const ProjectsPage = () => {
-  const { userId } = useParams();
-  const [tasksClicked, setTasksClicked] = useState(false);
-  const [usersClicked, setUsersClicked] = useState(false);
-  const [projectInfoClicked, setProjectInfoClicked] = useState(true);
   const [chosenProject, setChosenProject] = useState({});
   const [activeProjects, setActiveProjects] = useState([]);
   const [oldProjects, setOldProjects] = useState([]);
+
+  const [tasksClicked, setTasksClicked] = useState(false);
+  const [usersClicked, setUsersClicked] = useState(false);
+  const [projectInfoClicked, setProjectInfoClicked] = useState(true);
 
   const [createProjectOpened, setCreateProjectOpened] = useState(false);
   const [createdProjectPopUpOpened, setCreatedProjectPopUpOpened] =
@@ -26,25 +28,21 @@ const ProjectsPage = () => {
   const [failedProjectPopUpOpened, setFailedProjectPopUpOpened] =
     useState(false);
 
+  const { userId } = useParams();
+
   const fetchProjects = useCallback(async () => {
     request("GET", `/projects/active/${userId}`, {})
-      .then(async (response) => {
-        const data = await response.data;
+      .then((response) => response.data)
+      .then((data) => {
         setActiveProjects(data);
         setChosenProject(data[0]);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
 
     request("GET", `/projects/unactive/${userId}`, {})
-      .then(async (response) => {
-        const data = await response.data;
-        setOldProjects(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((response) => response.data)
+      .then((data) => setOldProjects(data))
+      .catch((error) => console.log(error));
   }, [userId]);
 
   useEffect(() => {
@@ -113,7 +111,10 @@ const ProjectsPage = () => {
                         isChosen ? "underline font-medium" : ""
                       }`}
                       key={project.projectId}
-                      onClick={() => setChosenProject(project)}
+                      onClick={() => {
+                        setChosenProject(project);
+                        handleProjectInfoClicked();
+                      }}
                     >
                       {project.projectName}
                     </button>
@@ -198,12 +199,7 @@ const ProjectsPage = () => {
             </div>
             <div className="flex flex-col justify-start mx-12 pt-8 overflow-auto h-5/6">
               {tasksClicked && <TasksView project={chosenProject} />}
-              {usersClicked && (
-                <UsersView
-                  project={chosenProject}
-                  projectChange={fetchProjects}
-                />
-              )}
+              {usersClicked && <UsersView project={chosenProject} />}
               {projectInfoClicked && (
                 <ProjectInfoView
                   project={chosenProject}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectInfoTable from "./ProjectInfoTable";
 import UpdateProjectNamePopUp from "./PopUps/UpdateProjectNamePopUp";
 import UpdateProjectDescriptionPopUp from "./PopUps/UpdateProjectDescriptionPopUp";
@@ -32,6 +32,8 @@ const ProjectInfoView = ({ project, projectChange }) => {
   const handleDeletedProjectOpen = () => {
     setDeletedProjectPopUp(true);
   };
+
+  useEffect(() => {}, [projectChange]);
 
   return (
     <div>

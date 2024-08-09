@@ -5,7 +5,7 @@ import NoUsersToAddPopUp from "./PopUps/NoUsersToAddPopUp";
 import RemoveUserPopUp from "./PopUps/RemoveUserPopUp";
 import ChangeRolePopUp from "./PopUps/ChangeRolePopUp";
 
-const UsersView = ({ project, projectChange }) => {
+const UsersView = ({ project }) => {
   const [users, setUsers] = useState([]);
   const [roles, setRoles] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
@@ -57,8 +57,6 @@ const UsersView = ({ project, projectChange }) => {
     fetchRoles();
     fetchAllUsers();
   }, [fetchUsers]);
-
-  console.log(roles);
 
   const handleAddUserClicked = () => {
     setAddUserPopUp(true);
@@ -134,7 +132,7 @@ const UsersView = ({ project, projectChange }) => {
             setAddUserPopUp(false);
             setNoUsersPopup(false);
           }}
-          projectChange={projectChange}
+          projectChange={fetchUsers}
           roles={roles}
           allUsers={allUsers}
         />
@@ -144,7 +142,7 @@ const UsersView = ({ project, projectChange }) => {
         user={user}
         openPopUp={changeRolePopUp}
         closePopUp={() => setChangeRolePopUp(false)}
-        projectChange={projectChange}
+        projectChange={fetchUsers}
         roles={roles}
       />
       <RemoveUserPopUp
@@ -152,7 +150,7 @@ const UsersView = ({ project, projectChange }) => {
         user={user}
         openPopUp={removeUserPopUp}
         closePopUp={() => setRemoveUserPopUp(false)}
-        projectChange={projectChange}
+        projectChange={fetchUsers}
       />
     </div>
   );

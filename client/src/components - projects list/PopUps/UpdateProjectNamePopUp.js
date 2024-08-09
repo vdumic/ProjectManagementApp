@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
+
 import { request } from "../../axios/axios_helper";
 
 const UpdateProjectNamePopUp = ({
@@ -34,19 +35,11 @@ const UpdateProjectNamePopUp = ({
       name: projectName,
       description: null,
     })
-      .then(async (response) => {
-        if (response.status === 200) {
-          const data = await response.data;
-          console.log("Project updated successfully:", data);
-          closePopUp();
-          projectChange();
-        } else {
-          console.log("Failed to update project!")
-        }
+      .then(() => {
+        closePopUp();
+        projectChange();
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
   return (

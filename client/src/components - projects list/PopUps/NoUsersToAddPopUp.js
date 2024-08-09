@@ -1,7 +1,4 @@
-const NoUsersToAddPopUp = ({
-  openPopUp,
-  closePopUp,
-}) => {
+const NoUsersToAddPopUp = ({ openPopUp, closePopUp }) => {
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
       closePopUp();

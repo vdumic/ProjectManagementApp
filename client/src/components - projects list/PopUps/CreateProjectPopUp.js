@@ -1,6 +1,7 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useParams } from "react-router-dom";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
+
 import { request } from "../../axios/axios_helper";
 
 const CreateProjectPopUp = ({
@@ -10,7 +11,7 @@ const CreateProjectPopUp = ({
   openCreatedProjectPopUp,
   openFailedProjectPopUp,
 }) => {
-  const {userId} = useParams();
+  const { userId } = useParams();
 
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
@@ -30,26 +31,22 @@ const CreateProjectPopUp = ({
   });
 
   const handleCreateProject = async (name, description) => {
-    request("POST",
-      "/projects",
-      {
-        name: name,
-        description: description,
-        createdBy: userId,
-      }
-    ).then(async response => {
-      if (response.status === 200) {
-        const data = await response.data;
-        console.log("Project created successfully:", data.name);
-        openCreatedProjectPopUp();
-        projectChange();
-      } else {
-        console.error("Failed to create project:", response.statusText);
-        openFailedProjectPopUp();
-      }
-    }).catch(error => {
-      console.log(error);
+    request("POST", "/projects", {
+      name: name,
+      description: description,
+      createdBy: userId,
     })
+      .then((response) => {
+        if (response.status === 200) {
+          openCreatedProjectPopUp();
+          projectChange();
+        } else {
+          openFailedProjectPopUp();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

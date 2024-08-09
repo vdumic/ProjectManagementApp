@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+
 import { request } from "../../axios/axios_helper";
 
 const DeleteProjectPopUp = ({
@@ -8,7 +9,7 @@ const DeleteProjectPopUp = ({
   projectChange,
   openDeletedProjectPopUp,
 }) => {
-  const {userId} = useParams();
+  const { userId } = useParams();
 
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
@@ -19,20 +20,15 @@ const DeleteProjectPopUp = ({
   if (openPopUp !== true) return null;
 
   const handleDeleteProject = async () => {
-    request("DELETE",
-      `/projects/${project.projectId}/${userId}`,
-      {}
-    ).then(async response => {
-      if (response.status === 200) {
-        closePopUp();
-        openDeletedProjectPopUp();
-        projectChange();
-      } else {
-        console.error("Failed to delete project:", response.statusText);
-      }
-    }).catch(error => {
-      console.log(error);
-    });
+    request("DELETE", `/projects/${project.projectId}/${userId}`, {})
+      .then((response) => {
+        if (response.status === 200) {
+          closePopUp();
+          openDeletedProjectPopUp();
+          projectChange();
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   return (

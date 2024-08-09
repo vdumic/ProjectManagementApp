@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+
 import { request } from "../../axios/axios_helper";
 
 const UpdateProjectStatusPopUp = ({
@@ -19,36 +20,20 @@ const UpdateProjectStatusPopUp = ({
 
   const handleActivateProject = async () => {
     request("PUT", `/projects/activate/${project.projectId}/${userId}`, {})
-      .then(async (response) => {
-        if (response.status === 200) {
-          const data = await response.data;
-          console.log("Project updated successfully:", data);
-          closePopUp();
-          projectChange();
-        } else {
-          console.error("Failed to update project:", response.statusText);
-        }
+      .then(() => {
+        closePopUp();
+        projectChange();
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
   const handleDeactivateProject = async () => {
     request("PUT", `/projects/deactivate/${project.projectId}/${userId}`, {})
-      .then(async (response) => {
-        if (response.status === 200) {
-          const data = await response.data;
-          console.log("Project updated successfully:", data);
-          closePopUp();
-          projectChange();
-        } else {
-          console.error("Failed to update project:", response.statusText);
-        }
+      .then(() => {
+        closePopUp();
+        projectChange();
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
   return (

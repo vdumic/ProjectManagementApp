@@ -1,4 +1,5 @@
 import { Field, Form, Formik } from "formik";
+
 import { request } from "../../axios/axios_helper";
 
 const AddNewUserPopUp = ({
@@ -17,25 +18,18 @@ const AddNewUserPopUp = ({
 
   if (openPopUp !== true) return null;
 
-  const handleAddUser = async (userId, roleId) => {
+  const handleAddUser = (userId, roleId) => {
     request("POST", "/on_projects", {
       userId,
       projectId: project.projectId,
       roleId,
     })
-      .then(async (response) => {
-        if (response.status === 200) {
-          const data = await response.data;
-          console.log("User added successfully:", data.name);
-          projectChange();
-        } else {
-          console.error("Failed to add user:", response.statusText);
-        }
+      .then((response) => response.data)
+      .then(() => {
+        projectChange();
         closePopUp();
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
   return (

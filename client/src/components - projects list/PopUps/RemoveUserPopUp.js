@@ -17,17 +17,11 @@ const RemoveUserPopUp = ({
 
   const handleRemoveUser = async () => {
     request("DELETE", `/on_projects/${project.projectId}/${user.id}`, {})
-      .then(async (response) => {
-        if (response.status === 200) {
-          closePopUp();
-          projectChange();
-        } else {
-          console.error("Failed to remove user:", response.statusText);
-        }
+      .then((response) => {
+        closePopUp();
+        projectChange();
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -39,7 +33,8 @@ const RemoveUserPopUp = ({
       <div className="p-2 bg-white w-10/12 md:w-1/2 lg:1/3 shadow-inner border-e-emerald-600 rounded-lg py-5">
         <div className="w-full p-3 justify-center items-center">
           <h2 className="font-semibold py-3 text-center text-xl">
-            Are you sure you want to remove {user.firstname} {user.lastname} from project?
+            Are you sure you want to remove {user.firstname} {user.lastname}{" "}
+            from project?
           </h2>
         </div>
         <div className="w-full p-3 justify-center items-center">

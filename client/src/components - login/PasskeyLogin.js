@@ -6,7 +6,6 @@ import { request, setAuthHeader } from "../axios/axios_helper";
 
 import logo from "../assets/logo.png";
 
-
 const hankoApi = process.env.REACT_APP_HANKO_API_URL;
 
 const PasskeyLogin = () => {
@@ -15,7 +14,7 @@ const PasskeyLogin = () => {
 
   const loginUser = useCallback(async () => {
     const { id, email } = await hanko.user.getCurrent();
-    request("GET", `/user/passkey/${email}/${id}`, {})
+    request("POST", `/user/passkey/${email}/${id}`, {})
       .then((response) => {
         const userId = response.data.id;
         setAuthHeader(response.data.token);

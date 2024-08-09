@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Field, Form, Formik } from "formik";
+
 import { request } from "../../axios/axios_helper";
 
 const UpdateProjectDescriptionPopUp = ({
@@ -19,26 +20,17 @@ const UpdateProjectDescriptionPopUp = ({
   if (openPopUp !== true) return null;
 
   const handleUpdateProjectDescription = async (projectDescription) => {
-    request("PUT",
-      "/projects/description",
-      {
-        projectId: project.projectId,
-        userId: userId,
-        name: null,
-        description: projectDescription,
-      }
-    ).then(async response => {
-      if (response.status === 200) {
-        const data = await response.data;
-        console.log("Project updated successfully:", data);
+    request("PUT", "/projects/description", {
+      projectId: project.projectId,
+      userId: userId,
+      name: null,
+      description: projectDescription,
+    })
+      .then(() => {
         closePopUp();
         projectChange();
-      }else {
-        console.error("Failed to update project:", response.statusText);
-      }
-    }).catch(error => {
-      console.log(error);
-    })
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
