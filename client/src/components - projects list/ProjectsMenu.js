@@ -4,7 +4,14 @@ import logo from "../assets/logo_light.png";
 
 import ProjectsList from "./ProjectsList";
 
-const ProjectsMenu = ({activeProjects, oldProjects, chosenProject, setChosenProject, handleProjectInfoClicked, setCreateProjectOpened}) => {
+const ProjectsMenu = ({
+  activeProjects,
+  oldProjects,
+  chosenProject,
+  setChosenProject,
+  handleProjectInfoClicked,
+  setCreateProjectOpened,
+}) => {
   return (
     <div className="hidden md:flex w-1/4 bg-bckgrnd-blue_dark h-screen overflow-clip">
       <div className="flex-grow flex flex-col justify-between h-screen">

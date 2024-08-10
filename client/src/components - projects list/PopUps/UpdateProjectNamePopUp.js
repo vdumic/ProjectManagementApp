@@ -66,7 +66,7 @@ const UpdateProjectNamePopUp = ({
                 handleUpdateProjectName(name);
               }}
             >
-              <Form className="flex flex-col w-1/2 justify-center items-center">
+              <Form className="flex flex-col sm:3/5 md:w-1/2 justify-center items-center">
                 <div className="flex flex-col items-start mb-6 w-full">
                   <label className="font-medium text-text-dark">Name</label>
                   <Field name="name" className="border-2 py-2 w-full px-4" />
@@ -75,7 +75,7 @@ const UpdateProjectNamePopUp = ({
                 <div className="w-full p-3 justify-center items-center py-5">
                   <div className="flex justify-center items-center">
                     <button type="submit" className="bg-button-blue rounded-md">
-                      <p className="text-lg py-2 px-5 text-white font-medium">
+                      <p className="text-lg py-2 px-5 text-white font-medium text-nowrap">
                         Update project name
                       </p>
                     </button>

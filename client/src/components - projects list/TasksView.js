@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import StatusLine from "./StatusLine";
+
 import { request } from "../axios/axios_helper";
+
+import StatusLine from "./StatusLine";
 
 const TasksView = ({ project }) => {
   const [statuses, setStatuses] = useState([]);
@@ -17,12 +19,10 @@ const TasksView = ({ project }) => {
   }, []);
 
   return (
-    <div className="flex flex-row justify-start w-full">
-      {statuses.map((status) => {
-        return (
-          <StatusLine key={status.statusId} status={status} project={project} />
-        );
-      })}
+    <div className="flex flex-col md:flex-row justify-start w-full h-screen md:h-auto overflow-auto">
+      {statuses.map((status) => (
+        <StatusLine key={status.statusId} status={status} project={project} />
+      ))}
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
+
 import { request } from "../axios/axios_helper";
+
 import AddNewUserPopUp from "./PopUps/AddNewUserPopUp";
 import NoUsersToAddPopUp from "./PopUps/NoUsersToAddPopUp";
 import RemoveUserPopUp from "./PopUps/RemoveUserPopUp";
@@ -9,37 +11,27 @@ const UsersView = ({ project }) => {
   const [users, setUsers] = useState([]);
   const [roles, setRoles] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
+  const [user, setUser] = useState({});
+
   const [addUserPopUp, setAddUserPopUp] = useState(false);
   const [noUsersPopUp, setNoUsersPopup] = useState(false);
   const [removeUserPopUp, setRemoveUserPopUp] = useState(false);
-  const [user, setUser] = useState({});
   const [changeRolePopUp, setChangeRolePopUp] = useState(false);
 
   const fetchUsers = useCallback(async () => {
     request("GET", `/users_on_project/${project.projectId}`, {})
-      .then(async (response) => {
-        if (response.status === 200) {
-          const data = await response.data;
-          setUsers(data);
-        } else {
-          console.log("Failed to fetch users: " + response.statusText);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((response) => response.data)
+      .then((data) => setUsers(data))
+      .catch((error) => console.log(error));
   }, []);
 
   const fetchAllUsers = async () => {
     request("GET", `/users_to_add/${project.projectId}`, {})
-      .then(async (response) => {
-        const data = await response.data;
-        setAllUsers(data);
-        console.log(data);
-      })
+      .then((response) => response.data)
+      .then((data) => setAllUsers(data))
       .catch((error) => {
-        console.log(error);
         setAllUsers(null);
+        console.log(error);
       });
   };
 
@@ -47,9 +39,9 @@ const UsersView = ({ project }) => {
     request("GET", "/roles", {})
       .then((response) => response.data)
       .then((data) => {
-        console.log(data);
         setRoles(data);
-      });
+      })
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
@@ -96,7 +88,7 @@ const UsersView = ({ project }) => {
                 <td className="py-2.5 px-4 text-md text-text-dark">
                   {user.role.toUpperCase()}
                 </td>
-                <td className="py-2.5 px-4">
+                <td className="hidden md:flex py-2.5 px-4">
                   <button
                     className="bg-bckgrnd-main text-text-dark border drop-shadow-md px-3 py-1 rounded mr-2"
                     onClick={() => handleChangeRoleClicked(user)}
@@ -105,6 +97,20 @@ const UsersView = ({ project }) => {
                   </button>
                   <button
                     className="bg-bckgrnd-high text-white px-3 py-1 ml-3 rounded drop-shadow-md"
+                    onClick={() => handleRemoveUserClicked(user)}
+                  >
+                    Remove user
+                  </button>
+                </td>
+                <td className="md:hidden flex-col justify-start py-2.5 px-4">
+                  <button
+                    className="bg-bckgrnd-main text-text-dark border drop-shadow-md px-3 py-1 rounded mb-2"
+                    onClick={() => handleChangeRoleClicked(user)}
+                  >
+                    Change role
+                  </button>
+                  <button
+                    className="bg-bckgrnd-high text-white px-3 py-1 rounded drop-shadow-md"
                     onClick={() => handleRemoveUserClicked(user)}
                   >
                     Remove user

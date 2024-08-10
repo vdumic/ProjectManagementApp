@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import ProjectInfoTable from "./ProjectInfoTable";
 import UpdateProjectNamePopUp from "./PopUps/UpdateProjectNamePopUp";
 import UpdateProjectDescriptionPopUp from "./PopUps/UpdateProjectDescriptionPopUp";
@@ -13,32 +14,18 @@ const ProjectInfoView = ({ project, projectChange }) => {
   const [deleteProjectPopUp, setDeleteProjectPopUp] = useState(false);
   const [deletedProjectPopUp, setDeletedProjectPopUp] = useState(false);
 
-  const handleUpdateNameOpen = () => {
-    setUpdateNamePopUp(true);
-  };
-
-  const handleUpdateDescriptionOpen = () => {
-    setUpdateDescriptionPopUp(true);
-  };
-
-  const handleUpdateStatusOpen = () => {
-    setUpdateStatusPopUp(true);
-  };
-
-  const handleDeleteProjectOpen = () => {
-    setDeleteProjectPopUp(true);
-  };
-
-  const handleDeletedProjectOpen = () => {
-    setDeletedProjectPopUp(true);
-  };
+  const handleUpdateNameOpen = () => setUpdateNamePopUp(true);
+  const handleUpdateDescriptionOpen = () => setUpdateDescriptionPopUp(true);
+  const handleUpdateStatusOpen = () => setUpdateStatusPopUp(true);
+  const handleDeleteProjectOpen = () => setDeleteProjectPopUp(true);
+  const handleDeletedProjectOpen = () => setDeletedProjectPopUp(true);
 
   useEffect(() => {}, [projectChange]);
 
   return (
     <div>
-      <div className="flex justify-start mx-auto p-4">
-        <p className="text-2xl py-3 text-text-dark font-medium">
+      <div className="flex justify-start md:mx-auto">
+        <p className="text-xl md:text-2xl text-text-dark font-medium p-2">
           Project details
         </p>
       </div>
@@ -66,9 +53,9 @@ const ProjectInfoView = ({ project, projectChange }) => {
         closePopUp={() => setUpdateStatusPopUp(false)}
         projectChange={projectChange}
       />
-      <div className="flex justify-start mx-auto p-4">
+      <div className="flex justify-start md:mx-auto p-2">
         <button
-          className="bg-bckgrnd-high text-white text-lg border drop-shadow-md px-6 py-3 rounded mr-2"
+          className="bg-bckgrnd-high text-white text-sm md:text-lg border drop-shadow-md px-4 md:px-6 py-2 md:py-3 rounded mr-2"
           onClick={handleDeleteProjectOpen}
         >
           Delete project

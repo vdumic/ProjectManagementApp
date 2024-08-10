@@ -56,7 +56,7 @@ const UpdateProjectDescriptionPopUp = ({
                 handleUpdateProjectDescription(description);
               }}
             >
-              <Form className="flex flex-col w-1/2 justify-center items-center">
+              <Form className="flex flex-col sm:w-3/5 md:w-1/2 justify-center items-center">
                 <div className="flex flex-col items-start mb-6 w-full">
                   <label className="font-medium text-text-dark">
                     Description
@@ -69,7 +69,7 @@ const UpdateProjectDescriptionPopUp = ({
                 <div className="w-full p-3 justify-center items-center py-5">
                   <div className="flex justify-center items-center">
                     <button type="submit" className="bg-button-blue rounded-md">
-                      <p className="text-lg py-2 px-5 text-white font-medium">
+                      <p className="text-lg py-2 px-5 text-white font-medium text-nowrap">
                         Update project description
                       </p>
                     </button>

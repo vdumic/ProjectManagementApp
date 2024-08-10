@@ -12,6 +12,7 @@ import ProjectsMenu from "../components - projects list/ProjectsMenu";
 import CreateProjectPopUp from "../components - projects list/PopUps/CreateProjectPopUp";
 import CreatedPopUp from "../components - projects list/PopUps/CreatedPopUp";
 import FailedCreationPopUp from "../components - projects list/PopUps/FailedCreationPopUp";
+import MobileProjectsHeader from "../components - projects list/Header/MobileProjectsHeader";
 
 const ProjectsPage = () => {
   const [chosenProject, setChosenProject] = useState({});
@@ -99,13 +100,20 @@ const ProjectsPage = () => {
         handleProjectInfoClicked={handleProjectInfoClicked}
         setCreateProjectOpened={setCreateProjectOpened}
       />
-      <div className="w-3/4 h-full bg-bckgrnd-main flex-col justify-start">
+      <div className="sm:w-full md:w-3/4 h-full bg-bckgrnd-main flex-col justify-start">
         <ProjectsHeader
           project={chosenProject}
           activeProjects={activeProjects}
           oldProjects={oldProjects}
         />
         <MobileHeader />
+        <MobileProjectsHeader
+          activeProjects={activeProjects}
+          oldProjects={oldProjects}
+          project={chosenProject}
+          setChosenProject={setChosenProject}
+          handleProjectInfoClicked={handleProjectInfoClicked}
+        />
         {(activeProjects.length !== 0 || oldProjects.length !== 0) && (
           <>
             <div className="flex items-center justify-between pt-1.5 pb-3 pl-14 border-b-2 border-gray-400">
@@ -139,12 +147,12 @@ const ProjectsPage = () => {
               </div>
             </div>
             {tasksClicked && (
-              <div className="flex flex-col justify-start mx-12 pt-8 overflow-auto h-5/6">
+              <div className="flex flex-col justify-start md:mx-12 pt-8 overflow-auto h-5/6">
                 {tasksClicked && <TasksView project={chosenProject} />}
               </div>
             )}
             {(usersClicked || projectInfoClicked) && (
-              <div className="flex flex-col justify-start mx-12 pt-8 overflow-auto h-5/6">
+              <div className="flex flex-col justify-start md:mx-12 pt-8 overflow-auto h-5/6">
                 {usersClicked && <UsersView project={chosenProject} />}
                 {projectInfoClicked && (
                   <ProjectInfoView

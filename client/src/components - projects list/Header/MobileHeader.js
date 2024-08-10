@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import logo from "../../assets/logo.png";
 import userIcon from "../../assets/user_icon.png";
-import { useState } from "react";
 
 const MobileHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,7 +10,7 @@ const MobileHeader = () => {
   const { userId } = useParams();
 
   return (
-    <main className="md:hidden max-w-full mx-auto px-8 shadow-md">
+    <main className="md:hidden max-w-full mx-auto px-8 shadow-md bg-bckgrnd-blue_light">
       <div className="flex items-center justify-between py-4">
         <Link to="/" onClick={() => window.scrollTo({ top: 0 })}>
           <img src={logo} alt="Sprynt logo" width="110" />
