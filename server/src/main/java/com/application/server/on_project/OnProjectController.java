@@ -21,6 +21,11 @@ public class OnProjectController {
         return onProjectService.getAllOnProject();
     }
 
+    @GetMapping("/on_projects/{user-id}/{project-id}")
+    public boolean checkIsUserAdmin(@PathVariable("user-id") UUID userId, @PathVariable("project-id") UUID projectId) {
+        return onProjectService.checkIsUserAdmin(userId, projectId);
+    }
+
     @PostMapping("/on_projects")
     public OnProjectResponseDto createOnProject(@RequestBody OnProjectDto onProjectDto) {
         return onProjectService.createOnProject(onProjectDto);

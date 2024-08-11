@@ -10,7 +10,6 @@ import com.application.server.user.User;
 import com.application.server.user.UserService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;

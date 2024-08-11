@@ -36,7 +36,7 @@ public class AuthController {
         return ResponseEntity.created(URI.create("/users/" + tokenUser.id())).body(tokenUser);
     }
 
-   @GetMapping("/user/passkey/{user-email}/{passkey-id}")
+   @PostMapping("/user/passkey/{user-email}/{passkey-id}")
     public ResponseEntity<UserDto> loginWithPasskey(@PathVariable("user-email") String userEmail, @PathVariable("passkey-id") String passkeyId) {
         User user = userService.findUser(userEmail, passkeyId);
 

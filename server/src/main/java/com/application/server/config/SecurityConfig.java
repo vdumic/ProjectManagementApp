@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagementConfigurer -> sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/user/passkey/{user-email}/{passkey-id}").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/user/passkey/{user-email}/{passkey-id}").permitAll()
                         .anyRequest().authenticated())
                 ;
 

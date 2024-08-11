@@ -40,6 +40,16 @@ public class OnProjectService {
         }
     }
 
+    public boolean checkIsUserAdmin(UUID userId, UUID projectId) {
+        OnProject onProject = onProjectRepository.findAll().stream().filter(op -> op.getUser().getId().equals(userId) && op.getProject().getId().equals(projectId)).findAny().orElse(null);
+
+        if (onProject != null) {
+            return onProject.getRole().getName().equalsIgnoreCase("admin");
+        } else {
+            return false;
+        }
+    }
+
     public OnProjectResponseDto updateUserRoleOnProject(OnProjectDto onProjectDto) {
         var onProject = onProjectMapper.toOnProject(onProjectDto);
         var role = new Role();
