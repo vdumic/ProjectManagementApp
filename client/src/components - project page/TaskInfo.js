@@ -123,7 +123,8 @@ const TaskInfo = ({
         </div>
       </div>
       {isAdmin && (
-        <div className="flex justify-center mt-6">
+        <div className="flex-col justify-start mb-6">
+        <div className="flex justify-center mb-3">
           <button
             className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-40 mx-6"
             onClick={handleEditTask}
@@ -133,9 +134,7 @@ const TaskInfo = ({
             </p>
           </button>
         </div>
-      )}
-      {isAdmin && (
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center">
           <button
             className="bg-bckgrnd-high rounded-full border-2 border-bckgrnd-high shadow-lg w-40 mx-6"
             onClick={handleDeleteTask}
@@ -144,6 +143,7 @@ const TaskInfo = ({
               Delete task
             </p>
           </button>
+        </div>
         </div>
       )}
     </div>

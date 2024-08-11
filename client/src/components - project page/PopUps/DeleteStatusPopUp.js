@@ -1,14 +1,16 @@
+import { useParams } from "react-router-dom";
 import { Field, Form, Formik } from "formik";
 
 import { request } from "../../axios/axios_helper";
 
-const AssignTaskPopUp = ({
-  task,
+const DeleteStatusPopUp = ({
+  statuses,
   openPopUp,
   closePopUp,
-  users,
-  setStateChanged,
+  setStateChanged
 }) => {
+    const {projectId} = useParams();
+
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
       closePopUp();
@@ -17,10 +19,8 @@ const AssignTaskPopUp = ({
 
   if (openPopUp !== true) return null;
 
-  const handleAssignUser = (user) => {
-    request("PUT", "/tasks/user", {
-      taskId: task.taskId,
-      userId: user,
+  const handleDeleteStatus =  (statusId) => {
+    request("DELETE", `/project_statuses/${projectId}/${statusId}`, {
     })
       .then((response) => response.data)
       .then(() => {
@@ -39,27 +39,27 @@ const AssignTaskPopUp = ({
       <div className="p-2 bg-white w-10/12 md:w-1/2 lg:1/3 shadow-inner border-e-emerald-600 rounded-lg py-5">
         <div className="w-full p-3 justify-center items-center">
           <h2 className="font-semibold py-3 text-center text-xl">
-            Assign user to task
+            Remove status from project
           </h2>
         </div>
         <div className="w-full p-3 justify-center items-center">
           <div className="flex justify-center items-center">
             <Formik
               initialValues={{
-                user: users[0].id,
+                status: statuses[0].statusId,
               }}
               onSubmit={(values) => {
-                handleAssignUser(values.user);
+                handleDeleteStatus(values.status);
               }}
             >
               <Form className="flex flex-col w-1/2 justify-center items-center">
                 <div className="flex flex-col items-start mb-6 w-full">
-                  <label className="font-medium text-text-dark">User</label>
-                  <Field as="select" name="user">
-                    {users.map((user) => {
+                  <label className="font-medium text-text-dark">Status</label>
+                  <Field as="select" name="status">
+                    {statuses.map((status) => {
                       return (
-                        <option key={user.id} value={user.id}>
-                          {user.firstname} {user.lastname}
+                        <option key={status.statusId} value={status.statusId}>
+                          {status.status}
                         </option>
                       );
                     })}
@@ -69,7 +69,7 @@ const AssignTaskPopUp = ({
                   <div className="flex justify-center items-center">
                     <button type="submit" className="bg-button-blue rounded-md">
                       <p className="text-lg py-2 px-5 text-white font-medium text-nowrap">
-                        Assign user
+                        Delete status
                       </p>
                     </button>
                   </div>
@@ -83,4 +83,4 @@ const AssignTaskPopUp = ({
   );
 };
 
-export default AssignTaskPopUp;
+export default DeleteStatusPopUp;

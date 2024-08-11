@@ -17,6 +17,7 @@ import UpdatePriorityPopUp from "../components - project page/PopUps/UpdatePrior
 import UpdateStatusPopUp from "../components - project page/PopUps/UpdateStatusPopUp";
 import AssignTaskPopUp from "../components - project page/PopUps/AssignTaskPopUp";
 import DeleteTaskPopUp from "../components - project page/PopUps/DeleteTaskPopUp";
+import DeleteStatusPopUp from "../components - project page/PopUps/DeleteStatusPopUp";
 
 const ProjectPage = () => {
   const [project, setProject] = useState({});
@@ -24,8 +25,10 @@ const ProjectPage = () => {
   const [priorities, setPriorities] = useState([]);
   const [task, setTask] = useState(null);
   const [usersOnProject, setUsersOnProject] = useState([]);
+  const [statusesToDelete, setStatusesToDelete] = useState([]);
   const [taskClicked, setTaskClicked] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [stateChanged, setStateChanged] = useState(false);
 
   const [createStatusPopUp, setCreateStatusPopUp] = useState(false);
   const [createTaskPopUp, setCreateTaskPopUp] = useState(false);
@@ -36,7 +39,7 @@ const ProjectPage = () => {
   const [updateStatusPopUp, setUpdateStatusPopUp] = useState(false);
   const [assignUserPopUp, setAssignUserPopUp] = useState(false);
   const [deleteTaskPopUp, setDeleteTaskPopUp] = useState(false);
-  const [stateChanged, setStateChanged] = useState(false);
+  const [deleteStatusPopUp, setDeleteStatusPopUp] = useState(false);
 
   const { userId, projectId } = useParams();
 
@@ -71,6 +74,11 @@ const ProjectPage = () => {
     request("GET", `/on_projects/${userId}/${projectId}`, {})
       .then((response) => response.data)
       .then((data) => setIsAdmin(data))
+      .catch((error) => console.log(error));
+
+    request("GET", `/project_statuses/to_delete/${projectId}`, {})
+      .then((response) => response.data)
+      .then((data) => setStatusesToDelete(data))
       .catch((error) => console.log(error));
   }, [projectId, userId]);
 
@@ -129,6 +137,10 @@ const ProjectPage = () => {
     setDeleteTaskPopUp(true);
   };
 
+  const handleDeleteStatusClicked = () => {
+    setDeleteStatusPopUp(true);
+  }
+
   return (
     <div className="h-screen flex">
       <div className="w-full h-full bg-bckgrnd-main flex-col justify-start">
@@ -138,6 +150,7 @@ const ProjectPage = () => {
             project={project}
             handleCreateStatus={handleCreateStatusClicked}
             handleCreateTask={handleCreateTaskClicked}
+            handleDeleteStatus={handleDeleteStatusClicked}
           />
         </div>
         <div
@@ -242,6 +255,12 @@ const ProjectPage = () => {
         openPopUp={deleteTaskPopUp}
         closePopUp={() => setDeleteTaskPopUp(false)}
         projectChange={() => setStateChanged(!stateChanged)}
+      />
+      <DeleteStatusPopUp
+      statuses={statusesToDelete}
+        openPopUp={deleteStatusPopUp}
+        closePopUp={() => setDeleteStatusPopUp(false)}
+        setStateChanged={() => setStateChanged(!stateChanged)}
       />
     </div>
   );
