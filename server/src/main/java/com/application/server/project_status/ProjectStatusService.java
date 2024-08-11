@@ -41,6 +41,19 @@ public class ProjectStatusService {
         return statusesOnProject;
     }
 
+    public List<StatusesOnProjectResponseDto> getStatusesOnProjectToDelete(UUID projectId) {
+        List<StatusesOnProjectResponseDto> allStatusesOnProject = getAllStatusesOnProject(projectId);
+        List<StatusesOnProjectResponseDto> statusesToDelete = new ArrayList<>();
+
+        for (StatusesOnProjectResponseDto status : allStatusesOnProject) {
+            if (!predefinedStatuses.contains(status.status())) {
+                statusesToDelete.add(status);
+            }
+        }
+
+        return statusesToDelete;
+    }
+
     public ProjectStatusResponseDto createProjectStatus(ProjectStatusDto projectStatusDto) {
         ProjectStatus projectStatusInDb = projectStatusRepository.findAll().stream().filter(ps -> ps.getProject().getId().equals(projectStatusDto.projectId()) && ps.getStatus().getId().equals(projectStatusDto.statusId())).findAny().orElse(null);
 

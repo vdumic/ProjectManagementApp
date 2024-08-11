@@ -27,6 +27,11 @@ public class ProjectStatusController {
         return projectStatusService.getAllStatusesOnProject(projectId);
     }
 
+    @GetMapping("/project_statuses/to_delete/{project-id}")
+    public List<StatusesOnProjectResponseDto> getStatusesOnProjectToDelete(@PathVariable("project-id") UUID projectId) {
+        return projectStatusService.getStatusesOnProjectToDelete(projectId);
+    }
+
     @PostMapping("/project_statuses")
     public ProjectStatusResponseDto createProjectStatus(@RequestBody ProjectStatusDto projectStatusDto) {
         return projectStatusService.createProjectStatus(projectStatusDto);
