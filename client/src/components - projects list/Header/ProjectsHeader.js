@@ -13,6 +13,8 @@ const ProjectsHeader = ({ project, activeProjects, oldProjects }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  console.log(project);
+
   return (
     <header className="hidden md:flex w-full bg-bckgrnd-blue_light">
       <main className="max-w-full flex-grow flex flex-col py-3 mx-12">

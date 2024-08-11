@@ -1,4 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useParams } from "react-router-dom";
+
+import { request } from "../axios/axios_helper";
 
 import ProjectInfoTable from "./ProjectInfoTable";
 import UpdateProjectNamePopUp from "./PopUps/UpdateProjectNamePopUp";
@@ -7,7 +10,13 @@ import UpdateProjectStatusPopUp from "./PopUps/UpdateProjectStatusPopUp";
 import DeleteProjectPopUp from "./PopUps/DeleteProjectPopUp";
 import DeletedProjectPopUp from "./PopUps/DeletedProjectPopUp";
 
-const ProjectInfoView = ({ project, projectChange }) => {
+const ProjectInfoView = ({
+  project,
+  projectChange,
+  handleProjectInfoClicked,
+}) => {
+  const [isAdmin, setIsAdmin] = useState(false);
+
   const [updateNamePopUp, setUpdateNamePopUp] = useState(false);
   const [updateDescriptionPopUp, setUpdateDescriptionPopUp] = useState(false);
   const [updateStatusPopUp, setUpdateStatusPopUp] = useState(false);
@@ -20,7 +29,18 @@ const ProjectInfoView = ({ project, projectChange }) => {
   const handleDeleteProjectOpen = () => setDeleteProjectPopUp(true);
   const handleDeletedProjectOpen = () => setDeletedProjectPopUp(true);
 
-  useEffect(() => {}, [projectChange]);
+  const { userId } = useParams();
+
+  const fetchUserRole = useCallback(() => {
+    request("GET", `/on_projects/${userId}/${project.projectId}`, {})
+      .then((response) => response.data)
+      .then((data) => setIsAdmin(data))
+      .catch((error) => console.log(error));
+  }, [project.projectId, userId]);
+
+  useEffect(() => {
+    fetchUserRole();
+  }, [projectChange, handleProjectInfoClicked, fetchUserRole]);
 
   return (
     <div>
@@ -34,6 +54,7 @@ const ProjectInfoView = ({ project, projectChange }) => {
         updateName={handleUpdateNameOpen}
         updateDescription={handleUpdateDescriptionOpen}
         updateStatus={handleUpdateStatusOpen}
+        isAdmin={isAdmin}
       />
       <UpdateProjectNamePopUp
         project={project}
@@ -53,14 +74,16 @@ const ProjectInfoView = ({ project, projectChange }) => {
         closePopUp={() => setUpdateStatusPopUp(false)}
         projectChange={projectChange}
       />
-      <div className="flex justify-start md:mx-auto p-2">
-        <button
-          className="bg-bckgrnd-high text-white text-sm md:text-lg border drop-shadow-md px-4 md:px-6 py-2 md:py-3 rounded mr-2"
-          onClick={handleDeleteProjectOpen}
-        >
-          Delete project
-        </button>
-      </div>
+      {userId === project.userId && (
+        <div className="flex justify-start md:mx-auto p-2">
+          <button
+            className="bg-bckgrnd-high text-white text-sm md:text-lg border drop-shadow-md px-4 md:px-6 py-2 md:py-3 rounded mr-2"
+            onClick={handleDeleteProjectOpen}
+          >
+            Delete project
+          </button>
+        </div>
+      )}
       <DeleteProjectPopUp
         project={project}
         openPopUp={deleteProjectPopUp}

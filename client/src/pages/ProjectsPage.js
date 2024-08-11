@@ -31,7 +31,7 @@ const ProjectsPage = () => {
 
   const { userId } = useParams();
 
-  const fetchProjects = useCallback(async () => {
+  const fetchProjects = useCallback( () => {
     request("GET", `/projects/active/${userId}`, {})
       .then((response) => response.data)
       .then((data) => {
@@ -158,6 +158,7 @@ const ProjectsPage = () => {
                   <ProjectInfoView
                     project={chosenProject}
                     projectChange={fetchProjects}
+                    handleProjectInfoClicked={handleProjectInfoClicked}
                   />
                 )}
               </div>
