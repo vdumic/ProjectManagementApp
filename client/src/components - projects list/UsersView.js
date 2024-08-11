@@ -104,34 +104,38 @@ const UsersView = ({ project }) => {
                 </td>
                 {user.id !== project.userId && (
                   <>
-                    <td className="hidden md:flex py-2.5 px-4">
-                      <button
-                        className="bg-bckgrnd-main text-text-dark border drop-shadow-md px-3 py-1 rounded mr-2"
-                        onClick={() => handleChangeRoleClicked(user)}
-                      >
-                        Change role
-                      </button>
-                      <button
-                        className="bg-bckgrnd-high text-white px-3 py-1 ml-3 rounded drop-shadow-md"
-                        onClick={() => handleRemoveUserClicked(user)}
-                      >
-                        Remove user
-                      </button>
-                    </td>
-                    <td className="md:hidden flex-col justify-start py-2.5 px-4">
-                      <button
-                        className="bg-bckgrnd-main text-text-dark border drop-shadow-md px-3 py-1 rounded mb-2"
-                        onClick={() => handleChangeRoleClicked(user)}
-                      >
-                        Change role
-                      </button>
-                      <button
-                        className="bg-bckgrnd-high text-white px-3 py-1 rounded drop-shadow-md"
-                        onClick={() => handleRemoveUserClicked(user)}
-                      >
-                        Remove user
-                      </button>
-                    </td>
+                    {user.id !== userId && (
+                      <td className="hidden md:flex py-2.5 px-4">
+                        <button
+                          className="bg-bckgrnd-main text-text-dark border drop-shadow-md px-3 py-1 rounded mr-2"
+                          onClick={() => handleChangeRoleClicked(user)}
+                        >
+                          Change role
+                        </button>
+                        <button
+                          className="bg-bckgrnd-high text-white px-3 py-1 ml-3 rounded drop-shadow-md"
+                          onClick={() => handleRemoveUserClicked(user)}
+                        >
+                          Remove user
+                        </button>
+                      </td>
+                    )}
+                    {user.id !== userId && (
+                      <td className="md:hidden flex-col justify-start py-2.5 px-4">
+                        <button
+                          className="bg-bckgrnd-main text-text-dark border drop-shadow-md px-3 py-1 rounded mb-2"
+                          onClick={() => handleChangeRoleClicked(user)}
+                        >
+                          Change role
+                        </button>
+                        <button
+                          className="bg-bckgrnd-high text-white px-3 py-1 rounded drop-shadow-md"
+                          onClick={() => handleRemoveUserClicked(user)}
+                        >
+                          Remove user
+                        </button>
+                      </td>
+                    )}
                   </>
                 )}
               </tr>

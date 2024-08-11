@@ -1,7 +1,9 @@
 import { Link, useParams, useLocation } from "react-router-dom";
 import { useState } from "react";
+
 import logo from "../assets/logo.png";
 import userIcon from "../assets/user_icon.png";
+
 import HeaderLink from "../components - main header/Buttons/HeaderLink";
 import DropDownMenu from "../components - projects list/Header/DropDownMenu";
 

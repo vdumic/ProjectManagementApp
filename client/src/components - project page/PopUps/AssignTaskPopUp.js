@@ -1,15 +1,14 @@
 import { Field, Form, Formik } from "formik";
+
 import { request } from "../../axios/axios_helper";
 
 const AssignTaskPopUp = ({
   task,
   openPopUp,
   closePopUp,
-  projectChange,
   users,
+  setStateChanged
 }) => {
-    console.log(users);
-
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
       closePopUp();
@@ -24,7 +23,10 @@ const AssignTaskPopUp = ({
       userId: user,
     })
       .then((response) => response.data)
-      .then(() => closePopUp())
+      .then(() => {
+        closePopUp();
+        setStateChanged();
+      })
       .catch((error) => console.log(error));
   };
 
@@ -66,7 +68,7 @@ const AssignTaskPopUp = ({
                 <div className="w-full p-3 justify-center items-center py-5">
                   <div className="flex justify-center items-center">
                     <button type="submit" className="bg-button-blue rounded-md">
-                      <p className="text-lg py-2 px-5 text-white font-medium">
+                      <p className="text-lg py-2 px-5 text-white font-medium text-nowrap">
                         Assign user
                       </p>
                     </button>

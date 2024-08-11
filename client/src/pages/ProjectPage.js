@@ -1,33 +1,32 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
+import { request } from "../axios/axios_helper";
+
 import ProjectHeader from "../components - project page/ProjectHeader";
 import ProjectTitle from "../components - project page/ProjectTitle";
 import StatusTasksBox from "../components - project page/StatusTasksBox";
-import { request } from "../axios/axios_helper";
-import AddNewUserPopUp from "../components - projects list/PopUps/AddNewUserPopUp";
-import NoUsersToAddPopUp from "../components - projects list/PopUps/NoUsersToAddPopUp";
+import TaskInfo from "../components - project page/TaskInfo";
+
 import CreateStatusPopUp from "../components - project page/PopUps/CreateStatusPopUp";
 import CreateTaskPopUp from "../components - project page/PopUps/CreateTaskPopUp";
 import CreatedPopUp from "../components - projects list/PopUps/CreatedPopUp";
 import FailedCreationPopUp from "../components - projects list/PopUps/FailedCreationPopUp";
-import TaskInfo from "../components - project page/TaskInfo";
 import EditTaskPopUp from "../components - project page/PopUps/EditTaskPopUp";
 import UpdatePriorityPopUp from "../components - project page/PopUps/UpdatePriorityPopUp";
 import UpdateStatusPopUp from "../components - project page/PopUps/UpdateStatusPopUp";
 import AssignTaskPopUp from "../components - project page/PopUps/AssignTaskPopUp";
+import DeleteTaskPopUp from "../components - project page/PopUps/DeleteTaskPopUp";
 
 const ProjectPage = () => {
   const [project, setProject] = useState({});
-  const [roles, setRoles] = useState([]);
-  const [allUsers, setAllUsers] = useState([]);
   const [statuses, setStatuses] = useState([]);
   const [priorities, setPriorities] = useState([]);
   const [task, setTask] = useState(null);
   const [usersOnProject, setUsersOnProject] = useState([]);
   const [taskClicked, setTaskClicked] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const [addNewUserPopUp, setAddNewUserPopUp] = useState(false);
-  const [noUsersToAddPopUp, setNoUsersToAdd] = useState(false);
   const [createStatusPopUp, setCreateStatusPopUp] = useState(false);
   const [createTaskPopUp, setCreateTaskPopUp] = useState(false);
   const [createdTaskPopUpOpened, setCreatedTaskPopUpOpened] = useState(false);
@@ -36,73 +35,48 @@ const ProjectPage = () => {
   const [updatePriorityPopUp, setUpdatePriorityPopUp] = useState(false);
   const [updateStatusPopUp, setUpdateStatusPopUp] = useState(false);
   const [assignUserPopUp, setAssignUserPopUp] = useState(false);
+  const [deleteTaskPopUp, setDeleteTaskPopUp] = useState(false);
+  const [stateChanged, setStateChanged] = useState(false);
 
   const { userId, projectId } = useParams();
-  console.log(taskClicked);
 
-  const fetchProject = useCallback(async () => {
+  const fetchData = useCallback(() => {
     request("GET", `/projects/${projectId}`, {})
       .then((response) => response.data)
       .then((data) => setProject(data))
       .catch((error) => console.log(error));
-  }, []);
 
-  const fetchRoles = async () => {
-    request("GET", "/roles", {})
-      .then((response) => response.data)
-      .then((data) => setRoles(data))
-      .catch((error) => console.log(error));
-  };
-
-  const fetchAllUsers = async () => {
-    request("GET", `/users_to_add/${projectId}`, {})
-      .then((response) => response.data)
-      .then((data) => setAllUsers(data))
-      .catch((error) => console.log(error));
-  };
-
-  const fetchStatuses = async () => {
     request("GET", `/project_statuses/${projectId}`, {})
       .then((response) => response.data)
       .then((data) => setStatuses(data))
       .catch((error) => console.log(error));
-  };
 
-  const fetchPriorities = async () => {
     request("GET", `/priorities`, {})
       .then((response) => response.data)
       .then((data) => setPriorities(data))
       .catch((error) => console.log(error));
-  };
 
-  const fetchUsersOnProject = async () => {
     request("GET", `/users_on_project/${projectId}`, {})
       .then((response) => response.data)
       .then((data) => setUsersOnProject(data))
       .catch((error) => console.log(error));
-  };
 
-  const fetchTasks = async () => {
     request("GET", `/tasks`, {})
       .then((response) => response.data)
-      .then((data) => setTask(data[0]))
+      .then((data) => {
+        setTask(data[0]);
+      })
       .catch((error) => console.log(error));
-  };
+
+    request("GET", `/on_projects/${userId}/${projectId}`, {})
+      .then((response) => response.data)
+      .then((data) => setIsAdmin(data))
+      .catch((error) => console.log(error));
+  }, [projectId, userId]);
 
   useEffect(() => {
-    fetchProject();
-    fetchRoles();
-    fetchAllUsers();
-    fetchStatuses();
-    fetchPriorities();
-    fetchTasks();
-    fetchUsersOnProject();
-  }, [fetchProject]);
-
-  const handleAddUserClicked = () => {
-    setAddNewUserPopUp(true);
-    setNoUsersToAdd(true);
-  };
+    fetchData();
+  }, [fetchData, stateChanged]);
 
   const handleCreateStatusClicked = () => {
     setCreateStatusPopUp(true);
@@ -147,20 +121,21 @@ const ProjectPage = () => {
   };
 
   const handleTaskClicked = (task) => {
-    console.log("USLOO");
     setTaskClicked(true);
-    console.log(task);
     setTask(task);
+  };
+
+  const handleDeleteTaskClicked = () => {
+    setDeleteTaskPopUp(true);
   };
 
   return (
     <div className="h-screen flex">
       <div className="w-full h-full bg-bckgrnd-main flex-col justify-start">
-        <div className="h-1/6 border-b-2 border-b-bckgrnd-blue_dark">
+        <div className="border-b-2 border-b-bckgrnd-blue_dark">
           <ProjectHeader userId={userId} />
           <ProjectTitle
             project={project}
-            handleAddUser={handleAddUserClicked}
             handleCreateStatus={handleCreateStatusClicked}
             handleCreateTask={handleCreateTaskClicked}
           />
@@ -185,6 +160,7 @@ const ProjectPage = () => {
                   key={status.statusId}
                   status={status}
                   selectTask={handleTaskClicked}
+                  stateChanged={stateChanged}
                 />
               );
             })}
@@ -197,7 +173,10 @@ const ProjectPage = () => {
                 handleUpdatePriority={handleUpdatePriorityClicked}
                 handleUpdateStatus={handleUpdateStatusClicked}
                 handleAssignUser={handleAssignUserClicked}
+                handleDeleteTask={handleDeleteTaskClicked}
                 closeTaskInfo={() => setTaskClicked(false)}
+                stateChanged={stateChanged}
+                isAdmin={isAdmin}
               />
             )}
           </div>
@@ -206,7 +185,7 @@ const ProjectPage = () => {
       <CreateStatusPopUp
         openPopUp={createStatusPopUp}
         closePopUp={() => setCreateStatusPopUp(false)}
-        projectChange={fetchProject}
+        projectChange={() => setStateChanged(!stateChanged)}
       />
       <CreateTaskPopUp
         openPopUp={createTaskPopUp}
@@ -215,6 +194,7 @@ const ProjectPage = () => {
         openFailedTaskPopUp={handleOpenFailedTaskPopUp}
         priorities={priorities}
         statuses={statuses}
+        projectChange={() => setStateChanged(!stateChanged)}
       />
       <CreatedPopUp
         openPopUp={createdTaskPopUpOpened}
@@ -226,50 +206,42 @@ const ProjectPage = () => {
         closePopUp={handleCloseFailedTaskPopUp}
         title="Task"
       />
-      {allUsers !== null && (
-        <AddNewUserPopUp
-          project={project}
-          openPopUp={addNewUserPopUp}
-          closePopUp={() => {
-            setAddNewUserPopUp(false);
-            setNoUsersToAdd(false);
-          }}
-          handleAddUserClicked={handleAddUserClicked}
-          roles={roles}
-          allUsers={allUsers}
-        />
-      )}
-      {allUsers === null && (
-        <NoUsersToAddPopUp
-          openPopUp={noUsersToAddPopUp}
-          closePopUp={() => {
-            setAddNewUserPopUp(false);
-            setNoUsersToAdd(false);
-          }}
-        />
-      )}
       <EditTaskPopUp
         openPopUp={editTaskPopUp}
         closePopUp={() => setEditTaskPopUp(false)}
         task={task}
+        projectChange={() => setStateChanged(!stateChanged)}
       />
       <UpdatePriorityPopUp
         openPopUp={updatePriorityPopUp}
         closePopUp={() => setUpdatePriorityPopUp(false)}
         task={task}
         priorities={priorities}
+        projectChange={() => setStateChanged(!stateChanged)}
       />
       <UpdateStatusPopUp
         openPopUp={updateStatusPopUp}
         closePopUp={() => setUpdateStatusPopUp(false)}
         task={task}
         statuses={statuses}
+        projectChange={() => setStateChanged(!stateChanged)}
       />
       <AssignTaskPopUp
         openPopUp={assignUserPopUp}
         closePopUp={() => setAssignUserPopUp(false)}
         task={task}
         users={usersOnProject}
+        projectChange={fetchData}
+        setStateChanged={() => {
+          setStateChanged(!stateChanged);
+          setTaskClicked(false);
+        }}
+      />
+      <DeleteTaskPopUp
+        task={task}
+        openPopUp={deleteTaskPopUp}
+        closePopUp={() => setDeleteTaskPopUp(false)}
+        projectChange={() => setStateChanged(!stateChanged)}
       />
     </div>
   );

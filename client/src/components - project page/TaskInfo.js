@@ -1,12 +1,13 @@
+import { useEffect } from "react";
+
 import { IoIosClose } from "react-icons/io";
-import { GoAlert } from "react-icons/go";
+import { GoAlert, GoTasklist } from "react-icons/go";
 import { MdOutlineAssignmentInd } from "react-icons/md";
-import { GoTasklist } from "react-icons/go";
 import { LiaFilePowerpointSolid } from "react-icons/lia";
 import { IoCalendarOutline } from "react-icons/io5";
 
-import DateFormat from "../functions/DateFormat";
 import Capitalize from "../functions/Capitalize";
+import TimestampFormat from "../functions/TimestampFormat";
 
 const TaskInfo = ({
   task,
@@ -14,9 +15,14 @@ const TaskInfo = ({
   handleUpdatePriority,
   handleUpdateStatus,
   handleAssignUser,
-  closeTaskInfo
+  handleDeleteTask,
+  closeTaskInfo,
+  stateChanged,
+  isAdmin,
 }) => {
   const bckgrnd = "bg-bckgrnd-" + task.priorityName.toLowerCase();
+
+  useEffect(() => {}, [stateChanged]);
 
   return (
     <div className="flex flex-col justify-between w-full h-full border-2 border-bckgrnd-blue_dark mt-10 bg-bckgrnd-task">
@@ -40,14 +46,16 @@ const TaskInfo = ({
                 {Capitalize(task.priorityName)}
               </div>
             </div>
-            <button
-              className="bg-white rounded-full border-2 border-gray-500 shadow-lg"
-              onClick={handleUpdatePriority}
-            >
-              <p className="py-0.5 px-4 text-text-dark font-medium text-center text-sm">
-                Update priority
-              </p>
-            </button>
+            {isAdmin && (
+              <button
+                className="bg-white rounded-full border-2 border-gray-500 shadow-lg"
+                onClick={handleUpdatePriority}
+              >
+                <p className="py-0.5 px-4 text-text-dark font-medium text-center text-sm">
+                  Update priority
+                </p>
+              </button>
+            )}
           </div>
           <div className="flex flex-row my-4 align-middle justify-between">
             <div className="flex flex-row">
@@ -56,14 +64,16 @@ const TaskInfo = ({
                 {task.assignedTo != null ? task.assignedTo : "Not assigned"}
               </p>
             </div>
-            <button
-              className="bg-white rounded-full border-2 border-gray-500 shadow-lg"
-              onClick={handleAssignUser}
-            >
-              <p className="py-0.5 px-4 text-text-dark font-medium text-center text-sm">
-                Assign task
-              </p>
-            </button>
+            {isAdmin && (
+              <button
+                className="bg-white rounded-full border-2 border-gray-500 shadow-lg"
+                onClick={handleAssignUser}
+              >
+                <p className="py-0.5 px-4 text-text-dark font-medium text-center text-sm">
+                  Assign task
+                </p>
+              </button>
+            )}
           </div>
           <div className="flex flex-row my-4 align-middle justify-between">
             <div className="flex flex-row">
@@ -87,28 +97,55 @@ const TaskInfo = ({
             <IoCalendarOutline className="h-7 w-7" />
             <p className="ml-4">
               Start date:
-              {task.startDate != null ? DateFormat(task.startDate) : "-"}
+              {task.startDate != null
+                ? ` ${TimestampFormat(task.startDate)}`
+                : " -"}
+            </p>
+          </div>
+          <div className="flex flex-row my-4 align-middle">
+            <IoCalendarOutline className="h-7 w-7" />
+            <p className="ml-4">
+              Updated at:
+              {task.updatedAt != null
+                ? ` ${TimestampFormat(task.updatedAt)}`
+                : " -"}
             </p>
           </div>
           <div className="flex flex-row my-4 align-middle">
             <IoCalendarOutline className="h-7 w-7" />
             <p className="ml-4">
               End date:
-              {task.endDate != null ? DateFormat(task.endDate) : "-"}
+              {task.endDate != null
+                ? ` ${TimestampFormat(task.endDate)}`
+                : " -"}
             </p>
           </div>
         </div>
       </div>
-      <div className="flex justify-center my-6">
-        <button
-          className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-40 mx-6"
-          onClick={handleEditTask}
-        >
-          <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
-            Edit task
-          </p>
-        </button>
-      </div>
+      {isAdmin && (
+        <div className="flex justify-center mt-6">
+          <button
+            className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-40 mx-6"
+            onClick={handleEditTask}
+          >
+            <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
+              Edit task
+            </p>
+          </button>
+        </div>
+      )}
+      {isAdmin && (
+        <div className="flex justify-center mb-6">
+          <button
+            className="bg-bckgrnd-high rounded-full border-2 border-bckgrnd-high shadow-lg w-40 mx-6"
+            onClick={handleDeleteTask}
+          >
+            <p className="text-lg py-0.5 px-4 text-white font-medium text-center">
+              Delete task
+            </p>
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { Field, Form, Formik } from "formik";
+
 import { request } from "../../axios/axios_helper";
 
 const UpdateStatusPopUp = ({
@@ -8,7 +9,6 @@ const UpdateStatusPopUp = ({
   projectChange,
   statuses,
 }) => {
-
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
       closePopUp();
@@ -23,7 +23,10 @@ const UpdateStatusPopUp = ({
       statusId: status,
     })
       .then((response) => response.data)
-      .then(() => closePopUp())
+      .then(() => {
+        closePopUp();
+        projectChange();
+      })
       .catch((error) => console.log(error));
   };
 

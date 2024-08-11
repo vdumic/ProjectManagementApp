@@ -1,5 +1,6 @@
-import { Field, Form, Formik } from "formik";
 import { useParams } from "react-router-dom";
+import { Field, Form, Formik } from "formik";
+
 import { request } from "../../axios/axios_helper";
 
 const UpdatePriorityPopUp = ({
@@ -9,7 +10,7 @@ const UpdatePriorityPopUp = ({
   projectChange,
   priorities,
 }) => {
-  const { userId, projectId } = useParams();
+  const { userId } = useParams();
 
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
@@ -26,7 +27,10 @@ const UpdatePriorityPopUp = ({
       priorityId: priority,
     })
       .then((response) => response.data)
-      .then(() => closePopUp())
+      .then(() => {
+        closePopUp();
+        projectChange();
+      })
       .catch((error) => console.log(error));
   };
 

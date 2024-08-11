@@ -1,5 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
+
 import { request } from "../../axios/axios_helper";
 
 const EditTaskPopUp = ({ task, openPopUp, closePopUp, projectChange }) => {
@@ -29,7 +30,10 @@ const EditTaskPopUp = ({ task, openPopUp, closePopUp, projectChange }) => {
       storyPoints: storyPoints,
     })
       .then((response) => response.data)
-      .then(() => closePopUp())
+      .then(() => {
+        closePopUp();
+        projectChange();
+      })
       .catch((error) => console.log(error));
   };
 

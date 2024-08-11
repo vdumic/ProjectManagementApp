@@ -1,10 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useParams } from "react-router-dom";
 import * as yup from "yup";
+
 import { request } from "../../axios/axios_helper";
 
 const CreateStatusPopUp = ({ openPopUp, closePopUp, projectChange }) => {
-  const { userId, projectId } = useParams();
+  const { projectId } = useParams();
 
   const handleClosePopUp = (e) => {
     if (e.target.id === "ModelContainer") {
@@ -22,24 +23,17 @@ const CreateStatusPopUp = ({ openPopUp, closePopUp, projectChange }) => {
     name: yup.string().required("Status name is required"),
   });
 
-  const handleCreateProject = async (name) => {
+  const handleCreateProject = (name) => {
     request("POST", "/project_statuses/new_status", {
       projectId,
       statusName: name,
     })
-      .then(async (response) => {
-        if (response.status === 200) {
-          const data = await response.data;
-          console.log("Status created successfully:", data.statusName);
-          closePopUp();
-          projectChange();
-        } else {
-          console.error("Failed to create status:", response.statusText);
-        }
+      .then((response) => response.data)
+      .then(() => {
+        closePopUp();
+        projectChange();
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
   return (

@@ -1,6 +1,7 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useParams } from "react-router-dom";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
+
 import { request } from "../../axios/axios_helper";
 
 const CreateTaskPopUp = ({
@@ -32,30 +33,32 @@ const CreateTaskPopUp = ({
     storyPoints: yup.number(),
   });
 
-  const handleCreateTask = async (name, description, storyPoints, priority, status) => {
+  const handleCreateTask = (
+    name,
+    description,
+    storyPoints,
+    priority,
+    status
+  ) => {
     request("POST", "/tasks", {
-        createdBy: userId,
+      createdBy: userId,
       name,
       description,
       storyPoints,
       projectId,
       priorityId: priority,
-      statusId: status
+      statusId: status,
     })
-      .then(async (response) => {
-        if (response.status === 200) {
-          const data = await response.data;
-          console.log("Project created successfully:", data.name);
+      .then((response) => response.status)
+      .then((status) => {
+        if (status === 200) {
           openCreatedTaskPopUp();
           projectChange();
         } else {
-          console.error("Failed to create project:", response.statusText);
           openFailedTaskPopUp();
         }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
   return (
