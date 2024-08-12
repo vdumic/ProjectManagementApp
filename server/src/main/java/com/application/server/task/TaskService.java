@@ -10,6 +10,7 @@ import com.application.server.user.User;
 import com.application.server.user.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -51,7 +52,11 @@ public class TaskService {
     }
 
     public List<TaskResponseDto> getTasksOnProjectWithStatus(UUID projectId, UUID statusId) {
-        List<Task> tasksOnProjectWithStatus = taskRepository.findAll().stream().filter(t -> t.getProject().getId().equals(projectId) && t.getStatus().getId().equals(statusId)).collect(Collectors.toList());
+        List<Task> tasksOnProjectWithStatus = taskRepository.findAll().stream()
+                .filter(t -> t.getProject().getId().equals(projectId) && t.getStatus().getId().equals(statusId))
+                .sorted(Comparator.comparing(Task::getUpdatedAt).reversed())
+                .collect(Collectors.toList());
+
         return tasksOnProjectWithStatus.stream().map(taskMapper::toTaskResponseDto).collect(Collectors.toList());
     }
 
@@ -98,15 +103,10 @@ public class TaskService {
 
             if (oldStatus.getName().equals("Done")) {
                 return null;
-            } else if (newStatus.getName().equals("Done") && oldStatus.getName().equals("In backlog")) {
-                task.setStartDate(new Date());
-                task.setEndDate(new Date());
-            } else if (newStatus.getName().equals("In backlog")) {
-                task.setStartDate(null);
-            } else if (oldStatus.getName().equals("In backlog")) {
-                task.setStartDate(new Date());
             } else if (newStatus.getName().equals("Done")) {
                 task.setEndDate(new Date());
+            } else if (oldStatus.getName().equals("In backlog")) {
+                task.setStartDate(null);
             }
 
             taskRepository.save(task);

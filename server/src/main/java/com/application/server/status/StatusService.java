@@ -63,15 +63,6 @@ public class StatusService {
         }
     }
 
-    public Status getStatusByName(String statusName) {
-        Status status = statusRepository.findAll().stream().filter(s -> s.getName().equalsIgnoreCase(statusName)).findAny().orElse(null);
-        if (status != null) {
-            return status;
-        } else {
-            return null;
-        }
-    }
-
     public UUID getStatusId(String statusName) {
         Status status = statusRepository.findAll().stream().filter(s -> s.getName().equals(statusName)).findAny().orElse(null);
         if (status != null) {
