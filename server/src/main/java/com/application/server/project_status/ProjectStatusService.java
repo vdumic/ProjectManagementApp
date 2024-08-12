@@ -84,6 +84,24 @@ public class ProjectStatusService {
         return createProjectStatus(new ProjectStatusDto(projectStatusNameDto.projectId(), status.getId()));
     }
 
+    public List<ProjectStatusResponseDto> reorderStatusesOnProject(ProjectStatusOrderDto projectStatusOrderDto) {
+        List<UUID> statusOrder = projectStatusOrderDto.statusOrder();
+        List<ProjectStatusResponseDto> projectStatusResponse = new ArrayList<>();
+        Integer counter = 1;
+
+        for (UUID statusId : statusOrder) {
+            ProjectStatus projectStatus = projectStatusRepository.findAll().stream()
+                    .filter(ps -> ps.getProject().getId().equals(projectStatusOrderDto.projectId()) && ps.getStatus().getId().equals(statusId))
+                    .findAny().orElse(null);
+
+            projectStatus.setOrder(counter);
+            counter++;
+            projectStatusResponse.add(projectStatusMapper.toProjectStatusDto(projectStatusRepository.save(projectStatus)));
+        }
+
+        return projectStatusResponse;
+    }
+
     public String deleteProjectStatus(UUID projectId, UUID statusId) {
         var projectStatus = projectStatusRepository.findAll().stream().filter(ps -> ps.getProject().getId().equals(projectId) && ps.getStatus().getId().equals(statusId)).findAny().orElse(null);
 

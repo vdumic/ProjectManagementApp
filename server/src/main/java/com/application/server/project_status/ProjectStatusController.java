@@ -42,6 +42,11 @@ public class ProjectStatusController {
         return projectStatusService.createNewProjectStatus(projectStatusNameDto);
     }
 
+    @PutMapping("/project_statuses/reorder")
+    public List<ProjectStatusResponseDto> reorderStatusesOnProject(@RequestBody ProjectStatusOrderDto projectStatusOrderDto) {
+        return projectStatusService.reorderStatusesOnProject(projectStatusOrderDto);
+    }
+
     @DeleteMapping("/project_statuses/{project-id}/{status-id}")
     @ResponseStatus(HttpStatus.OK)
     public String deleteProjectStatus(@PathVariable("project-id") UUID projectId, @PathVariable("status-id") UUID statusId) {
