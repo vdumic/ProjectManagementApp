@@ -19,14 +19,16 @@ const MobileProjectsHeader = ({
   return (
     <div className="md:hidden max-w-full mx-auto px-8 shadow-md">
       <div className="flex items-center justify-between w-5/6 py-3">
-        <div className="flex items-center justify-between mr-8">
-          <p
-            className="font-medium text-text-dark text-lg text-nowrap"
-            onClick={handleProjectClicked}
-          >
-            {project.projectName}
-          </p>
-        </div>
+        {(activeProjects.length !== 0 || oldProjects.length !== 0) && (
+          <div className="flex items-center justify-between mr-8">
+            <p
+              className="font-medium text-text-dark text-lg text-nowrap"
+              onClick={handleProjectClicked}
+            >
+              {project.projectName}
+            </p>
+          </div>
+        )}
         <div className="flex items-center justify-between">
           {(activeProjects.length !== 0 || oldProjects.length !== 0) && (
             <Link

@@ -68,7 +68,7 @@ const CreateStatusPopUp = ({ openPopUp, closePopUp, projectChange }) => {
                 <div className="w-full p-3 justify-center items-center py-5">
                   <div className="flex justify-center items-center">
                     <button type="submit" className="bg-button-blue rounded-md">
-                      <p className="text-lg py-2 px-5 text-white font-medium">
+                      <p className="text-lg py-2 px-5 text-white font-medium text-nowrap">
                         Create status
                       </p>
                     </button>

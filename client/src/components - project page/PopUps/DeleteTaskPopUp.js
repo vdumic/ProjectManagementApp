@@ -31,7 +31,7 @@ const DeleteTaskPopUp = ({ task, openPopUp, closePopUp, projectChange }) => {
       <div className="p-2 bg-white w-10/12 md:w-1/2 lg:1/3 shadow-inner border-e-emerald-600 rounded-lg py-5">
         <div className="w-full p-3 justify-center items-center">
           <h2 className="font-semibold py-3 text-center text-xl">
-            Are you sure you want to delete the project?
+            Are you sure you want to delete task?
           </h2>
         </div>
         <div className="w-full p-3 justify-center items-center">

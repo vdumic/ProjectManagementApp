@@ -19,7 +19,6 @@ const ProjectsPage = () => {
   const [activeProjects, setActiveProjects] = useState([]);
   const [oldProjects, setOldProjects] = useState([]);
   const [token, setToken] = useState(getAuthToken());
-  const [validToken, setValidToken] = useState(false);
 
   const [tasksClicked, setTasksClicked] = useState(false);
   const [usersClicked, setUsersClicked] = useState(false);
@@ -34,7 +33,7 @@ const ProjectsPage = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
 
-  const fetchProjects = useCallback( () => {
+  const fetchProjects = useCallback(() => {
     request("GET", `/projects/active/${userId}`, {})
       .then((response) => response.data)
       .then((data) => {
@@ -52,21 +51,20 @@ const ProjectsPage = () => {
   const checkToken = useCallback(() => {
     request("GET", `/validation/${token}`, {})
       .then((response) => response.data)
-      .then((data) => setValidToken(data))
+      .then((data) => {
+        if (!data) {
+          navigate("/");
+        }
+      })
       .catch((error) => console.log(error));
-  }, [token]);
-
+  }, [token, navigate]);
 
   useEffect(() => {
     setToken(getAuthToken());
     checkToken();
 
-    if (!validToken) {
-      navigate("/");
-    }
-
     fetchProjects();
-  }, [fetchProjects, checkToken, navigate, validToken]);
+  }, [fetchProjects, checkToken]);
 
   const handleTasksClicked = () => {
     setTasksClicked(true);

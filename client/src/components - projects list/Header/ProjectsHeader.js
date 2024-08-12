@@ -18,11 +18,13 @@ const ProjectsHeader = ({ project, activeProjects, oldProjects }) => {
       <main className="max-w-full flex-grow flex flex-col py-3 mx-12">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start w-5/6">
-            <div className="flex items-center justify-between mr-8">
-              <p className="font-medium text-text-dark text-2xl text-nowrap">
-                {project.projectName}
-              </p>
-            </div>
+            {(activeProjects.length !== 0 || oldProjects.length !== 0) && (
+              <div className="flex items-center justify-between mr-8">
+                <p className="font-medium text-text-dark text-2xl text-nowrap">
+                  {project.projectName}
+                </p>
+              </div>
+            )}
             <div className="flex items-center justify-between">
               {(activeProjects.length !== 0 || oldProjects.length !== 0) && (
                 <Link
