@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
-import { request } from "../axios/axios_helper";
+import { request, getAuthToken } from "../axios/axios_helper";
 
 import ProjectHeader from "../components - project page/ProjectHeader";
 import ProjectTitle from "../components - project page/ProjectTitle";
@@ -29,6 +29,8 @@ const ProjectPage = () => {
   const [taskClicked, setTaskClicked] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [stateChanged, setStateChanged] = useState(false);
+  const [token, setToken] = useState(getAuthToken());
+  const [validToken, setValidToken] = useState(false);
 
   const [createStatusPopUp, setCreateStatusPopUp] = useState(false);
   const [createTaskPopUp, setCreateTaskPopUp] = useState(false);
@@ -42,6 +44,7 @@ const ProjectPage = () => {
   const [deleteStatusPopUp, setDeleteStatusPopUp] = useState(false);
 
   const { userId, projectId } = useParams();
+  const navigate = useNavigate();
 
   const fetchData = useCallback(() => {
     request("GET", `/projects/${projectId}`, {})
@@ -82,9 +85,23 @@ const ProjectPage = () => {
       .catch((error) => console.log(error));
   }, [projectId, userId]);
 
+  const checkToken = useCallback(() => {
+    request("GET", `/validation/${token}`, {})
+      .then((response) => response.data)
+      .then((data) => setValidToken(data))
+      .catch((error) => console.log(error));
+  }, [token]);
+
   useEffect(() => {
+    setToken(getAuthToken());
+    checkToken();
+
+    if (!validToken) {
+      navigate("/");
+    }
+
     fetchData();
-  }, [fetchData, stateChanged]);
+  }, [fetchData, stateChanged, checkToken, validToken, navigate]);
 
   const handleCreateStatusClicked = () => {
     setCreateStatusPopUp(true);
@@ -139,7 +156,7 @@ const ProjectPage = () => {
 
   const handleDeleteStatusClicked = () => {
     setDeleteStatusPopUp(true);
-  }
+  };
 
   return (
     <div className="h-screen flex">
@@ -156,8 +173,8 @@ const ProjectPage = () => {
         <div
           className={
             taskClicked
-              ? "flex justify-between h-5/6 overflow-auto mx-8"
-              : "flex h-5/6 overflow-auto mx-8"
+              ? "flex justify-between h-5/6 overflow-auto mx-14"
+              : "flex h-5/6 overflow-auto mx-14"
           }
         >
           <div
@@ -257,7 +274,7 @@ const ProjectPage = () => {
         projectChange={() => setStateChanged(!stateChanged)}
       />
       <DeleteStatusPopUp
-      statuses={statusesToDelete}
+        statuses={statusesToDelete}
         openPopUp={deleteStatusPopUp}
         closePopUp={() => setDeleteStatusPopUp(false)}
         setStateChanged={() => setStateChanged(!stateChanged)}

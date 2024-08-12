@@ -5,7 +5,7 @@ const ProjectTitle = ({
   handleDeleteStatus,
 }) => {
   return (
-    <div className="flex items-center justify-center mx-28 my-2">
+    <div className="flex items-center justify-center mx-20 my-2">
       <div className="flex-col items-center justify-between mr-8">
         <p className="font-medium text-text-dark text-2xl text-nowrap">
           {project.name}

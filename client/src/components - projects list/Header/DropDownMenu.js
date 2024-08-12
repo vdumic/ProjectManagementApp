@@ -31,6 +31,9 @@ const DropDownMenu = () => {
   return (
     <div className="relative">
       <div className="absolute right-0 z-10 w-44 mt-4 origin-top-right bg-bckgrnd-main p-2 rounded-md shadow-xl">
+      <div className="p-2 text-bckgrnd-blue_dark bg-bckgrnd-light rounded-md font-semibold mb-2">
+          <Link to={`/projects-list/${userId}`}>Projects</Link>
+        </div>
         <div className="p-2 text-bckgrnd-blue_dark bg-bckgrnd-light rounded-md font-semibold mb-2">
           <Link to={`/profile/${userId}`}>Profile</Link>
         </div>

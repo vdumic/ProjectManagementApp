@@ -1,7 +1,7 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 
-import { request } from "../axios/axios_helper";
+import { getAuthToken, request } from "../axios/axios_helper";
 
 import ProjectsHeader from "../components - projects list/Header/ProjectsHeader";
 import TasksView from "../components - projects list/TasksView";
@@ -18,6 +18,8 @@ const ProjectsPage = () => {
   const [chosenProject, setChosenProject] = useState({});
   const [activeProjects, setActiveProjects] = useState([]);
   const [oldProjects, setOldProjects] = useState([]);
+  const [token, setToken] = useState(getAuthToken());
+  const [validToken, setValidToken] = useState(false);
 
   const [tasksClicked, setTasksClicked] = useState(false);
   const [usersClicked, setUsersClicked] = useState(false);
@@ -30,6 +32,7 @@ const ProjectsPage = () => {
     useState(false);
 
   const { userId } = useParams();
+  const navigate = useNavigate();
 
   const fetchProjects = useCallback( () => {
     request("GET", `/projects/active/${userId}`, {})
@@ -46,9 +49,24 @@ const ProjectsPage = () => {
       .catch((error) => console.log(error));
   }, [userId]);
 
+  const checkToken = useCallback(() => {
+    request("GET", `/validation/${token}`, {})
+      .then((response) => response.data)
+      .then((data) => setValidToken(data))
+      .catch((error) => console.log(error));
+  }, [token]);
+
+
   useEffect(() => {
+    setToken(getAuthToken());
+    checkToken();
+
+    if (!validToken) {
+      navigate("/");
+    }
+
     fetchProjects();
-  }, [fetchProjects]);
+  }, [fetchProjects, checkToken, navigate, validToken]);
 
   const handleTasksClicked = () => {
     setTasksClicked(true);
