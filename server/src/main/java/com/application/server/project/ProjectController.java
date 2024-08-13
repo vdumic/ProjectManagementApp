@@ -22,16 +22,6 @@ public class ProjectController {
         return projectService.getAllProjects();
     }
 
-    @GetMapping("/projects_names")
-    public List<ProjectsListDto> getAllProjectsNames() {
-        return projectService.getAllProjectsNames();
-    }
-
-    @GetMapping("/projects_from_others/{user-id}")
-    public List<ProjectResponseDto> getAllProjectsCreatedByOtherUsers(@PathVariable("user-id") UUID userId) {
-        return projectService.getAllProjectsCreatedByOtherUsers(userId);
-    }
-
     @GetMapping("/projects/{project-id}")
     public Project getProjectById(@PathVariable("project-id") UUID id) {
         return projectService.getProjectById(id);
@@ -50,11 +40,6 @@ public class ProjectController {
     @PostMapping("/projects")
     public Project createProject(@RequestBody ProjectDto projectDto) {
         return projectService.createProject(projectDto);
-    }
-
-    @PutMapping("/projects")
-    public ProjectResponseDto updateProject(@RequestBody ProjectUpdateDto projectUpdateDto) {
-        return projectService.updateProject(projectUpdateDto);
     }
 
     @PutMapping("/projects/name")

@@ -37,15 +37,6 @@ public class ProjectService {
         return projectRepository.findAll().stream().map(projectMapper::toProjectResponseDto).collect(Collectors.toList());
     }
 
-    public List<ProjectsListDto> getAllProjectsNames() {
-        return projectRepository.findAll().stream().map(projectMapper::toProjectsListDto).collect(Collectors.toList());
-    }
-
-    public List<ProjectResponseDto> getAllProjectsCreatedByOtherUsers(UUID userId) {
-        var projects = projectRepository.projectsFromOthers(userId);
-        return projects.stream().map(projectMapper::toProjectResponseDto).collect(Collectors.toList());
-    }
-
     public Project getProjectById(UUID id) {
         return projectRepository.findById(id).orElse(null);
     }
@@ -54,8 +45,8 @@ public class ProjectService {
         List<OnProject> userOnProjects = onProjectService.getAllUserProjects(userId);
         List<Project> userProjects = new ArrayList<>();
 
-        if(!userOnProjects.isEmpty()) {
-            for (OnProject userProject: userOnProjects) {
+        if (!userOnProjects.isEmpty()) {
+            for (OnProject userProject : userOnProjects) {
                 if (userProject.getProject().isActive()) {
                     userProjects.add(userProject.getProject());
                 }
@@ -69,8 +60,8 @@ public class ProjectService {
         List<OnProject> userOnProjects = onProjectService.getAllUserProjects(userId);
         List<Project> userProjects = new ArrayList<>();
 
-        if(!userOnProjects.isEmpty()) {
-            for (OnProject userProject: userOnProjects) {
+        if (!userOnProjects.isEmpty()) {
+            for (OnProject userProject : userOnProjects) {
                 if (!userProject.getProject().isActive()) {
                     userProjects.add(userProject.getProject());
                 }
@@ -88,31 +79,10 @@ public class ProjectService {
             return projectInDb;
         } else {
             Project project = projectRepository.save(projectMapper.toProject(projectDto));
-            OnProjectDto onProjectDto = new OnProjectDto(projectDto.createdBy(), project.getId().toString(), roleService.getRoleIdByName("admin").toString());
+            OnProjectDto onProjectDto = new OnProjectDto(projectDto.createdBy(), project.getId(), roleService.getRoleIdByName("admin"));
             onProjectService.createOnProject(onProjectDto);
             projectStatusService.addPredefinedStatusesOnProject(project.getId());
             return project;
-        }
-    }
-
-    public ProjectResponseDto updateProject(ProjectUpdateDto projectUpdateDto) {
-        Project project = projectRepository.findById(projectUpdateDto.projectId()).orElse(null);
-
-        if (project != null) {
-            OnProject onProject = project.getOnProjects().stream().filter(op -> op.getUser().getId().equals(projectUpdateDto.userId())).findAny().orElse(null);
-
-            if (onProject.getRole().getName().equals("admin")) {
-                String newName = projectUpdateDto.name() != null ? projectUpdateDto.name() : project.getName();
-                String newDescription = projectUpdateDto.description() != null ? projectUpdateDto.description() : project.getDescription();
-                project.setName(newName);
-                project.setDescription(newDescription);
-
-                return projectMapper.toProjectResponseDto(projectRepository.save(project));
-            } else {
-                return projectMapper.toProjectResponseDto(project);
-            }
-        } else {
-            return null;
         }
     }
 

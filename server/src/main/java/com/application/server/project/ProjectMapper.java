@@ -3,8 +3,6 @@ package com.application.server.project;
 import com.application.server.user.User;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 public class ProjectMapper {
 
@@ -19,8 +17,7 @@ public class ProjectMapper {
         project.setActive(true);
 
         User user = new User();
-        user.setId(UUID.fromString(projectDto.createdBy()));
-        user.setId(UUID.fromString(projectDto.createdBy()));
+        user.setId(projectDto.createdBy());
         project.setUser(user);
 
         return project;

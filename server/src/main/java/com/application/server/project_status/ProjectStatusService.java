@@ -1,6 +1,5 @@
 package com.application.server.project_status;
 
-import com.application.server.project.ProjectService;
 import com.application.server.status.Status;
 import com.application.server.status.StatusService;
 import org.springframework.stereotype.Service;
@@ -22,10 +21,6 @@ public class ProjectStatusService {
         this.projectStatusRepository = projectStatusRepository;
         this.projectStatusMapper = projectStatusMapper;
         this.statusService = statusService;
-    }
-
-    public List<ProjectStatusResponseDto> getAllProjectStatuses() {
-        return projectStatusRepository.findAll().stream().map(projectStatusMapper::toProjectStatusDto).collect(Collectors.toList());
     }
 
     public List<StatusesOnProjectResponseDto> getAllStatusesOnProject(UUID projectId) {

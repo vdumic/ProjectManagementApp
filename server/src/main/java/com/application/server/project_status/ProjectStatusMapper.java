@@ -4,8 +4,6 @@ import com.application.server.project.Project;
 import com.application.server.status.Status;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 public class ProjectStatusMapper {
     public ProjectStatus toProjectStatus(ProjectStatusDto projectStatusDto) {

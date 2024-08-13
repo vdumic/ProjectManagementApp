@@ -37,20 +37,6 @@ public class TaskService {
         return taskRepository.findAll().stream().map(taskMapper::toTaskResponseDto).collect(Collectors.toList());
     }
 
-    public TaskResponseDto getTaskById(UUID id) {
-        Task task = taskRepository.findById(id).orElse(null);
-
-        if (task == null) {
-            return null;
-        }
-        return taskMapper.toTaskResponseDto(task);
-    }
-
-    public List<TaskResponseDto> getTasksOnProject(UUID projectId) {
-        List<Task> tasksOnProject = taskRepository.findAll().stream().filter(t -> t.getProject().getId().equals(projectId)).collect(Collectors.toList());
-        return tasksOnProject.stream().map(taskMapper::toTaskResponseDto).collect(Collectors.toList());
-    }
-
     public List<TaskResponseDto> getTasksOnProjectWithStatus(UUID projectId, UUID statusId) {
         List<Task> tasksOnProjectWithStatus = taskRepository.findAll().stream()
                 .filter(t -> t.getProject().getId().equals(projectId) && t.getStatus().getId().equals(statusId))
@@ -67,6 +53,13 @@ public class TaskService {
             return taskInDb;
         } else {
             var task = taskMapper.toTask(taskDto);
+            Status status = statusService.getStatusById(taskDto.statusId());
+            if (!status.getName().equalsIgnoreCase("in backlog")) {
+                task.setStartDate(new Date());
+            } if (status.getName().equalsIgnoreCase("done")) {
+                task.setStartDate(new Date());
+                task.setEndDate(new Date());
+            }
             return taskRepository.save(task);
         }
     }
@@ -106,7 +99,7 @@ public class TaskService {
             } else if (newStatus.getName().equals("Done")) {
                 task.setEndDate(new Date());
             } else if (oldStatus.getName().equals("In backlog")) {
-                task.setStartDate(null);
+                task.setStartDate(new Date());
             }
 
             taskRepository.save(task);

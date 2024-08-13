@@ -3,7 +3,6 @@ package com.application.server.on_project;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -14,11 +13,6 @@ public class OnProjectController {
 
     public OnProjectController(OnProjectService onProjectService) {
         this.onProjectService = onProjectService;
-    }
-
-    @GetMapping("/on_projects")
-    public List<OnProject> getAllOnProjects() {
-        return onProjectService.getAllOnProject();
     }
 
     @GetMapping("/on_projects/{user-id}/{project-id}")

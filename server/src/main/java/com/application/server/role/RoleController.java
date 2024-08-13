@@ -1,10 +1,8 @@
 package com.application.server.role;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -19,16 +17,6 @@ public class RoleController {
     @GetMapping("/roles")
     public List<Role> getAllRoles() {
         return roleService.getAllRoles();
-    }
-
-    @GetMapping("/roles_names")
-    public List<RolesListDto> getAllRolesNames() {
-        return roleService.getAllRolesNames();
-    }
-
-    @GetMapping("/roles/{role-id}")
-    public Role getRoleById(@PathVariable("role-id") UUID id) {
-        return roleService.getRoleById(id);
     }
 
     @PostMapping("/roles")

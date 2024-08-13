@@ -1,6 +1,5 @@
 package com.application.server.user;
 
-import com.application.server.role.Role;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Service;
 

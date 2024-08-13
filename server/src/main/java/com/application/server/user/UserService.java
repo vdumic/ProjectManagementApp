@@ -1,6 +1,5 @@
 package com.application.server.user;
 
-import com.application.server.config.UserAuthProvider;
 import com.application.server.exceptions.AppException;
 import com.application.server.on_project.OnProject;
 import com.application.server.on_project.OnProjectService;
@@ -31,10 +30,6 @@ public class UserService {
         this.onProjectService = onProjectService;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
     public List<User> getUsersToAdd(UUID projectId) {
         List<User> allUsers = userRepository.findAll();
 
@@ -56,19 +51,6 @@ public class UserService {
         } else {
             return filteredUsers;
         }
-    }
-
-    public User getUserById(UUID id) {
-        return userRepository.findById(id).orElse(null);
-    }
-
-    public boolean getUserByEmail(String email) {
-        return !userRepository.findAll().stream().filter(user -> user.getEmail().equals(email)).collect(Collectors.toList()).isEmpty();
-    }
-
-    public UserIdDto getUserIdByEmail(String email) {
-        User user = userRepository.findAll().stream().filter(u -> u.getEmail().equals(email)).findAny().orElse(null);
-        return userMapper.toUserIdDto(user);
     }
 
     public List<UsersListDto> getAllUsersOnProject(UUID projectId) {
@@ -155,7 +137,7 @@ public class UserService {
     public UserProfileDto getUserProfile(UUID userId) {
         User user = userRepository.findById(userId).orElse(null);
 
-        if(user != null) {
+        if (user != null) {
             return userMapper.toUserProfileDto(user);
         } else {
             return null;
@@ -166,7 +148,7 @@ public class UserService {
     public UserProfileDto updateUserProfile(UserProfileDto userProfileDto) {
         User user = userRepository.findById(userProfileDto.id()).orElse(null);
 
-        if(user != null) {
+        if (user != null) {
             user.setFirstname(userProfileDto.firstname());
             user.setLastname(userProfileDto.lastname());
             user.setUsername(userProfileDto.username());

@@ -1,7 +1,6 @@
 package com.application.server.config;
 
 import com.application.server.exceptions.AppException;
-import com.application.server.user.User;
 import com.application.server.user.UserDto;
 import com.application.server.user.UserService;
 import com.auth0.jwt.JWT;
@@ -25,10 +24,9 @@ import java.util.Date;
 @Component
 public class UserAuthProvider {
 
+    private final UserService userService;
     @Value("${security.jwt.token.secret-key:secret.value}")
     private String secretKey;
-
-    private final UserService userService;
 
     public UserAuthProvider(UserService userService) {
         this.userService = userService;

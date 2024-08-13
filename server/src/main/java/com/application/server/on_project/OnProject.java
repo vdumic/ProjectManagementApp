@@ -9,7 +9,8 @@ import jakarta.persistence.*;
 @Entity
 public class OnProject {
 
-    @EmbeddedId OnProjectId id;
+    @EmbeddedId
+    OnProjectId id;
 
     @ManyToOne
     @MapsId("userId")

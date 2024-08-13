@@ -1,6 +1,5 @@
 package com.application.server.config;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,8 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
-// Defined paths can be accessed without signing in
 
 @Configuration
 @EnableWebSecurity
@@ -35,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user/passkey/{user-email}/{passkey-id}").permitAll()
                         .anyRequest().authenticated())
-                ;
+        ;
 
         return http.build();
     }

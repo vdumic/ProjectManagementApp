@@ -1,6 +1,5 @@
 package com.application.server.project_status;
 
-import com.application.server.status.Status;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,11 +16,6 @@ public class ProjectStatusController {
         this.projectStatusService = projectStatusService;
     }
 
-    @GetMapping("/project_statuses")
-    public List<ProjectStatusResponseDto> getAllProjectStatuses() {
-        return projectStatusService.getAllProjectStatuses();
-    }
-
     @GetMapping("/project_statuses/{project-id}")
     public List<StatusesOnProjectResponseDto> getAllStatusesOnProject(@PathVariable("project-id") UUID projectId) {
         return projectStatusService.getAllStatusesOnProject(projectId);
@@ -30,11 +24,6 @@ public class ProjectStatusController {
     @GetMapping("/project_statuses/to_delete/{project-id}")
     public List<StatusesOnProjectResponseDto> getStatusesOnProjectToDelete(@PathVariable("project-id") UUID projectId) {
         return projectStatusService.getStatusesOnProjectToDelete(projectId);
-    }
-
-    @PostMapping("/project_statuses")
-    public ProjectStatusResponseDto createProjectStatus(@RequestBody ProjectStatusDto projectStatusDto) {
-        return projectStatusService.createProjectStatus(projectStatusDto);
     }
 
     @PostMapping("/project_statuses/new_status")

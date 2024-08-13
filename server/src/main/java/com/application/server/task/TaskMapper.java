@@ -6,8 +6,6 @@ import com.application.server.status.Status;
 import com.application.server.user.User;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 public class TaskMapper {
 
@@ -21,19 +19,19 @@ public class TaskMapper {
         task.setStoryPoints(taskDto.storyPoints());
 
         Project project = new Project();
-        project.setId(UUID.fromString(taskDto.projectId()));
+        project.setId(taskDto.projectId());
         task.setProject(project);
 
         Status status = new Status();
-        status.setId(UUID.fromString(taskDto.statusId()));
+        status.setId(taskDto.statusId());
         task.setStatus(status);
 
         Priority priority = new Priority();
-        priority.setId(UUID.fromString(taskDto.priorityId()));
+        priority.setId(taskDto.priorityId());
         task.setPriority(priority);
 
         User user = new User();
-        user.setId(UUID.fromString(taskDto.createdBy()));
+        user.setId(taskDto.createdBy());
         task.setCreatedByUser(user);
 
         return task;

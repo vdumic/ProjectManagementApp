@@ -2,10 +2,8 @@ package com.application.server.on_project;
 
 import com.application.server.project.Project;
 import com.application.server.project.ProjectRepository;
-import com.application.server.project.ProjectService;
 import com.application.server.role.Role;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.UUID;

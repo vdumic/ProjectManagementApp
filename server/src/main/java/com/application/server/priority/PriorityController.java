@@ -1,10 +1,8 @@
 package com.application.server.priority;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -19,16 +17,6 @@ public class PriorityController {
     @GetMapping("/priorities")
     public List<Priority> getAllPriorities() {
         return priorityService.getAllPriorities();
-    }
-
-    @GetMapping("/priorities_names")
-    public List<PrioritiesListDto> getAllPrioritiesNames() {
-        return priorityService.getAllPrioritiesNames();
-    }
-
-    @GetMapping("/priorities/{priority-id}")
-    public Priority getPriorityById(@PathVariable("priority-id") UUID id) {
-        return priorityService.getPriorityById(id);
     }
 
     @PostMapping("/priorities")

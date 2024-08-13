@@ -9,7 +9,8 @@ import jakarta.persistence.*;
 @Table(name = "project_status")
 public class ProjectStatus {
 
-    @EmbeddedId ProjectStatusId id;
+    @EmbeddedId
+    ProjectStatusId id;
 
     @ManyToOne
     @MapsId("projectId")

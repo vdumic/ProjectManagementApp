@@ -21,16 +21,6 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
-    @GetMapping("/tasks/{task-id}")
-    public TaskResponseDto getTaskById(@PathVariable("task-id") UUID id) {
-        return taskService.getTaskById(id);
-    }
-
-    @GetMapping("/tasks/project/{project-id}")
-    public List<TaskResponseDto> getTasksOnProject(@PathVariable("project-id") UUID projectId) {
-        return taskService.getTasksOnProject(projectId);
-    }
-
     @GetMapping("/tasks/status/{project-id}/{status-id}")
     public List<TaskResponseDto> getTasksOnProjectWithStatus(@PathVariable("project-id") UUID projectId, @PathVariable("status-id") UUID statusId) {
         return taskService.getTasksOnProjectWithStatus(projectId, statusId);
