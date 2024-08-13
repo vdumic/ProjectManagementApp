@@ -1,6 +1,8 @@
-import { useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
+import { useParams } from "react-router-dom";
+
 import { request } from "../axios/axios_helper";
+
 import TasksColumn from "./TasksColumn";
 
 const StatusTasksBox = ({ status, selectTask, stateChanged }) => {

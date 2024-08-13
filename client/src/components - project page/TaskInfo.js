@@ -124,26 +124,26 @@ const TaskInfo = ({
       </div>
       {isAdmin && (
         <div className="flex-col justify-start mb-6">
-        <div className="flex justify-center mb-3">
-          <button
-            className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-40 mx-6"
-            onClick={handleEditTask}
-          >
-            <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
-              Edit task
-            </p>
-          </button>
-        </div>
-        <div className="flex justify-center">
-          <button
-            className="bg-bckgrnd-high rounded-full border-2 border-bckgrnd-high shadow-lg w-40 mx-6"
-            onClick={handleDeleteTask}
-          >
-            <p className="text-lg py-0.5 px-4 text-white font-medium text-center">
-              Delete task
-            </p>
-          </button>
-        </div>
+          <div className="flex justify-center mb-3">
+            <button
+              className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-40 mx-6"
+              onClick={handleEditTask}
+            >
+              <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
+                Edit task
+              </p>
+            </button>
+          </div>
+          <div className="flex justify-center">
+            <button
+              className="bg-bckgrnd-high rounded-full border-2 border-bckgrnd-high shadow-lg w-40 mx-6"
+              onClick={handleDeleteTask}
+            >
+              <p className="text-lg py-0.5 px-4 text-white font-medium text-center">
+                Delete task
+              </p>
+            </button>
+          </div>
         </div>
       )}
     </div>
