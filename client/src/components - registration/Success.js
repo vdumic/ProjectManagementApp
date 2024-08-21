@@ -8,7 +8,7 @@ const Success = ({ email, userId }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate(`/projects-list/${userId}`);
+      navigate("/");
     }, 4000);
   }, [navigate, userId]);
 
@@ -25,6 +25,9 @@ const Success = ({ email, userId }) => {
         </div>
         <div className="text-lg sm:text-xl font-light mt-2">
           Registered email: <span className="font-medium">{email}</span>
+        </div>
+        <div className="text-lg sm:text-xl font-light mt-2">
+          Sign in with registered data!
         </div>
       </div>
     </div>
