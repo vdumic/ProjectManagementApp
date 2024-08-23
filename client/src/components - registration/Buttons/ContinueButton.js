@@ -3,7 +3,7 @@ import { SlArrowRight } from "react-icons/sl";
 const ContinueButton = () => {
   return (
     <button
-      className="flex items-center justify-center text-white font-medium mt-6 py-2 px-4 bg-button-blue rounded-xl shadow-xl"
+      className="flex items-center justify-center text-white font-medium mt-6 py-2 px-4 bg-bckgrnd-blue_dark rounded-xl shadow-xl"
       type="submit"
     >
       Continue

@@ -31,16 +31,21 @@ public class AuthController {
         UserDto user = userService.register(signUpDto);
         String token = userAuthProvider.createToken(user.email());
 
-        UserDto tokenUser = new UserDto(user.id(), user.email(), user.firstName(), user.lastName(), user.login(), token, user.passkeyId());
+        UserDto tokenUser = new UserDto(user.id(), user.email(),
+                user.firstName(), user.lastName(),
+                user.login(), token, user.passkeyId());
 
-        return ResponseEntity.created(URI.create("/users/" + tokenUser.id())).body(tokenUser);
+        return ResponseEntity.created(URI.create("/")).body(tokenUser);
     }
 
     @PostMapping("/user/passkey/{user-email}/{passkey-id}")
     public ResponseEntity<UserDto> loginWithPasskey(@PathVariable("user-email") String userEmail, @PathVariable("passkey-id") String passkeyId) {
         User user = userService.findUser(userEmail, passkeyId);
 
-        UserDto tokenUser = new UserDto(user.getId(), user.getEmail(), user.getFirstname(), user.getLastname(), user.getLogin(), userAuthProvider.createToken(user.getEmail()), user.getPasskeyId());
+        UserDto tokenUser = new UserDto(user.getId(), user.getEmail(),
+                user.getFirstname(), user.getLastname(),
+                user.getLogin(), userAuthProvider.createToken(user.getEmail()),
+                user.getPasskeyId());
 
         return ResponseEntity.ok(tokenUser);
     }

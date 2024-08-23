@@ -9,12 +9,10 @@ const StatusesBox = ({ statuses, selectTask, stateChanged, setStatuses }) => {
   const { projectId } = useParams();
 
   const handleReorder = (newStatuses) => {
-    console.log(newStatuses);
     let order = [];
     for (let i = 0; i < newStatuses.length; i++) {
       order.push(newStatuses[i].statusId);
     }
-    console.log(order);
     setStatuses(newStatuses);
     request("PUT", "/project_statuses/reorder", {
       projectId,

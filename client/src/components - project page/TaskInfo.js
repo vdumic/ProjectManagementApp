@@ -15,6 +15,7 @@ const TaskInfo = ({
   handleUpdatePriority,
   handleUpdateStatus,
   handleAssignUser,
+  handleAssignToSignedUser,
   handleDeleteTask,
   closeTaskInfo,
   stateChanged,
@@ -29,13 +30,13 @@ const TaskInfo = ({
       <div>
         <div className="m-6">
           <div className="flex flex-row justify-between my-2">
-            <p className="font-bold text-lg text-text-dark">{task.taskName}</p>
+            <p className="font-bold text-md text-text-dark">{task.taskName}</p>
             <button onClick={closeTaskInfo}>
               <IoIosClose className="h-7 w-7" />
             </button>
           </div>
           <div className="flex flex-row mb-8">
-            <p className="text-wrap">{task.description}</p>
+            <p className="text-wrap text-sm">{task.description}</p>
           </div>
           <div className="flex flex-row my-4 align-middle justify-between">
             <div className="flex flex-row">
@@ -71,6 +72,16 @@ const TaskInfo = ({
               >
                 <p className="py-0.5 px-4 text-text-dark font-medium text-center text-sm">
                   Assign task
+                </p>
+              </button>
+            )}
+            {!isAdmin && (
+              <button
+                className="bg-white rounded-full border-2 border-gray-500 shadow-lg"
+                onClick={handleAssignToSignedUser}
+              >
+                <p className="py-0.5 px-4 text-text-dark font-medium text-center text-sm">
+                  Assign to me
                 </p>
               </button>
             )}

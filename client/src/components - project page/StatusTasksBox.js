@@ -21,7 +21,7 @@ const StatusTasksBox = ({ status, selectTask, stateChanged }) => {
   }, [fetchStatusTasks, stateChanged]);
 
   return (
-    <div className="flex h-full flex-col justify-start w-full md:w-1/5 mx-0 md:mx-4 pt-10">
+    <div className="flex h-full flex-col justify-start w-full md:w-1/5 mx-0 md:mx-8 pt-10">
       <h1 className="text-text-dark text-xl font-medium mb-4 break-normal text-nowrap">
         {status.status}
       </h1>

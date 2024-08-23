@@ -49,14 +49,14 @@ const AdditionalInfo = () => {
         </div>
         <div className="flex flex-col sm:flex-row justify-center w-full">
           <button
-            className="flex items-center justify-center text-white font-medium mt-10 py-2 px-4 bg-button-blue rounded-xl shadow-xl mb-4 sm:mb-0 sm:mr-4"
+            className="flex items-center justify-center text-white font-medium mt-10 py-2 px-4 bg-bckgrnd-blue_dark rounded-xl shadow-xl mb-4 sm:mb-0 sm:mr-4"
             onClick={handleGoingBack}
           >
             <SlArrowLeft className="h-5 w-5 mr-2" />
             Back
           </button>
           <button
-            className="flex items-center justify-center text-white font-medium mt-10 py-2 px-4 bg-button-blue rounded-xl shadow-xl mb-4 sm:mb-0 sm:mr-4"
+            className="flex items-center justify-center text-white font-medium mt-10 py-2 px-4 bg-bckgrnd-blue_dark rounded-xl shadow-xl mb-4 sm:mb-0 sm:mr-4"
             type="submit"
           >
             Continue

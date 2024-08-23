@@ -16,8 +16,6 @@ import MobileProjectsHeader from "../components - projects list/Header/MobilePro
 
 const ProjectsPage = () => {
   const [chosenProject, setChosenProject] = useState({});
-  const [activeProjects, setActiveProjects] = useState([]);
-  const [oldProjects, setOldProjects] = useState([]);
   const [token, setToken] = useState(getAuthToken());
 
   const [tasksClicked, setTasksClicked] = useState(false);
@@ -32,6 +30,9 @@ const ProjectsPage = () => {
 
   const { userId } = useParams();
   const navigate = useNavigate();
+
+  const [activeProjects, setActiveProjects] = useState([]);
+  const [oldProjects, setOldProjects] = useState([]);
 
   const fetchProjects = useCallback(() => {
     request("GET", `/projects/active/${userId}`, {})

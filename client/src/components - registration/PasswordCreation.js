@@ -23,11 +23,11 @@ const PasswordCreation = () => {
       .min(6, "Password must be at least 6 characters"),
     confirmPassword: yup
       .string()
+      .required("Password confirmation is required")
       .oneOf([yup.ref("password"), null], "Passwords must match"),
   });
 
   const registerUser = (email, password) => {
-    console.log(formData.firstname, formData.lastname, formData.username, email, password, formData.organization,  formData.jobtitle);
     request("POST", "/register", {
       firstname: formData.firstname,
       lastname: formData.lastname,

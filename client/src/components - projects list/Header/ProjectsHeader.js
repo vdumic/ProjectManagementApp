@@ -29,7 +29,7 @@ const ProjectsHeader = ({ project, activeProjects, oldProjects }) => {
               {(activeProjects.length !== 0 || oldProjects.length !== 0) && (
                 <Link
                   to={`/projects/${userId}/${project.projectId}`}
-                  className="bg-white rounded border-2 border-gray-500 shadow-lg"
+                  className="bg-white rounded-full border-2 border-gray-500 shadow-lg"
                 >
                   <p className="text-lg py-0.5 px-4 text-text-dark font-medium">
                     Open project

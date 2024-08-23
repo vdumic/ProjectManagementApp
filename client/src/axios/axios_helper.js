@@ -20,7 +20,6 @@ export const setHankoSession = (token) => {
     window.localStorage.setItem("hanko_session", token);
     window.localStorage.setItem("hanko", token);
   } else {
-    console.log("ušloo");
     window.localStorage.removeItem("hanko_session");
     window.localStorage.removeItem("hanko");
   }

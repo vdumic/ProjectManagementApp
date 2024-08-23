@@ -1,6 +1,7 @@
 const ProjectTitle = ({
   project,
   statuses,
+  isAdmin,
   handleCreateStatus,
   handleCreateTask,
   handleDeleteStatus,
@@ -16,23 +17,27 @@ const ProjectTitle = ({
         </p>
       </div>
       <div className="flex flex-col lg:flex-row flex-grow items-center justify-center lg:justify-end">
-        <button
-          className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-fit md:w-40 my-2 lg:my-0 lg:mx-6"
-          onClick={handleCreateTask}
-        >
-          <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
-            Create task
-          </p>
-        </button>
-        <button
-          className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-fit md:w-40 my-2 lg:my-0 lg:mx-6"
-          onClick={handleCreateStatus}
-        >
-          <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
-            Create status
-          </p>
-        </button>
-        {statuses.length > 3 && (
+        {isAdmin && (
+          <button
+            className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-fit md:w-40 my-2 lg:my-0 lg:mx-6"
+            onClick={handleCreateTask}
+          >
+            <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
+              Create task
+            </p>
+          </button>
+        )}
+        {isAdmin && (
+          <button
+            className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-fit md:w-40 my-2 lg:my-0 lg:mx-6"
+            onClick={handleCreateStatus}
+          >
+            <p className="text-lg py-0.5 px-4 text-text-dark font-medium text-center">
+              Create status
+            </p>
+          </button>
+        )}
+        {isAdmin && statuses.length > 3 && (
           <button
             className="bg-white rounded-full border-2 border-gray-500 shadow-lg w-fit md:w-40 my-2 lg:my-0 lg:mx-6"
             onClick={handleDeleteStatus}

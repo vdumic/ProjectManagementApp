@@ -19,6 +19,7 @@ import AssignTaskPopUp from "../components - project page/PopUps/AssignTaskPopUp
 import DeleteTaskPopUp from "../components - project page/PopUps/DeleteTaskPopUp";
 import DeleteStatusPopUp from "../components - project page/PopUps/DeleteStatusPopUp";
 import MobileHeader from "../components - projects list/Header/MobileHeader";
+import AssignToMePopUp from "../components - project page/PopUps/AssignToMePopUp";
 
 const ProjectPage = () => {
   const [project, setProject] = useState({});
@@ -40,6 +41,7 @@ const ProjectPage = () => {
   const [updatePriorityPopUp, setUpdatePriorityPopUp] = useState(false);
   const [updateStatusPopUp, setUpdateStatusPopUp] = useState(false);
   const [assignUserPopUp, setAssignUserPopUp] = useState(false);
+  const [assignToMePopUp, setAssignToMeClicked] = useState(false);
   const [deleteTaskPopUp, setDeleteTaskPopUp] = useState(false);
   const [deleteStatusPopUp, setDeleteStatusPopUp] = useState(false);
 
@@ -145,6 +147,10 @@ const ProjectPage = () => {
     setAssignUserPopUp(true);
   };
 
+  const handleAssignToSignedUserClicked = () => {
+    setAssignToMeClicked(true);
+  };
+
   const handleTaskClicked = (task) => {
     setTaskClicked(true);
     setTask(task);
@@ -160,42 +166,67 @@ const ProjectPage = () => {
 
   return (
     <div className="h-screen flex flex-col md:flex-row">
-    <div className="w-full h-full bg-bckgrnd-main flex-col justify-start">
-      <div className="border-b-2 border-b-bckgrnd-blue_dark">
-        <ProjectHeader userId={userId} />
-        <MobileHeader />
-        <ProjectTitle
-          project={project}
-          statuses={statuses}
-          handleCreateStatus={handleCreateStatusClicked}
-          handleCreateTask={handleCreateTaskClicked}
-          handleDeleteStatus={handleDeleteStatusClicked}
-        />
-      </div>
-
-      <div
-        className={`hidden ${
-          taskClicked
-            ? " md:flex md:justify-between md:h-5/6 overflow-auto md:mx-14"
-            : "md:flex md:h-5/6 overflow-auto md:mx-14"
-        }`}
-      >
-        <div
-          className={`${
-            taskClicked
-              ? "flex flex-col md:flex-row w-full md:w-3/4 overflow-x-auto"
-              : "flex flex-col md:flex-row justify-start w-full md:w-4/5"
-          }`}
-        >
-          <StatusesBox
+      <div className="w-full h-full bg-bckgrnd-main flex-col justify-start">
+        <div className="border-b-2 border-b-bckgrnd-blue_dark">
+          <ProjectHeader userId={userId} />
+          <MobileHeader />
+          <ProjectTitle
+            project={project}
             statuses={statuses}
-            selectTask={handleTaskClicked}
-            stateChanged={stateChanged}
-            setStatuses={setStatuses}
+            isAdmin={isAdmin}
+            handleCreateStatus={handleCreateStatusClicked}
+            handleCreateTask={handleCreateTaskClicked}
+            handleDeleteStatus={handleDeleteStatusClicked}
           />
         </div>
 
-        <div className="w-full md:w-1/4 h-5/6 bg-transparent md:ml-6">
+        <div
+          className={`hidden ${
+            taskClicked
+              ? " md:flex md:justify-between md:h-5/6 overflow-auto md:mx-14"
+              : "md:flex md:h-5/6 overflow-auto md:mx-14"
+          }`}
+        >
+          <div
+            className={`${
+              taskClicked
+                ? "flex flex-col md:flex-row w-full md:w-3/4 overflow-x-auto"
+                : "flex flex-col md:flex-row justify-start w-full md:w-4/5"
+            }`}
+          >
+            <StatusesBox
+              statuses={statuses}
+              selectTask={handleTaskClicked}
+              stateChanged={stateChanged}
+              setStatuses={setStatuses}
+            />
+          </div>
+
+          <div className="w-full md:w-1/4 h-5/6 bg-transparent md:ml-6">
+            {taskClicked && (
+              <TaskInfo
+                task={task}
+                handleEditTask={handleEditTaskClicked}
+                handleUpdatePriority={handleUpdatePriorityClicked}
+                handleUpdateStatus={handleUpdateStatusClicked}
+                handleAssignUser={handleAssignUserClicked}
+                handleAssignToSignedUser={handleAssignToSignedUserClicked}
+                handleDeleteTask={handleDeleteTaskClicked}
+                closeTaskInfo={() => setTaskClicked(false)}
+                stateChanged={stateChanged}
+                isAdmin={isAdmin}
+              />
+            )}
+          </div>
+        </div>
+
+        <div
+          className={`md:hidden ${
+            taskClicked
+              ? "flex flex-col overflow-auto mx-2"
+              : "flex flex-col overflow-auto mx-2"
+          }`}
+        >
           {taskClicked && (
             <TaskInfo
               task={task}
@@ -203,43 +234,21 @@ const ProjectPage = () => {
               handleUpdatePriority={handleUpdatePriorityClicked}
               handleUpdateStatus={handleUpdateStatusClicked}
               handleAssignUser={handleAssignUserClicked}
+              handleAssignToSignedUser={handleAssignToSignedUserClicked}
               handleDeleteTask={handleDeleteTaskClicked}
               closeTaskInfo={() => setTaskClicked(false)}
               stateChanged={stateChanged}
               isAdmin={isAdmin}
             />
           )}
+          <StatusesBox
+            statuses={statuses}
+            selectTask={handleTaskClicked}
+            stateChanged={stateChanged}
+            setStatuses={setStatuses}
+          />
         </div>
       </div>
-
-      <div
-        className={`md:hidden ${
-          taskClicked
-            ? "flex flex-col overflow-auto mx-2"
-            : "flex flex-col overflow-auto mx-2"
-        }`}
-      >
-        {taskClicked && (
-          <TaskInfo
-            task={task}
-            handleEditTask={handleEditTaskClicked}
-            handleUpdatePriority={handleUpdatePriorityClicked}
-            handleUpdateStatus={handleUpdateStatusClicked}
-            handleAssignUser={handleAssignUserClicked}
-            handleDeleteTask={handleDeleteTaskClicked}
-            closeTaskInfo={() => setTaskClicked(false)}
-            stateChanged={stateChanged}
-            isAdmin={isAdmin}
-          />
-        )}
-        <StatusesBox
-          statuses={statuses}
-          selectTask={handleTaskClicked}
-          stateChanged={stateChanged}
-          setStatuses={setStatuses}
-        />
-      </div>
-    </div>
       <CreateStatusPopUp
         openPopUp={createStatusPopUp}
         closePopUp={() => setCreateStatusPopUp(false)}
@@ -294,6 +303,12 @@ const ProjectPage = () => {
           setStateChanged(!stateChanged);
           setTaskClicked(false);
         }}
+      />
+      <AssignToMePopUp
+        openPopUp={assignToMePopUp}
+        closePopUp={() => setAssignToMeClicked(false)}
+        task={task}
+        projectChange={() => setStateChanged(!stateChanged)}
       />
       <DeleteTaskPopUp
         task={task}

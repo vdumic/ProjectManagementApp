@@ -31,7 +31,7 @@ const ProjectsMenu = ({
         </div>
         <div className="flex justify-center my-8">
           <button
-            className="bg-bckgrnd-light rounded drop-shadow-xl mx-2"
+            className="bg-bckgrnd-light rounded-full drop-shadow-xl mx-2"
             onClick={() => {
               setCreateProjectOpened(true);
             }}

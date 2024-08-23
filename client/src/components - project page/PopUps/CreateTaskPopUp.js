@@ -28,7 +28,7 @@ const CreateTaskPopUp = ({
   );
 
   const ValidationSchema = yup.object().shape({
-    name: yup.string().required("Project name is required"),
+    name: yup.string().required("Task name is required"),
     description: yup.string(),
     storyPoints: yup.number(),
   });

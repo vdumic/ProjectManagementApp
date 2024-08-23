@@ -19,11 +19,11 @@ const StatusLine = ({ status, project }) => {
   }, [fetchTasks]);
 
   return (
-    <div className="flex h-full flex-col justify-start sm:w-2/5 md:w-1/5 mx-4">
+    <div className="flex h-full flex-col justify-start sm:w-2/5 md:w-1/5 mx-8">
       <div className="text-text-dark text-lg font-medium mb-4 break-normal text-nowrap">
         {status.status}
       </div>
-      <div className="flex flex-row md:flex-col w-full justify-start h-3/4">
+      <div className="flex flex-row md:flex-col w-full justify-start">
         {tasks.map((task) => {
           return (
             <TaskCard
